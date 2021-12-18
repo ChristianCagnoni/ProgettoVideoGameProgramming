@@ -28,6 +28,7 @@ public class MenuStartupManager : MonoBehaviour
         exitB = actualMenu.transform.GetChild(3).gameObject.GetComponent<Button>();
         exitB.onClick.AddListener(CloseGame);
         settingsB.onClick.AddListener(startSetttings);
+        newGameB.onClick.AddListener(newGameClick);
         savesPath = Directory.GetCurrentDirectory() + "\\Saves";
         if (!Directory.Exists(savesPath))
         {
@@ -48,6 +49,13 @@ public class MenuStartupManager : MonoBehaviour
     void continueGame()
     {
 
+    }
+
+    void newGameClick()
+    {
+        actualMenu.SetActive(false);
+        actualMenu = newGame;
+        actualMenu.SetActive(true);
     }
 
     void startSetttings()
