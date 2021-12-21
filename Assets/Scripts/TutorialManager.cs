@@ -1,3 +1,4 @@
+using DigitalRuby.PyroParticles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +13,16 @@ public class TutorialManager : MonoBehaviour
     private GameObject child;
     private bool[] pressed;
     private int falses;
+    private Button repeat;
+    private Button gioca;
+    private bool wheel;
 
     // Start is called before the first frame update
     void Start()
     {
         pressed = new bool[] { false, false, false, false};
         falses = 4;
+        wheel = false;
         tutorialPhase = 0;
         tutorialCanvas.SetActive(true);
         panel= tutorialCanvas.transform.GetChild(0).gameObject;
@@ -59,12 +64,13 @@ public class TutorialManager : MonoBehaviour
             {
                 tutorialPhase++;
                 child.SetActive(false);
-                child= panel.transform.GetChild(tutorialPhase).gameObject;
+                child = panel.transform.GetChild(tutorialPhase).gameObject;
                 child.SetActive(true);
             }
-        }else if (tutorialPhase == 1)
+        }
+        else if (tutorialPhase == 1)
         {
-            if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || 
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ||
                 Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ||
                 Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ||
                 Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
@@ -88,13 +94,97 @@ public class TutorialManager : MonoBehaviour
         }
         else if (tutorialPhase == 4)
         {
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                tutorialPhase++;
+                child.SetActive(false);
+                child = panel.transform.GetChild(tutorialPhase).gameObject;
+                child.SetActive(true);
+            }
+        }
+        else if (tutorialPhase == 5)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                wheel = true;
+            }
+            if(wheel && Input.GetKey(KeyCode.Mouse0))
+            {
+                tutorialPhase++;
+                child.SetActive(false);
+                child = panel.transform.GetChild(tutorialPhase).gameObject;
+                child.SetActive(true);
+                wheel = false;
+            }
+        }
+        else if (tutorialPhase == 6)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                wheel = true;
+            }
+            if (wheel && Input.GetKey(KeyCode.Mouse0))
+            {
+                tutorialPhase++;
+                child.SetActive(false);
+                child = panel.transform.GetChild(tutorialPhase).gameObject;
+                child.SetActive(true);
+                wheel = false;
+            }
+        }
+        else if (tutorialPhase == 7)
+        {
             StartCoroutine("waitEnemy");
         }
+        else if (tutorialPhase == 8)
+        {
+            StartCoroutine("waitEnemy");
+        }
+        else if (tutorialPhase == 9)
+        {
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                tutorialPhase++;
+                child.SetActive(false);
+                child = panel.transform.GetChild(tutorialPhase).gameObject;
+                child.SetActive(true);
+            }
+        }
+        else if (tutorialPhase == 10)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                tutorialPhase++;
+                child.SetActive(false);
+                child = panel.transform.GetChild(tutorialPhase).gameObject;
+                child.SetActive(true);
+            }
+        }
+        else if (tutorialPhase == 11)
+        {
+            Player.MouseLookToggle = false;
+            gioca = child.transform.GetChild(1).gameObject.GetComponent<Button>();
+            repeat = child.transform.GetChild(0).gameObject.GetComponent<Button>();
+            repeat.onClick.AddListener(repeatTutorial);
+        }
+    }
+
+    void repeatTutorial()
+    {
+        tutorialPhase = 0;
+        child.SetActive(false);
+        child = panel.transform.GetChild(tutorialPhase).gameObject;
+        child.SetActive(true);
+        pressed = new bool[] { false, false, false, false };
+        falses = 4;
+        Player.MouseLookToggle = true;
+        wheel = false;
+        repeat.onClick.RemoveListener(repeatTutorial);
     }
 
     IEnumerator waitEnemy()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(20);
         tutorialPhase++;
         child.SetActive(false);
         child = panel.transform.GetChild(tutorialPhase).gameObject;

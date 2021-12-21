@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float speed;
     public static float noiseLevel;
     public GameObject[] Prefabs;
-    public bool MouseLookToggle;
+    public static bool MouseLookToggle;
 
     private GameObject currentPrefabObject;
     private FireBaseScript currentPrefabScript;
@@ -30,14 +30,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         originalRotation = transform.localRotation;
-        MouseLookToggle = false;
+        MouseLookToggle = true;
         noiseLevel = 0;
         StartCoroutine("noiseControl");
     }
 
     private void UpdateEffect()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             StartCurrent();
         }
@@ -159,9 +159,34 @@ public class Player : MonoBehaviour
         return Mathf.Clamp(angle, min, max);
     }
 
+    public void NextPrefab()
+    {
+        currentPrefabIndex++;
+        if (currentPrefabIndex == Prefabs.Length)
+        {
+            currentPrefabIndex = 0;
+        }
+    }
+
+    public void PreviousPrefab()
+    {
+        currentPrefabIndex--;
+        if (currentPrefabIndex == -1)
+        {
+            currentPrefabIndex = Prefabs.Length - 1;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f )
+        {
+            NextPrefab();
+        }else if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            PreviousPrefab();
+        }
         if (Input.GetKeyDown(KeyCode.M))
         {
             MouseLookToggle = !MouseLookToggle;

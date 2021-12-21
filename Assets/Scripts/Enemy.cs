@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -45,9 +44,9 @@ public class Enemy : MonoBehaviour
                     agent.SetDestination(target.position);
                 }
             }
-            if (transform.position.x == target.position.x && transform.position.z == target.position.z)
-            {
-            }
+            //if (transform.position.x == target.position.x && transform.position.z == target.position.z)
+            //{
+            //}
         }
         if(TutorialManager.tutorialPhase == 3)
         {
@@ -59,12 +58,18 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        if (TutorialManager.tutorialPhase == 5)
+        if (TutorialManager.tutorialPhase == 8)
         {
+            if (target)
+            {
+                agent.SetDestination(target.position);
+                agent.speed = moveSpeed + 1;
+            }
             if (playerInRange && canAttack)
             {
                 //GameObject.Find("Player").GetComponent<ControllerForPlayer>().currentHealth -= damage;
                 Debug.Log("Attacco");
+                target.position = target.position + new Vector3(1.0f, 0, 0);
                 StartCoroutine(AttackCooldown());
             }
         }
@@ -76,7 +81,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("audioSource");
         }
-        if (other.gameObject.CompareTag("Player")) ;
+        if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = true;
         }

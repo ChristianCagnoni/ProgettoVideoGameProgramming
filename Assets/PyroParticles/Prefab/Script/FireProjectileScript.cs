@@ -15,6 +15,9 @@ namespace DigitalRuby.PyroParticles
     /// </summary>
     public class FireProjectileScript : FireBaseScript, ICollisionHandler
     {
+
+        static public bool collide;
+
         [Tooltip("The collider object to use for collision and physics.")]
         public GameObject ProjectileColliderObject;
 
@@ -62,7 +65,7 @@ namespace DigitalRuby.PyroParticles
         protected override void Start()
         {
             base.Start();
-
+            collide = false;
             StartCoroutine(SendCollisionAfterDelay());
         }
 
@@ -96,6 +99,10 @@ namespace DigitalRuby.PyroParticles
             // if we have contacts, play the collision particle system and call the delegate
             if (c.contacts.Length != 0)
             {
+                if (c.transform.name == "Enemy")
+                {
+                    collide = true;
+                }
                 ProjectileExplosionParticleSystem.transform.position = c.contacts[0].point;
                 ProjectileExplosionParticleSystem.Play();
                 FireBaseScript.CreateExplosion(c.contacts[0].point, ProjectileExplosionRadius, ProjectileExplosionForce);
