@@ -84,17 +84,22 @@ public class TutorialManager : MonoBehaviour
         }
         else if (tutorialPhase == 3)
         {
-            StopCoroutine("waitEnemy");
+            StartCoroutine("waitEnemy");
+        }
+        else if (tutorialPhase == 4)
+        {
+            StartCoroutine("waitEnemy");
         }
     }
 
     IEnumerator waitEnemy()
     {
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(5);
         tutorialPhase++;
         child.SetActive(false);
         child = panel.transform.GetChild(tutorialPhase).gameObject;
         child.SetActive(true);
+        StopCoroutine("waitEnemy");
     }
 
 }

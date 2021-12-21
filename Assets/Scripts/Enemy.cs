@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-/*
-
-
-instead of actually trying to detect a "sound", you can just set a variable that stores like a noiseLevel, and if the distance from the player to the enemy is smaller than the noiseLevel, the enemy knows you're there.
-
-for example, when you're not doing anything, the noise level is 0. when you're walking it is 1. if you shoot, it is 10. and if the distance from the enemy to you is smaller than the noiselevel, they find you.
- 
- 
- */
-
 public class Enemy : MonoBehaviour
 {
 
@@ -23,6 +13,12 @@ public class Enemy : MonoBehaviour
     public float moveSpeed=4;
     public float maxDist=10;
     public float minDist=5;
+
+    public float enemyCooldown = 1;
+    public float damage = 1;
+
+    private bool playerInRange = false;
+    private bool canAttack = true;
 
     private void Awake()
     {
@@ -53,6 +49,25 @@ public class Enemy : MonoBehaviour
             {
             }
         }
+        if(TutorialManager.tutorialPhase == 3)
+        {
+            if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel *4)
+            {
+                if (target)
+                {
+                    agent.SetDestination(target.position);
+                }
+            }
+        }
+        if (TutorialManager.tutorialPhase == 5)
+        {
+            if (playerInRange && canAttack)
+            {
+                //GameObject.Find("Player").GetComponent<ControllerForPlayer>().currentHealth -= damage;
+                Debug.Log("Attacco");
+                StartCoroutine(AttackCooldown());
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,6 +75,10 @@ public class Enemy : MonoBehaviour
         if (other.transform == target)
         {
             Debug.Log("audioSource");
+        }
+        if (other.gameObject.CompareTag("Player")) ;
+        {
+            playerInRange = true;
         }
     }
 
@@ -80,6 +99,10 @@ public class Enemy : MonoBehaviour
             playerSighted = false;
             enemyShooting = false;
         }
+        if (other.gameObject.CompareTag("Player")) ;
+        {
+            playerInRange = false;
+        }
     }
 
     void playerFound()
@@ -97,6 +120,13 @@ public class Enemy : MonoBehaviour
                 enemyShooting = true;
             }
         }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(enemyCooldown);
+        canAttack = true;
     }
 
 }
