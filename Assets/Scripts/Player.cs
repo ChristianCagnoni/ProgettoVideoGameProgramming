@@ -2,6 +2,7 @@ using DigitalRuby.PyroParticles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class Player : MonoBehaviour
     public static float noiseLevel;
     public GameObject[] Prefabs;
     public static bool MouseLookToggle;
+    public Image power;
+    public Sprite[] powers;
 
     private GameObject currentPrefabObject;
     private FireBaseScript currentPrefabScript;
     private int currentPrefabIndex;
+    
 
     private enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
     private RotationAxes axes = RotationAxes.MouseXAndY;
@@ -166,6 +170,7 @@ public class Player : MonoBehaviour
         {
             currentPrefabIndex = 0;
         }
+        power.sprite = powers[currentPrefabIndex];
     }
 
     public void PreviousPrefab()
@@ -175,6 +180,7 @@ public class Player : MonoBehaviour
         {
             currentPrefabIndex = Prefabs.Length - 1;
         }
+        power.sprite = powers[currentPrefabIndex];
     }
 
     // Update is called once per frame
