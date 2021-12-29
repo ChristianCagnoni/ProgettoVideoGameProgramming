@@ -12,6 +12,12 @@ public class Player : MonoBehaviour
     public static bool MouseLookToggle;
     public Image power;
     public Sprite[] powers;
+    public int maxHealth=100;
+    public int currentHealth;
+    public HealthBar healthBar;
+    public float maxEnergy = 50;
+    public float currentEnergy;
+    public EnergyBar energyBar;
 
     private GameObject currentPrefabObject;
     private FireBaseScript currentPrefabScript;
@@ -33,6 +39,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentEnergy = maxEnergy;
+        energyBar.SetMaxEnergy(maxEnergy);
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         originalRotation = transform.localRotation;
         MouseLookToggle = true;
         noiseLevel = 0;
@@ -200,9 +210,10 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy()>0)
             {
                 transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, speed * 2 * Time.deltaTime);
+                ConsumeEnergy(.2f);
                 noiseLevel = 2;
             }
             else
@@ -213,9 +224,10 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
             {
                 transform.position = Vector3.Lerp(transform.position, transform.position - transform.forward, speed * 2 * Time.deltaTime);
+                ConsumeEnergy(.2f);
                 noiseLevel = 2;
             }
             else
@@ -226,9 +238,10 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
             {
                 transform.position = Vector3.Lerp(transform.position, transform.position + transform.right, speed * 2 * Time.deltaTime);
+                ConsumeEnergy(.2f);
                 noiseLevel = 2;
             }
             else
@@ -239,9 +252,10 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
             {
                 transform.position = Vector3.Lerp(transform.position, transform.position - transform.right, speed * 2 * Time.deltaTime);
+                ConsumeEnergy(.2f);
                 noiseLevel = 2;
             }
             else
@@ -250,8 +264,25 @@ public class Player : MonoBehaviour
                 noiseLevel = 1;
             }
         }
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            if(currentEnergy<50)
+                ReloadEnergy();
+        }
         UpdateMouseLook();
         UpdateEffect();
+    }
+
+    void ReloadEnergy()
+    {
+        currentEnergy += 0.2f;
+        energyBar.SetEnergy(currentEnergy);
+    }
+
+    void ConsumeEnergy(float energy)
+    {
+        currentEnergy -= energy;
+        energyBar.SetEnergy(currentEnergy);    
     }
 
     IEnumerator noiseControl()

@@ -7,19 +7,20 @@ public class EnemyZombieFC : MonoBehaviour
 {
 
     
-    public NavMeshAgent agent;
     static bool enemyShooting;
     public bool playerSighted;
     public float moveSpeed = 4;
     public float maxDist = 10;
     public float minDist = 5;
-
     public float enemyCooldown = 1;
     public float damage = 1;
 
+    private NavMeshAgent agent;
+    private HealthBar HealthBar;
     private bool playerInRange = false;
     private bool canAttack = true;
     private Transform target;
+    private bool started;
 
     private void Awake()
     {
@@ -30,13 +31,23 @@ public class EnemyZombieFC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        started = false;
+        HealthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
         target=GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerFound();
+        if (!started)
+        {
+            if (target)
+            {
+                agent.SetDestination(target.position);
+            }
+        }
+        //playerFound();
 
         if (playerSighted)
             {
@@ -55,9 +66,8 @@ public class EnemyZombieFC : MonoBehaviour
             }
         if (playerInRange && canAttack)
         {
-            //GameObject.Find("Player").GetComponent<ControllerForPlayer>().currentHealth -= damage;
-            Debug.Log("Attacco");
-            target.position = target.position + new Vector3(1.0f, 0, 0);
+            HealthBar.SetHealth((int)(HealthBar.GetHealth()-damage));
+            target.position = target.position + transform.forward+new Vector3(0,1,0);
             StartCoroutine(AttackCooldown());
         }
     }
@@ -81,6 +91,7 @@ public class EnemyZombieFC : MonoBehaviour
         if (other.transform == target)
         {
             playerSighted = true;
+            started = true;
         }
     }
 
@@ -110,7 +121,7 @@ public class EnemyZombieFC : MonoBehaviour
             if (Vector3.Distance(transform.position, target.position) <= maxDist)
             {
                 enemyShooting = true;
-                Debug.Log("Shot");
+                HealthBar.SetHealth((int)(HealthBar.GetHealth() - 1));
             }
         }
     }

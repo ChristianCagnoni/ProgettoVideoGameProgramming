@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1335612439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1335612440}
+  - component: {fileID: 1335612442}
+  - component: {fileID: 1335612441}
+  m_Layer: 0
+  m_Name: Box Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1335612440
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335612439}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.28496552, y: 1.532, z: 0.687}
+  m_LocalScale: {x: 1, y: 3.2, z: 1.6757812}
+  m_Children: []
+  m_Father: {fileID: 4195739536864286915}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1335612442
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335612439}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1335612441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335612439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 0
+  priority: 0
+  blendDistance: 1
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: c4d3718d402ba3e4eb7bbc29c763e8cc, type: 2}
 --- !u!1 &43189529502564971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,7 +1124,7 @@ GameObject:
   - component: {fileID: 5496375513976488632}
   - component: {fileID: 4238937794834235617}
   - component: {fileID: 8578147110113753924}
-  - component: {fileID: -7806146898529528483}
+  - component: {fileID: 1466791037}
   m_Layer: 0
   m_Name: copzombie_l_actisdato
   m_TagString: Enemy
@@ -1086,6 +1148,7 @@ Transform:
   - {fileID: 7627369222233928047}
   - {fileID: 1611100564357792810}
   - {fileID: 4198097357120987082}
+  - {fileID: 1335612440}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1123,15 +1186,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb420bb1295641f4fb84baa166fdbddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  player: {fileID: 517491385232926951, guid: 46d4e38b81de62449b8d21c8e7a97139, type: 3}
   agent: {fileID: 6570148004389669507}
   playerSighted: 0
   moveSpeed: 4
-  maxDist: 10
+  maxDist: 15
   minDist: 5
+  HealthBar: {fileID: 0}
   enemyCooldown: 1
-  damage: 1
+  damage: 30
 --- !u!136 &4238937794834235617
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1159,7 +1221,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4.1412673
   m_Center: {x: -0.70999956, y: 2.179264, z: 3.5337367}
---- !u!54 &-7806146898529528483
+--- !u!54 &1466791037
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
