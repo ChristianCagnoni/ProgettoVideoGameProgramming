@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour
             playerSighted = false;
             enemyShooting = false;
         }
-        if (other.gameObject.CompareTag("Player")) ;
+        if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
         }
