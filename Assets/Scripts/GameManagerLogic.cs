@@ -6,20 +6,21 @@ using UnityEngine.UI;
 public class GameManagerLogic : MonoBehaviour
 {
 
-    public enum State{start,pause,game};
+    public enum State{start,pause,game,death};
     public GameObject portal;
-    public GameObject gui;
     public static State state;
+    public HealthBar healthBar;
+    public GameObject deathCanvas;
+    public GameObject zombiePrefab;
 
-    private Text text;
-    private GameObject textBox;
+    private bool spawn;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        spawn= false;
         state=State.start;
-        textBox = gui.transform.GetChild(4).gameObject;
-        text =textBox.GetComponent<Text>();
         StartCoroutine("startGame");
     }
 
@@ -39,21 +40,31 @@ public class GameManagerLogic : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
+        if (healthBar.GetHealth() <= 0)
+        {
+            state = State.death;
+            Time.timeScale = 0f;
+            deathCanvas.SetActive(true);
+        }
+        if (PortalBarrier.inPortalZone && !spawn)
+        {
+            spawn = true;
+            StartCoroutine("PortalZone");
+        }
+    }
+
+    IEnumerator PortalZone()
+    {
+        Instantiate(zombiePrefab, new Vector3(258, 3.25f, 55), Quaternion.identity);
+        yield return null;
     }
 
     IEnumerator startGame()
     {
-        yield return new WaitForSeconds(5);
+        //yield return new WaitForSeconds(5);
         state = State.game;
-        text.text = "Scappa e prova a nasconderti dai nemici";
-        textBox.SetActive(true);
-        yield return new WaitForSeconds(5);
-        textBox.SetActive(false);
-        yield return new WaitForSeconds(125);
-        text.text = "Un portale è apparso, usalo per salvarti";
-        textBox.SetActive(true);
+        //yield return new WaitForSeconds(125);
         Instantiate(portal,new Vector3(258, 3.25f, 55), Quaternion.identity);
         yield return new WaitForSeconds(5);
-        textBox.SetActive(false);
     }
 }

@@ -40,7 +40,7 @@ public class EnemyZombieFC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManagerLogic.state != GameManagerLogic.State.pause)
+        if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
             if (!started)
             {
