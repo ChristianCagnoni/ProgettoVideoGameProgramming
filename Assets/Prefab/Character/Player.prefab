@@ -254,10 +254,16 @@ MonoBehaviour:
   speed: 6
   Prefabs:
   - {fileID: 121802, guid: 8f18e1d8c46c51f429429815455062fc, type: 3}
-  - {fileID: 165786, guid: d7b50f004cdc74b409188d8b822292fc, type: 3}
   - {fileID: 163286, guid: 50daa816369323b42b56093bb108296f, type: 3}
+  - {fileID: 165786, guid: d7b50f004cdc74b409188d8b822292fc, type: 3}
   power: {fileID: 0}
   powers:
   - {fileID: 21300000, guid: 7e448634f2274b344aab621caa06f4bf, type: 3}
   - {fileID: 21300000, guid: 2ef470c2203df2246bc9891237549234, type: 3}
   - {fileID: 21300000, guid: e8e224205a58a2341a05eeefc4788ae6, type: 3}
+  maxHealth: 100
+  currentHealth: 0
+  healthBar: {fileID: 0}
+  maxEnergy: 50
+  currentEnergy: 0
+  energyBar: {fileID: 0}

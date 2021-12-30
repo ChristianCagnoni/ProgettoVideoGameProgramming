@@ -12,7 +12,7 @@ public class EnemyGenerator : MonoBehaviour
     private int maxIndex;
     private int maxEnemy;
     private int maxPosition;
-    private int enemyCounter;
+    static public int enemyCounter;
 
     // Start is called before the first frame update
     void Start()

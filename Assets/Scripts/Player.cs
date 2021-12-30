@@ -53,7 +53,24 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            StartCurrent();
+            int energy = 0;
+            if (currentPrefabIndex == 0)
+            {
+                energy = 15;
+            }else if (currentPrefabIndex == 1)
+            {
+                energy = 25;
+            }
+            else
+            {
+                energy = 45;
+            }
+            if (energyBar.GetEnergy() > energy) 
+            {
+                StartCurrent();
+                ConsumeEnergy(energy); 
+            }
+            
         }
     }
 
@@ -196,81 +213,85 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f )
+        if (GameManagerLogic.state != GameManagerLogic.State.pause)
         {
-            NextPrefab();
-        }else if(Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            PreviousPrefab();
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            MouseLookToggle = !MouseLookToggle;
-        }
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                NextPrefab();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                PreviousPrefab();
+            }
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                MouseLookToggle = !MouseLookToggle;
+            }
 
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy()>0)
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             {
-                transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, speed * 2 * Time.deltaTime);
-                ConsumeEnergy(.2f);
-                noiseLevel = 2;
+                if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, speed * 2 * Time.deltaTime);
+                    ConsumeEnergy(.2f);
+                    noiseLevel = 2;
+                }
+                else
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
+                    noiseLevel = 1;
+                }
             }
-            else
+            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
             {
-                transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward, speed * Time.deltaTime);
-                noiseLevel = 1;
+                if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position - transform.forward, speed * 2 * Time.deltaTime);
+                    ConsumeEnergy(.2f);
+                    noiseLevel = 2;
+                }
+                else
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position - transform.forward, speed * Time.deltaTime);
+                    noiseLevel = 1;
+                }
             }
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            {
+                if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position + transform.right, speed * 2 * Time.deltaTime);
+                    ConsumeEnergy(.2f);
+                    noiseLevel = 2;
+                }
+                else
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position + transform.right, speed * Time.deltaTime);
+                    noiseLevel = 1;
+                }
+            }
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            {
+                if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position - transform.right, speed * 2 * Time.deltaTime);
+                    ConsumeEnergy(.2f);
+                    noiseLevel = 2;
+                }
+                else
+                {
+                    transform.position = Vector3.Lerp(transform.position, transform.position - transform.right, speed * Time.deltaTime);
+                    noiseLevel = 1;
+                }
+            }
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                if (currentEnergy < 50)
+                    ReloadEnergy();
+            }
+            UpdateMouseLook();
+            UpdateEffect();
         }
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
-            {
-                transform.position = Vector3.Lerp(transform.position, transform.position - transform.forward, speed * 2 * Time.deltaTime);
-                ConsumeEnergy(.2f);
-                noiseLevel = 2;
-            }
-            else
-            {
-                transform.position = Vector3.Lerp(transform.position, transform.position - transform.forward, speed * Time.deltaTime);
-                noiseLevel = 1;
-            }
-        }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
-            {
-                transform.position = Vector3.Lerp(transform.position, transform.position + transform.right, speed * 2 * Time.deltaTime);
-                ConsumeEnergy(.2f);
-                noiseLevel = 2;
-            }
-            else
-            {
-                transform.position = Vector3.Lerp(transform.position, transform.position + transform.right, speed * Time.deltaTime);
-                noiseLevel = 1;
-            }
-        }
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
-            {
-                transform.position = Vector3.Lerp(transform.position, transform.position - transform.right, speed * 2 * Time.deltaTime);
-                ConsumeEnergy(.2f);
-                noiseLevel = 2;
-            }
-            else
-            {
-                transform.position = Vector3.Lerp(transform.position, transform.position - transform.right, speed * Time.deltaTime);
-                noiseLevel = 1;
-            }
-        }
-        if (!Input.GetKey(KeyCode.LeftShift))
-        {
-            if(currentEnergy<50)
-                ReloadEnergy();
-        }
-        UpdateMouseLook();
-        UpdateEffect();
     }
 
     void ReloadEnergy()

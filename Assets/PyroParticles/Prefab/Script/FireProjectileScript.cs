@@ -103,12 +103,22 @@ namespace DigitalRuby.PyroParticles
                 {
                     collide = true;
                 }
+                if (c.transform.tag == "Enemy")
+                {
+                    collide = true;
+                }
                 ProjectileExplosionParticleSystem.transform.position = c.contacts[0].point;
                 ProjectileExplosionParticleSystem.Play();
                 FireBaseScript.CreateExplosion(c.contacts[0].point, ProjectileExplosionRadius, ProjectileExplosionForce);
                 if (CollisionDelegate != null)
                 {
                     CollisionDelegate(this, c.contacts[0].point);
+                }
+                if (collide)
+                {
+                    Destroy(c.gameObject);
+                    EnemyGenerator.enemyCounter--;
+                    collide = false;
                 }
             }
         }

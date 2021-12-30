@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4819757203154443844}
   - component: {fileID: 8452390319951548897}
   - component: {fileID: 5956040741380252971}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Demo_Spruce_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 4465860574682440742}
   - component: {fileID: 3065300696868997439}
   - component: {fileID: 6099115729637223104}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DemoSpruce
   m_TagString: Untagged
   m_Icon: {fileID: 0}

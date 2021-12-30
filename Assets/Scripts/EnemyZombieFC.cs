@@ -40,23 +40,26 @@ public class EnemyZombieFC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!started)
+        if (GameManagerLogic.state != GameManagerLogic.State.pause)
         {
-            if (target)
+            if (!started)
             {
-                agent.SetDestination(target.position);
+                if (target)
+                {
+                    agent.SetDestination(target.position);
+                }
+                started = true;
             }
-        }
-        //playerFound();
+            //playerFound();
 
-        if (playerSighted)
+            if (playerSighted)
             {
                 if (target)
                 {
                     agent.SetDestination(target.position);
                 }
             }
-        if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4)
+            if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4)
             {
                 if (target)
                 {
@@ -64,11 +67,12 @@ public class EnemyZombieFC : MonoBehaviour
                     agent.speed = moveSpeed + 1;
                 }
             }
-        if (playerInRange && canAttack)
-        {
-            HealthBar.SetHealth((int)(HealthBar.GetHealth()-damage));
-            target.position = target.position + transform.forward+new Vector3(0,1,0);
-            StartCoroutine(AttackCooldown());
+            if (playerInRange && canAttack)
+            {
+                HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
+                target.position = target.position + transform.forward + new Vector3(0, 1, 0);
+                StartCoroutine(AttackCooldown());
+            }
         }
     }
 
@@ -91,7 +95,6 @@ public class EnemyZombieFC : MonoBehaviour
         if (other.transform == target)
         {
             playerSighted = true;
-            started = true;
         }
     }
 
