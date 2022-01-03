@@ -14,13 +14,14 @@ public class EnemyZombieFC : MonoBehaviour
     public float minDist = 5;
     public float enemyCooldown = 1;
     public float damage = 1;
+    public float radius;
 
     private NavMeshAgent agent;
     private HealthBar HealthBar;
     private bool playerInRange = false;
     private bool canAttack = true;
     private Transform target;
-    private bool started;
+    private Animator animator;
 
     private void Awake()
     {
@@ -31,8 +32,8 @@ public class EnemyZombieFC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        started = false;
         HealthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
         target=GameObject.Find("Player").transform;
     }
@@ -42,36 +43,66 @@ public class EnemyZombieFC : MonoBehaviour
     {
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
-            if (!started)
-            {
-                if (target)
-                {
-                    agent.SetDestination(target.position);
-                }
-                started = true;
-            }
             //playerFound();
+            if (!playerSighted)
+            {
+                if (!agent.hasPath)
+                {
+                    agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
+                    animator.SetBool("Walk", true);
+                }
 
-            if (playerSighted)
-            {
-                if (target)
+                RaycastHit hit;
+                Vector3 raycastDir = agent.destination - transform.position;
+                Ray landingRay = new Ray(transform.position, raycastDir);
+                if (agent.hasPath)
                 {
-                    agent.SetDestination(target.position);
+                    Debug.DrawRay(landingRay.origin, landingRay.direction, Color.red);
+                    if (Physics.Raycast(landingRay, out hit, 1))
+                    {
+                        if (hit.collider.tag == "Rock")
+                        {
+                            agent.ResetPath();
+                            agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
+                            animator.SetBool("Walk", true);
+                        }
+                    }
                 }
             }
-            if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4)
+            else
             {
-                if (target)
+                if (playerSighted)
                 {
-                    agent.SetDestination(target.position);
-                    agent.speed = moveSpeed + 1;
+                    if (target)
+                    {
+                        agent.SetDestination(target.position);
+                        animator.SetBool("Walk", true);
+                    }
                 }
-            }
-            if (playerInRange && canAttack)
-            {
-                HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
-                target.position = target.position + transform.forward + new Vector3(0, 1, 0);
-                StartCoroutine(AttackCooldown());
+
+                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4)
+                {
+                    if (target)
+                    {
+                        agent.SetDestination(target.position);
+                        animator.SetBool("Walk", true);
+                        agent.speed = moveSpeed + 1;
+                    }
+                }
+
+                if (playerInRange && canAttack)
+                {
+                    animator.SetBool("Walk", false);
+                    animator.SetBool("Attack", true);
+                    HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
+                    target.position = target.position + transform.forward + new Vector3(0, 1, 0);
+                    StartCoroutine(AttackCooldown());
+                    if (HealthBar.GetHealth() <= 0)
+                    {
+                        animator.SetBool("Attack", false);
+                        animator.SetTrigger("AfterDead");
+                    }
+                }
             }
         }
     }
@@ -81,6 +112,7 @@ public class EnemyZombieFC : MonoBehaviour
         if (other.transform == target)
         {
             Debug.Log("audioSource");
+            agent.ResetPath();
         }
         if (other.gameObject.CompareTag("Player"))
         {
@@ -134,6 +166,16 @@ public class EnemyZombieFC : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(enemyCooldown);
         canAttack = true;
+        animator.SetBool("Attack", false);
     }
+
+#if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+#endif
 
 }

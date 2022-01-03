@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1335612440}
   - component: {fileID: 1335612442}
   - component: {fileID: 1335612441}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Box Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1125,6 +1125,7 @@ GameObject:
   - component: {fileID: 4238937794834235617}
   - component: {fileID: 8578147110113753924}
   - component: {fileID: 1466791037}
+  - component: {fileID: 204093930035411437}
   m_Layer: 6
   m_Name: copzombie_l_actisdato
   m_TagString: Enemy
@@ -1192,6 +1193,7 @@ MonoBehaviour:
   minDist: 5
   enemyCooldown: 1
   damage: 30
+  radius: 50
 --- !u!136 &4238937794834235617
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1235,6 +1237,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &204093930035411437
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3562789636993172089}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 60f028e7a1b594a4bac0ffeaea1dec3c, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6f3e5bd31263b9e4ea88bfdc4df4c008, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3650218778369863306
 GameObject:
   m_ObjectHideFlags: 0

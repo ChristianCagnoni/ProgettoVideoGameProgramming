@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 8202049981070529638}
   - component: {fileID: 1495535974950958432}
   - component: {fileID: 5346602963052894293}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Box Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1217,6 +1217,7 @@ MonoBehaviour:
   minDist: 1
   enemyCooldown: 0.5
   damage: 35
+  radius: 100
 --- !u!1 &4449654473976675189
 GameObject:
   m_ObjectHideFlags: 0
