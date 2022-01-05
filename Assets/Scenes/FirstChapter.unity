@@ -2621,7 +2621,7 @@ MonoBehaviour:
     mainColor: {r: 1, g: 1, b: 1, a: 1}
     secondaryColor: {r: 1, g: 1, b: 1, a: 1}
     linkColors: 0
-    minMaxHeight: {x: 1.5653409, y: 2.065341}
+    minMaxHeight: {x: 0.3239615, y: 0.8239614}
     minMaxWidth: {x: 0.8, y: 1.2}
     noiseSize: 0.1
   - enabled: 1

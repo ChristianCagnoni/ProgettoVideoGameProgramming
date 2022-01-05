@@ -1859,6 +1859,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645638173}
   m_CullTransparentMesh: 1
+--- !u!114 &691091558 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 736723971, guid: e1371866391934b43ae5e5fae7cde7c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8995153124485332690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56544e19ac7176e44a0ec23c12a85730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &742814477
 GameObject:
   m_ObjectHideFlags: 0
@@ -3565,6 +3577,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426769771}
   m_CullTransparentMesh: 1
+--- !u!114 &1445619735 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1004813642, guid: e1371866391934b43ae5e5fae7cde7c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8995153124485332690}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b5db193b7bfa4446a781c0f1893bc4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1454765915
 GameObject:
   m_ObjectHideFlags: 0
@@ -5101,6 +5125,16 @@ PrefabInstance:
       propertyPath: power
       value: 
       objectReference: {fileID: 1484869443}
+    - target: {fileID: 517491385232926950, guid: 46d4e38b81de62449b8d21c8e7a97139,
+        type: 3}
+      propertyPath: energyBar
+      value: 
+      objectReference: {fileID: 1445619735}
+    - target: {fileID: 517491385232926950, guid: 46d4e38b81de62449b8d21c8e7a97139,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 691091558}
     - target: {fileID: 517491385232926951, guid: 46d4e38b81de62449b8d21c8e7a97139,
         type: 3}
       propertyPath: m_Name

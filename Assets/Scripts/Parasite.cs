@@ -1,0 +1,147 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Parasite : MonoBehaviour
+{
+
+    public bool playerSighted;
+    public float moveSpeed = 4;
+    public float maxDist = 10;
+    public float minDist = 5;
+    public float enemyCooldown = 1;
+    public float damage = 1;
+    public float radius;
+
+    private NavMeshAgent agent;
+    private HealthBar HealthBar;
+    private bool playerInRange = false;
+    private bool canAttack = true;
+    private Transform target;
+    private Animator animator;
+    private bool isAttacking;
+
+    private void Awake()
+    {
+        playerSighted = false;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        isAttacking = false;
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        HealthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
+        target = GameObject.Find("Player").transform;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
+        {
+
+            if (!playerSighted)
+            {
+                if (!agent.hasPath)
+                {
+                    agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
+                    animator.SetBool("Walk", true);
+                }
+
+                RaycastHit hit;
+                Vector3 raycastDir = agent.destination - transform.position;
+                Ray landingRay = new Ray(transform.position, raycastDir);
+                if (agent.hasPath)
+                {
+                    Debug.DrawRay(landingRay.origin, landingRay.direction, Color.red);
+                    if (Physics.Raycast(landingRay, out hit, 1))
+                    {
+                        if (hit.collider.tag == "Cave")
+                        {
+                            agent.ResetPath();
+                            agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
+                            animator.SetBool("Walk", true);
+                        }
+                    }
+                }
+            }
+            else if (canAttack && playerInRange)
+            {
+                Debug.Log("1");
+                isAttacking = true;
+                agent.ResetPath();
+                animator.SetBool("Walk", false);
+                HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
+                StartCoroutine(AttackCooldown());
+                if (HealthBar.GetHealth() <= 0)
+                {
+                }
+            }
+            else if(!isAttacking)
+            {
+                if (target)
+                {
+                    agent.SetDestination(target.position);
+                    animator.SetBool("Walk", true);
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform == target)
+        {
+            Debug.Log("audioSource");
+            agent.ResetPath();
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform == target)
+        {
+            playerSighted = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform == target)
+        {
+            playerSighted = false;
+        }
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(enemyCooldown);
+        canAttack = true;
+        isAttacking = false;
+        Debug.Log("2");
+    }
+
+#if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+#endif
+
+}
