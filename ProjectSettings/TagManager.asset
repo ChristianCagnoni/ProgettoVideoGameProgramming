@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Rock
   - CinemachineTarget
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Player
   - Cave
   - CheckPoint
-  - 
-  - 
+  - Boss
+  - BigAttack
   - 
   - 
   - 

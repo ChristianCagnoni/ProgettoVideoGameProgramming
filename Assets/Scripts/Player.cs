@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     public float maxEnergy = 50;
     public float currentEnergy;
     public EnergyBar energyBar;
+    public static bool isPower;
+    public static bool isPowerUsed;
+    public static bool secret;
 
     private Transform myTransform;
     private Transform myCameraTransform;
@@ -47,6 +50,9 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        secret = false;
+        isPower = false;
+        isPowerUsed = false;
         myTransform = GetComponent<Transform>();
         myCameraTransform = myTransform.GetChild(0);
         xRot = myCameraTransform.localRotation.eulerAngles.x; ;
@@ -64,7 +70,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
 
@@ -224,6 +229,12 @@ public class Player : MonoBehaviour
 
             currentPrefabObject.transform.position = pos;
             currentPrefabObject.transform.rotation = rotation;
+            if(secret)
+                isPowerUsed = true;
+            else
+            {
+                isPowerUsed = false;
+            }
         }
 
         public void StartCurrent()
@@ -251,6 +262,12 @@ public class Player : MonoBehaviour
             currentPrefabIndex = 0;
         }
         power.sprite = powers[currentPrefabIndex];
+        if (currentPrefabIndex == 1)
+            isPower = true;
+        else
+        {
+            isPower = false;
+        }
     }
 
     public void PreviousPrefab()
@@ -261,6 +278,12 @@ public class Player : MonoBehaviour
             currentPrefabIndex = Prefabs.Length - 1;
         }
         power.sprite = powers[currentPrefabIndex];
+        if (currentPrefabIndex == 1)
+            isPower = true;
+        else
+        {
+            isPower = false;
+        }
     }
 
         void ReloadEnergy()

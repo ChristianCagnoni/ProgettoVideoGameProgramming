@@ -106,6 +106,10 @@ namespace DigitalRuby.PyroParticles
                 if (c.transform.tag == "Enemy")
                 {
                     collide = true;
+                }else if (c.transform.tag == "Boss")
+                {
+                    BossHealthBar bossBar = GameObject.Find("GUI").transform.GetChild(4).GetComponent<BossHealthBar>();
+                    bossBar.SetHealth((int)(bossBar.GetHealth() - 10));
                 }
                 ProjectileExplosionParticleSystem.transform.position = c.contacts[0].point;
                 ProjectileExplosionParticleSystem.Play();

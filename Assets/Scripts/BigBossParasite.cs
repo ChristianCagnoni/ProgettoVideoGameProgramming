@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Parasite : MonoBehaviour
+public class BigBossParasite : MonoBehaviour
 {
+
+    public enum BossStatus { live, death };
 
     public bool playerSighted;
     public float moveSpeed = 4;
@@ -13,8 +15,10 @@ public class Parasite : MonoBehaviour
     public float enemyCooldown = 1;
     public float damage = 1;
     public float radius;
-    public Transform[] transforms;
-    public int numberT;
+    public BossHealthBar bossBar;
+    public int maxH;
+    public static BossStatus state;
+    public GameObject gui;
 
     private NavMeshAgent agent;
     private HealthBar HealthBar;
@@ -34,9 +38,10 @@ public class Parasite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        state=BossStatus.live;
+        bossBar.SetMaxHealth(maxH);
         old = 0;
         last = 0;
-        numberT = transforms.Length;
         isAttacking = false;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -47,46 +52,9 @@ public class Parasite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
+        if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death && state!=BossStatus.death)
         {
-            if (!playerSighted)
-            {
-                if (!agent.hasPath)
-                {
-                    int dec = Random.Range(0, numberT);
-                    if (old + dec == 4 || old + dec == 5)
-                    {
-                        dec = 0;
-                        old = 0;
-                    }
-                    agent.SetDestination(transforms[dec].position);
-                    animator.SetBool("Walk", true);
-                    if (last != dec)
-                    {
-                        old += dec;
-                        last = dec;
-                    }
-                    
-                }
-
-                RaycastHit hit;
-                Vector3 raycastDir = agent.destination - transform.position;
-                Ray landingRay = new Ray(transform.position, raycastDir);
-                if (agent.hasPath)
-                {
-                    Debug.DrawRay(landingRay.origin, landingRay.direction, Color.red);
-                    if (Physics.Raycast(landingRay, out hit, 1))
-                    {
-                        if (hit.collider.tag == "Cave")
-                        {
-                            agent.ResetPath();
-                            agent.SetDestination(transforms[Random.Range(0, numberT)].position);
-                            animator.SetBool("Walk", true);
-                        }
-                    }
-                }
-            }
-            else if (canAttack && playerInRange)
+            if (canAttack && playerInRange)
             {
                 Debug.Log("1");
                 isAttacking = true;
@@ -98,14 +66,37 @@ public class Parasite : MonoBehaviour
                 {
                 }
             }
-            else if(!isAttacking)
+            else if (!isAttacking && playerSighted)
             {
                 if (target)
                 {
                     agent.SetDestination(target.position);
+                    agent.speed = moveSpeed;
                     animator.SetBool("Walk", true);
                 }
             }
+            if (Vector3.Distance(target.position, transform.position) < radius)
+            {
+                playerSighted = true;
+            }
+            else
+            {
+                playerSighted = false;
+            }
+            if (bossBar.GetHealth() <= 0)
+            {
+                state = BossStatus.death;
+                Destroy(gameObject);
+                gui.transform.GetChild(4).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            Debug.Log("ok");
         }
     }
 
@@ -126,18 +117,10 @@ public class Parasite : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform == target)
-        {
-            playerSighted = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform == target)
-        {
-            playerSighted = false;
-        }
         if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
@@ -150,7 +133,6 @@ public class Parasite : MonoBehaviour
         yield return new WaitForSeconds(enemyCooldown);
         canAttack = true;
         isAttacking = false;
-        Debug.Log("2");
     }
 
 #if UNITY_EDITOR
