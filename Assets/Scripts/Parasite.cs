@@ -13,6 +13,8 @@ public class Parasite : MonoBehaviour
     public float enemyCooldown = 1;
     public float damage = 1;
     public float radius;
+    public Transform[] transforms;
+    public int numberT;
 
     private NavMeshAgent agent;
     private HealthBar HealthBar;
@@ -21,6 +23,8 @@ public class Parasite : MonoBehaviour
     private Transform target;
     private Animator animator;
     private bool isAttacking;
+    private int old;
+    private int last;
 
     private void Awake()
     {
@@ -30,6 +34,10 @@ public class Parasite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("R:" + Random.Range(0, 0));
+        old = 0;
+        last = 0;
+        numberT = transforms.Length;
         isAttacking = false;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -42,13 +50,24 @@ public class Parasite : MonoBehaviour
     {
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
-
             if (!playerSighted)
             {
                 if (!agent.hasPath)
                 {
-                    agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
+                    int dec = Random.Range(0, numberT);
+                    if (old + dec == 4 || old + dec == 5)
+                    {
+                        dec = 0;
+                        old = 0;
+                    }
+                    agent.SetDestination(transforms[dec].position);
                     animator.SetBool("Walk", true);
+                    if (last != dec)
+                    {
+                        old += dec;
+                        last = dec;
+                    }
+                    
                 }
 
                 RaycastHit hit;
@@ -62,7 +81,7 @@ public class Parasite : MonoBehaviour
                         if (hit.collider.tag == "Cave")
                         {
                             agent.ResetPath();
-                            agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
+                            agent.SetDestination(transforms[Random.Range(0, numberT)].position);
                             animator.SetBool("Walk", true);
                         }
                     }
