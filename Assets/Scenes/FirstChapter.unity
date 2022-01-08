@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 478beca09e3b4af40aa1a79b540d3c57,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 4396feb145e07d3488f1303fcd6ef4cb,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -323,6 +325,7 @@ GameObject:
   - component: {fileID: 111460316}
   - component: {fileID: 111460315}
   - component: {fileID: 111460314}
+  - component: {fileID: 111460318}
   m_Layer: 5
   m_Name: DeathPlayer
   m_TagString: Untagged
@@ -411,6 +414,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &111460318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111460313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da6574e99a2a0148ac5fc03846f4408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restart: {fileID: 1450240055}
+  close: {fileID: 1845834690}
 --- !u!1 &208657457
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257829417}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 34.3, y: 271.1, z: -240}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3073,6 +3090,7 @@ GameObject:
   - component: {fileID: 1424054332}
   - component: {fileID: 1424054331}
   - component: {fileID: 1424054330}
+  - component: {fileID: 1424054334}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -3161,6 +3179,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1424054334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424054329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b140a5be4a5472a44b4d0e86870e10a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resume: {fileID: 854979623}
+  reload: {fileID: 1007945789}
+  settings: {fileID: 1416664607}
+  close: {fileID: 297063276}
 --- !u!1 &1450240053
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,6 +4141,7 @@ MonoBehaviour:
   deathCanvas: {fileID: 111460313}
   zombiePrefab: {fileID: 5852115578763215387, guid: 7e7bf895b804c7d479682e0a89e82ba2,
     type: 3}
+  menu: {fileID: 1424054329}
 --- !u!1001 &1934936942
 PrefabInstance:
   m_ObjectHideFlags: 0

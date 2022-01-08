@@ -49,6 +49,16 @@ public class Parasite : MonoBehaviour
     {
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
+
+            if (Vector3.Distance(target.position, transform.position) < radius)
+            {
+                playerSighted = true;
+            }
+            else
+            {
+                playerSighted = false;
+            }
+
             if (!playerSighted)
             {
                 if (!agent.hasPath)
@@ -126,18 +136,10 @@ public class Parasite : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform == target)
-        {
-            playerSighted = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform == target)
-        {
-            playerSighted = false;
-        }
         if (other.gameObject.CompareTag("Player"))
         {
             playerInRange = false;
@@ -147,7 +149,9 @@ public class Parasite : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         canAttack = false;
+        animator.SetBool("Attack", true);
         yield return new WaitForSeconds(enemyCooldown);
+        animator.SetBool("Attack", false);
         canAttack = true;
         isAttacking = false;
         Debug.Log("2");

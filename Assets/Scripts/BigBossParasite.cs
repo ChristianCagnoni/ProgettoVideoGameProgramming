@@ -19,6 +19,7 @@ public class BigBossParasite : MonoBehaviour
     public int maxH;
     public static BossStatus state;
     public GameObject gui;
+    public GameObject portal;
 
     private NavMeshAgent agent;
     private HealthBar HealthBar;
@@ -70,9 +71,9 @@ public class BigBossParasite : MonoBehaviour
             {
                 if (target)
                 {
+                    animator.SetBool("Walk", true);
                     agent.SetDestination(target.position);
                     agent.speed = moveSpeed;
-                    animator.SetBool("Walk", true);
                 }
             }
             if (Vector3.Distance(target.position, transform.position) < radius)
@@ -88,6 +89,7 @@ public class BigBossParasite : MonoBehaviour
                 state = BossStatus.death;
                 Destroy(gameObject);
                 gui.transform.GetChild(4).gameObject.SetActive(false);
+                portal.SetActive(true);
             }
         }
     }
@@ -130,7 +132,9 @@ public class BigBossParasite : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         canAttack = false;
+        animator.SetBool("Attack",true);
         yield return new WaitForSeconds(enemyCooldown);
+        animator.SetBool("Attack", false);
         canAttack = true;
         isAttacking = false;
     }

@@ -1764,7 +1764,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7475955120919829994
 Transform:
   m_ObjectHideFlags: 0
@@ -1791,7 +1791,7 @@ Animator:
   m_GameObject: {fileID: 7850967387472922448}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 60f028e7a1b594a4bac0ffeaea1dec3c, type: 3}
-  m_Controller: {fileID: 9100000, guid: ff79e4e5a89c6db4fb77f46451eb3b72, type: 2}
+  m_Controller: {fileID: 9100000, guid: f2d1496500ce76d42a7dc54f3135288b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1867,6 +1867,10 @@ MonoBehaviour:
   minDist: 5
   enemyCooldown: 1
   damage: 1
+  radius: 0
+  bossBar: {fileID: 0}
+  maxH: 0
+  gui: {fileID: 0}
 --- !u!1 &7922714077366213633
 GameObject:
   m_ObjectHideFlags: 0

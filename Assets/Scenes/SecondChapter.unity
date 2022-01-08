@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1414138866}
   m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 26b31bfa74e30014b9c20b1212303252,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 7d2ca74228373474887964520d5d360e,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1010,6 +1012,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1915890274, guid: fbb18cb54b574c54d9b4d0f42ad06f4c, type: 3}
+      propertyPath: radius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1915890274, guid: fbb18cb54b574c54d9b4d0f42ad06f4c, type: 3}
       propertyPath: transforms.Array.size
       value: 5
@@ -6476,6 +6482,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1257676544}
+  - {fileID: 1701774847}
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8783,6 +8790,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1915890274, guid: fbb18cb54b574c54d9b4d0f42ad06f4c, type: 3}
+      propertyPath: radius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915890274, guid: fbb18cb54b574c54d9b4d0f42ad06f4c, type: 3}
       propertyPath: transforms.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -10151,7 +10162,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -11482,6 +11493,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363496042646947322, guid: 996b57ba7fb5b8448ae7bf6849dba2dd,
         type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1701774848}
+    - target: {fileID: 5363496042646947322, guid: 996b57ba7fb5b8448ae7bf6849dba2dd,
+        type: 3}
       propertyPath: radius
       value: 176.28
       objectReference: {fileID: 0}
@@ -12558,6 +12574,92 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5118460033899367882, guid: 06fa46bc580986446920431d7984ab93,
     type: 3}
   m_PrefabInstance: {fileID: 1609400380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1701774846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 764797528}
+    m_Modifications:
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -120.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532940057154390170, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532940057154390170, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a, type: 3}
+--- !u!4 &1701774847 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4041903618852817383, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1701774846}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1701774848 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5532940057154390170, guid: 74c25f0d82f1a734eb7b4c6cbbbe049a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1701774846}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1720488172 stripped
 Transform:

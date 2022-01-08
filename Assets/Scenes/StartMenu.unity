@@ -4793,6 +4793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 1415202711}
+  toggle: {fileID: 1121140026}
 --- !u!1 &1983554803
 GameObject:
   m_ObjectHideFlags: 0
@@ -5447,6 +5448,43 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4339053797678456520, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_ContentType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339053797678456520, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_KeyboardType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339053797678456520, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_CharacterValidation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339053798146572591, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339053798632070062, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339053798789131449, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_Text
+      value: '10
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339053798843417058, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4339053799499291058, guid: a91f9c2ede3e78c4aae38b4be50253bb,
         type: 3}
       propertyPath: parent

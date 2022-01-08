@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
 

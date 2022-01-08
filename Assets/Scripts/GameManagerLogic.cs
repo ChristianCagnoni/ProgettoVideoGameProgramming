@@ -12,6 +12,7 @@ public class GameManagerLogic : MonoBehaviour
     public HealthBar healthBar;
     public GameObject deathCanvas;
     public GameObject zombiePrefab;
+    public GameObject menu;
 
     private bool spawn;
 
@@ -33,11 +34,13 @@ public class GameManagerLogic : MonoBehaviour
             {
                 state = State.pause;
                 Time.timeScale = 0f;
+                menu.SetActive(true);
             }
             else
             {
                 state = State.game;
                 Time.timeScale = 1f;
+                menu.SetActive(false);
             }
         }
         if (healthBar.GetHealth() <= 0)
@@ -56,15 +59,14 @@ public class GameManagerLogic : MonoBehaviour
     IEnumerator PortalZone()
     {
         Instantiate(zombiePrefab, new Vector3(258, 3.25f, 55), Quaternion.identity);
+        //Instantiate(portal, new Vector3(258, 3.25f, 55), Quaternion.identity);
         yield return null;
     }
 
     IEnumerator startGame()
     {
-        //yield return new WaitForSeconds(5);
         state = State.game;
-        //yield return new WaitForSeconds(125);
-        Instantiate(portal,new Vector3(258, 3.25f, 55), Quaternion.identity);
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(5);
     }
 }
