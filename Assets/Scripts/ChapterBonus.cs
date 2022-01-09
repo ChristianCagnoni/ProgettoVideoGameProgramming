@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChapterBonus : MonoBehaviour
 {
@@ -38,9 +39,16 @@ public class ChapterBonus : MonoBehaviour
         {
             if (Player.isPower && Player.isPowerUsed)
             {
-                Debug.Log("segreto");
+                StartCoroutine("Bonus");
             }
         }
+    }
+
+    IEnumerator Bonus()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("BonusChapter", LoadSceneMode.Single);
+        yield return null;
     }
 
 }

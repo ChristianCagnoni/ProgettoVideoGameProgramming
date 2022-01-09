@@ -26,13 +26,13 @@ public class InGameMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void Resume()
     {
         transform.gameObject.SetActive(false);
         Time.timeScale = 1f;
+        GameManagerLogic.state = GameManagerLogic.State.game;
         isInMenu = false;
     }
 

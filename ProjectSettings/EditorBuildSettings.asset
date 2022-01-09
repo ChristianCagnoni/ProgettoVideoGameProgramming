@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SecondChapter.unity
     guid: d1b7385e865e9cc4383508566c055a98
+  - enabled: 1
+    path: Assets/Scenes/BonusChapter.unity
+    guid: 9c5e755c77e0ae641b3a83d21c3106be
   m_configObjects: {}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManagerLogic : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManagerLogic : MonoBehaviour
     public GameObject menu;
 
     private bool spawn;
+    private Scene scene;
 
 
     // Start is called before the first frame update
@@ -23,6 +25,7 @@ public class GameManagerLogic : MonoBehaviour
         spawn= false;
         state=State.start;
         StartCoroutine("startGame");
+        scene= SceneManager.GetActiveScene();
     }
 
     // Update is called once per frame
@@ -51,17 +54,19 @@ public class GameManagerLogic : MonoBehaviour
             Time.timeScale = 0f;
             deathCanvas.SetActive(true);
         }
-        if (PortalBarrier.inPortalZone && !spawn)
+        if (scene.name == "FirstChapter")
         {
-            spawn = true;
-            StartCoroutine("PortalZone");
+            if (PortalBarrier.inPortalZone && !spawn)
+            {
+                spawn = true;
+                StartCoroutine("PortalZone");
+            }
         }
     }
 
     IEnumerator PortalZone()
     {
         Instantiate(zombiePrefab, new Vector3(258, 3.25f, 55), Quaternion.identity);
-        //Instantiate(portal, new Vector3(258, 3.25f, 55), Quaternion.identity);
         yield return null;
     }
 

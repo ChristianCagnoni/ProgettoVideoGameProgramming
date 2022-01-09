@@ -29,10 +29,10 @@ public class BossManager : MonoBehaviour
         {
             if (bossBar.GetHealth() <= 0)
             {
+                Instantiate(portal, new Vector3(258, 2.51f, 55), Quaternion.identity);
                 state = BossZombieStatus.death;
                 Destroy(gameObject);
                 gui.transform.GetChild(4).gameObject.SetActive(false);
-                portal.SetActive(true);
             }
         }
     }

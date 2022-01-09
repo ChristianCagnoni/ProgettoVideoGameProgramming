@@ -579,7 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2509899514d9147d8abeb8784ec9fae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphericalFogMaterial: {fileID: 2100000, guid: 40b037c1d8b1a44a3be65e65d0ed4629,
+  sphericalFogMaterial: {fileID: 2100000, guid: 09a99b10658931c46a438c586a49ec65,
     type: 2}
   scaleFactor: 0.5
 --- !u!23 &741721473
