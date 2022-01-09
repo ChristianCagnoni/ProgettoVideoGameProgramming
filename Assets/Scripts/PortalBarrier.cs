@@ -9,6 +9,7 @@ public class PortalBarrier : MonoBehaviour
     private GameObject child;
     private GameObject child2;
     static public bool inPortalZone;
+    public GameObject gui;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class PortalBarrier : MonoBehaviour
             child.GetComponent<BoxCollider>().isTrigger = false;
             child2.GetComponent<BoxCollider>().isTrigger = false;
             inPortalZone =true;
+            gui.transform.GetChild(4).gameObject.SetActive(true);
         }
     }
 }

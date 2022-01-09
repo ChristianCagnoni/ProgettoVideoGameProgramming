@@ -15,6 +15,7 @@ public class EnemyZombieFC : MonoBehaviour
     public float enemyCooldown = 1;
     public float damage = 1;
     public float radius;
+    public float viewArea;
 
     private NavMeshAgent agent;
     private HealthBar HealthBar;
@@ -43,6 +44,16 @@ public class EnemyZombieFC : MonoBehaviour
     {
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
+
+            if (Vector3.Distance(target.position, transform.position) < viewArea)
+            {
+                playerSighted = true;
+            }
+            else
+            {
+                playerSighted = false;
+            }
+
             //playerFound();
             if (!playerSighted)
             {
@@ -124,17 +135,12 @@ public class EnemyZombieFC : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform == target)
-        {
-            playerSighted = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.transform == target)
         {
-            playerSighted = false;
             enemyShooting = false;
         }
         if (other.gameObject.CompareTag("Player"))
@@ -174,6 +180,7 @@ public class EnemyZombieFC : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position,viewArea);
     }
 
 #endif

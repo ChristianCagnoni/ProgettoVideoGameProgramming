@@ -1236,6 +1236,7 @@ GameObject:
   - component: {fileID: 2502796941234057856}
   - component: {fileID: 1493538160146454117}
   - component: {fileID: 5545121321087727527}
+  - component: {fileID: -3020567784330344457}
   m_Layer: 6
   m_Name: zombiegirl_w_kurniawan
   m_TagString: Enemy
@@ -1274,7 +1275,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1346,6 +1347,26 @@ MonoBehaviour:
   enemyCooldown: 2
   damage: 5
   radius: 25
+  viewArea: 10
+--- !u!95 &-3020567784330344457
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4329084590879264719}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 60f028e7a1b594a4bac0ffeaea1dec3c, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6f3e5bd31263b9e4ea88bfdc4df4c008, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4401389282105726110
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,12 +35,14 @@ public class GameManagerLogic : MonoBehaviour
                 state = State.pause;
                 Time.timeScale = 0f;
                 menu.SetActive(true);
+                InGameMenu.isInMenu = true;
             }
-            else
+            else if(state==State.pause && InGameMenu.isInMenu)
             {
                 state = State.game;
                 Time.timeScale = 1f;
                 menu.SetActive(false);
+                InGameMenu.isInMenu = false;
             }
         }
         if (healthBar.GetHealth() <= 0)

@@ -11,6 +11,8 @@ public class InGameMenu : MonoBehaviour
     public Button reload;
     public Button settings;
     public Button close;
+    public GameObject SettingsPage;
+    public static bool isInMenu=false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +33,19 @@ public class InGameMenu : MonoBehaviour
     {
         transform.gameObject.SetActive(false);
         Time.timeScale = 1f;
+        isInMenu = false;
     }
 
     private void Settings()
     {
-
+        transform.gameObject.SetActive(false);
+        SettingsPage.SetActive(true);
+        isInMenu = false;
     }
 
     private void Exit()
     {
+        isInMenu = false;
         GameManagerLogic.state = GameManagerLogic.State.start;
         Time.timeScale = 1f;
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Single);
@@ -47,6 +53,7 @@ public class InGameMenu : MonoBehaviour
 
     private void Reload()
     {
+        isInMenu = false;
         Scene scene = SceneManager.GetActiveScene();
         GameManagerLogic.state = GameManagerLogic.State.start;
         Time.timeScale = 1f;

@@ -1509,6 +1509,7 @@ GameObject:
   - component: {fileID: 2498959680056272822}
   - component: {fileID: -7565437024537016768}
   - component: {fileID: -7530057106598735041}
+  - component: {fileID: 9053565571287453351}
   m_Layer: 6
   m_Name: zombie
   m_TagString: Enemy
@@ -1545,7 +1546,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1617,6 +1618,26 @@ MonoBehaviour:
   enemyCooldown: 2
   damage: 5
   radius: 25
+  viewArea: 10
+--- !u!95 &9053565571287453351
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4001119784016967717}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 60f028e7a1b594a4bac0ffeaea1dec3c, type: 3}
+  m_Controller: {fileID: 9100000, guid: 754f4e06b1bbe3948a63913d0f1f9f46, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4506293640285714968
 GameObject:
   m_ObjectHideFlags: 0
