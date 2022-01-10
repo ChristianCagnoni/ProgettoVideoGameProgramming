@@ -47,9 +47,15 @@ public class Player : MonoBehaviour
     private float rotationY = 0F;
     private Quaternion originalRotation;
 
+    private bool isMoving;
+    private bool attackAnim;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        attackAnim=false;
+        isMoving = false;
         secret = false;
         isPower = false;
         isPowerUsed = false;
@@ -118,6 +124,17 @@ public class Player : MonoBehaviour
 
             xMov = Input.GetAxis("Horizontal");
             zMov = Input.GetAxis("Vertical");
+
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) &&
+                    !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.DownArrow) && !attackAnim)
+            {
+                isMoving = false;
+                //transform.gameObject.GetComponent<Animator>().Play("idle1");
+            }
+            else
+            {
+                isMoving = true;
+            }
         }
     }
 
@@ -144,12 +161,16 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
                 {
+                    //if(isMoving && !attackAnim)
+                        //transform.gameObject.GetComponent<Animator>().Play("Run");
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed*2, yMov, zMov * keyboardSpeed*2) * Time.fixedDeltaTime));
                     ConsumeEnergy(.2f);
                     noiseLevel = 2;
                 }
                 else
                 {
+                    //if(isMoving && !attackAnim)
+                      //  transform.gameObject.GetComponent<Animator>().Play("Walk");
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed, yMov, zMov * keyboardSpeed) * Time.fixedDeltaTime));
                     noiseLevel = 1;
                 }
@@ -167,21 +188,31 @@ public class Player : MonoBehaviour
                 int energy = 0;
                 if (currentPrefabIndex == 0)
                 {
+                    attackAnim = true;
+                    //transform.gameObject.GetComponent<Animator>().Play("Attack1");
                     energy = 15;
                 }else if (currentPrefabIndex == 1)
                 {
+                    attackAnim = true;
+                    //transform.gameObject.GetComponent<Animator>().Play("Attack5");
                     energy = 25;
                 }
                 else
                 {
+                    attackAnim = true;
+                    //transform.gameObject.GetComponent<Animator>().Play("Attack2");
                     energy = 45;
                 }
                 if (energyBar.GetEnergy() > energy) 
                 {
+                    StartCoroutine("WaitForAnimation");
                     StartCurrent();
-                    ConsumeEnergy(energy); 
-                }
-
+                    ConsumeEnergy(energy);
+            }
+            else
+            {
+                attackAnim = false;
+            }
             }
         }
 
@@ -205,18 +236,18 @@ public class Player : MonoBehaviour
                 {
                     // set the start point near the player
                     rotation = transform.rotation;
-                    pos = transform.position + forward + right + up;
+                pos = transform.position + forward;// + right + up;
                 }
                 else
                 {
-                    // set the start point in front of the player a ways
-                    pos = transform.position + (forwardY * 10.0f);
+                // set the start point in front of the player a ways
+                pos = transform.position;//+ (forwardY * 10.0f);
                 }
             }
             else
             {
-                // set the start point in front of the player a ways, rotated the same way as the player
-                pos = transform.position + (forwardY * 5.0f);
+            // set the start point in front of the player a ways, rotated the same way as the player
+            pos = transform.position + (forwardY * 5.0f);
                 rotation = transform.rotation;
                 pos.y = 0.0f;
             }
@@ -306,5 +337,12 @@ public class Player : MonoBehaviour
                 noiseLevel=0;
             yield return new WaitForSeconds(1);
         }
+    }
+
+    IEnumerator WaitForAnimation()
+    {
+        //yield return new WaitForSeconds(transform.GetComponent<Animator>().runtimeAnimatorController.animationClips[5].length);
+        attackAnim = false;
+        yield return new WaitForSeconds(1);
     }
 }
