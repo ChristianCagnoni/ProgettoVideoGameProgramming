@@ -38,7 +38,7 @@ public class Skeleton : MonoBehaviour
     {
         old = 0;
         last = 0;
-        numberT = transforms.Length;
+        numberT = transforms[0].childCount;
         isAttacking = false;
         animator = GetComponent<Animator>();
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -66,7 +66,7 @@ public class Skeleton : MonoBehaviour
                 if (!agent.hasPath)
                 {
                     int dec = Random.Range(0, numberT);
-                    agent.SetDestination(transforms[dec].position);
+                    agent.SetDestination(transforms[0].GetChild(dec).transform.position);
                     animator.SetBool("Walk", true);
                 }
             }

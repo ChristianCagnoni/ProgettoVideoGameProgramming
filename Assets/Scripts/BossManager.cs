@@ -29,7 +29,8 @@ public class BossManager : MonoBehaviour
         {
             if (bossBar.GetHealth() <= 0)
             {
-                Instantiate(portal, new Vector3(258, 2.51f, 55), Quaternion.identity);
+                GameObject p=Instantiate(portal, new Vector3(258, 2.51f, 55), Quaternion.identity);
+                p.transform.GetComponent<Portal>().nextChapter = "SecondChapter";
                 state = BossZombieStatus.death;
                 Destroy(gameObject);
                 gui.transform.GetChild(4).gameObject.SetActive(false);

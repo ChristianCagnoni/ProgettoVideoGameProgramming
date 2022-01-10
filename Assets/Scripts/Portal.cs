@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
+
+    public string nextChapter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,7 @@ public class Portal : MonoBehaviour
     {
         if (other.name == "Player")
         {
-            SceneManager.LoadScene("SecondChapter",LoadSceneMode.Single);
+            SceneManager.LoadScene(nextChapter,LoadSceneMode.Single);
         }
     }
 

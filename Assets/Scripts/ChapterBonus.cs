@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class ChapterBonus : MonoBehaviour
 {
+
+
+    public static bool inBonusChapter;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        inBonusChapter = false;
     }
 
     // Update is called once per frame
@@ -46,6 +50,7 @@ public class ChapterBonus : MonoBehaviour
 
     IEnumerator Bonus()
     {
+        inBonusChapter=true;
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene("BonusChapter", LoadSceneMode.Single);
         yield return null;
