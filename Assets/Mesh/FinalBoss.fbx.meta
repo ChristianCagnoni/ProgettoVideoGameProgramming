@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f5303813b72f3c84a8c51a042a1e16fe
+guid: 5e13cc9b9673dc24d8ff273c3c36a692
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -8,42 +8,42 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material_Body
-    second: {fileID: 2100000, guid: 4fb4044e1e68cd74f8bb16247438f871, type: 2}
+    second: {fileID: 2100000, guid: b6e3be4eaecda834fb6ffbf3f466a413, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material_Face
-    second: {fileID: 2100000, guid: 78ef5d78e0dfed548aa10fcdf8e611fb, type: 2}
+    second: {fileID: 2100000, guid: 564af99da1c94cd4b95f2ee5672c5abc, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material_Hair
-    second: {fileID: 2100000, guid: e0be21212ab8a5f4fb15a24bf350c90b, type: 2}
+    second: {fileID: 2100000, guid: cec6ee97875ec3343957d12e0c068878, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material_Helmet_Male_A
-    second: {fileID: 2100000, guid: 7072094d2fece1142a7332aa9c22a1b4, type: 2}
+    second: {fileID: 2100000, guid: a3957b15e6aeaf3418291bc822b3511b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material_Helmet_Male_B
-    second: {fileID: 2100000, guid: c9b5e8b9f3f3fc34fbd5c73d94151d81, type: 2}
+    second: {fileID: 2100000, guid: 33bc8b6b4ec8bd24184f2d593b7dfc83, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Morgan_Hair_Material_Hair
-    second: {fileID: 2100000, guid: 8d000f02e52591549abadfaf5f909eb7, type: 2}
+    second: {fileID: 2100000, guid: ecad892c617aa2743a81b34a9be4abf0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Morgan_Hair_Material_Hair_Top
-    second: {fileID: 2100000, guid: b0b786e774e1af04ba0790b3a837fdac, type: 2}
+    second: {fileID: 2100000, guid: 5c19696c5c963664fb7a57d357e15e41, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: lambert1
-    second: {fileID: 2100000, guid: 6507775cb8f817f48a29dbbfaa592374, type: 2}
+    second: {fileID: 2100000, guid: ae5ad55b25495c74f871815be9e71169, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
