@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace DigitalRuby.PyroParticles
@@ -108,8 +109,11 @@ namespace DigitalRuby.PyroParticles
                     collide = true;
                 }else if (c.transform.tag == "Boss")
                 {
-                    BossHealthBar bossBar = GameObject.Find("GUI").transform.GetChild(4).GetComponent<BossHealthBar>();
-                    bossBar.SetHealth((int)(bossBar.GetHealth() - 10));
+                    if (SceneManager.GetActiveScene().name!="FinalChapter" || FinalBoss.damage != FinalBoss.FinalBossDamage.god)
+                    {
+                        BossHealthBar bossBar = GameObject.Find("GUI").transform.GetChild(4).GetComponent<BossHealthBar>();
+                        bossBar.SetHealth((int)(bossBar.GetHealth() - 10));
+                    }
                 }
                 ProjectileExplosionParticleSystem.transform.position = c.contacts[0].point;
                 ProjectileExplosionParticleSystem.Play();

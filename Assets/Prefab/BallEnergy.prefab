@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6124532547408467767}
   - component: {fileID: 6124532547408467766}
   - component: {fileID: 6858244508091302569}
-  m_Layer: 0
+  - component: {fileID: 1092639098777747117}
+  m_Layer: 13
   m_Name: BallEnergy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,3 +132,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 10
+--- !u!135 &1092639098777747117
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124532547408467761}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.223805
+  m_Center: {x: 0.019035816, y: -0.08716774, z: 0.0000076293036}
