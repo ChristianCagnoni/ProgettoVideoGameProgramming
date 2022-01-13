@@ -20,6 +20,7 @@ public class BossEnemyZombie : MonoBehaviour
     private HealthBar HealthBar;
     private bool playerInRange = false;
     private bool canAttack = true;
+    private bool isAttacking;
     private Transform target;
     private Animator animator;
 
@@ -32,6 +33,7 @@ public class BossEnemyZombie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isAttacking = false;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         HealthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
@@ -56,6 +58,7 @@ public class BossEnemyZombie : MonoBehaviour
             //playerFound();
             if (!playerSighted)
             {
+                animator.SetBool("Attack", false);
                 if (!agent.hasPath)
                 {
                     agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
@@ -81,7 +84,7 @@ public class BossEnemyZombie : MonoBehaviour
             }
             else
             {
-                if (playerSighted)
+                if (playerSighted && !isAttacking)
                 {
                     if (target)
                     {
@@ -90,7 +93,7 @@ public class BossEnemyZombie : MonoBehaviour
                     }
                 }
 
-                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4)
+                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4 && !isAttacking)
                 {
                     if (target)
                     {
@@ -102,16 +105,10 @@ public class BossEnemyZombie : MonoBehaviour
 
                 if (playerInRange && canAttack)
                 {
+                    isAttacking = true;
                     animator.SetBool("Walk", false);
                     animator.SetBool("Attack", true);
-                    HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
-                    target.position = target.position + transform.forward + new Vector3(0, 1, 0);
                     StartCoroutine(AttackCooldown());
-                    if (HealthBar.GetHealth() <= 0)
-                    {
-                        animator.SetBool("Attack", false);
-                        animator.SetTrigger("AfterDead");
-                    }
                 }
             }
         }
@@ -169,7 +166,18 @@ public class BossEnemyZombie : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         canAttack = false;
-        yield return new WaitForSeconds(enemyCooldown);
+        yield return new WaitForSeconds(animator.runtimeAnimatorController.animationClips[2].length);
+        if (playerInRange)
+        {
+            HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
+            target.position = target.position + transform.forward;
+            if (HealthBar.GetHealth() <= 0)
+            {
+                animator.SetBool("Attack", false);
+                animator.SetTrigger("AfterDead");
+            }
+        }
+        isAttacking = false;
         canAttack = true;
         animator.SetBool("Attack", false);
     }

@@ -76,11 +76,7 @@ public class Skeleton : MonoBehaviour
                 isAttacking = true;
                 agent.ResetPath();
                 animator.SetBool("Walk", false);
-                HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
                 StartCoroutine(AttackCooldown());
-                if (HealthBar.GetHealth() <= 0)
-                {
-                }
             }
             else if (!isAttacking)
             {
@@ -179,7 +175,7 @@ public class Skeleton : MonoBehaviour
         BeginEffect();
         canAttack = false;
         animator.SetBool("Attack", true);
-        yield return new WaitForSeconds(enemyCooldown);
+        yield return new WaitForSeconds(animator.runtimeAnimatorController.animationClips[0].length);
         animator.SetBool("Attack", false);
         canAttack = true;
         isAttacking = false;

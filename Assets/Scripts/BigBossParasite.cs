@@ -61,11 +61,7 @@ public class BigBossParasite : MonoBehaviour
                 isAttacking = true;
                 agent.ResetPath();
                 animator.SetBool("Walk", false);
-                HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
                 StartCoroutine(AttackCooldown());
-                if (HealthBar.GetHealth() <= 0)
-                {
-                }
             }
             else if (!isAttacking && playerSighted)
             {
@@ -133,7 +129,14 @@ public class BigBossParasite : MonoBehaviour
     {
         canAttack = false;
         animator.SetBool("Attack",true);
-        yield return new WaitForSeconds(enemyCooldown);
+        yield return new WaitForSeconds(animator.runtimeAnimatorController.animationClips[2].length);
+        if (playerInRange)
+        {
+            HealthBar.SetHealth((int)(HealthBar.GetHealth() - damage));
+            if (HealthBar.GetHealth() <= 0)
+            {
+            }
+        }
         animator.SetBool("Attack", false);
         canAttack = true;
         isAttacking = false;
