@@ -41,13 +41,20 @@ public class Parasite : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         HealthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
-        target = GameObject.Find("Player").transform;
+        target = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
+        if (target == null)
+        {
+            if (GameObject.Find("Player") != null)
+            {
+                target= GameObject.Find("Player").transform; ;
+            }
+        }
+        if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death && target!=null)
         {
 
             if (Vector3.Distance(target.position, transform.position) < radius)
@@ -149,6 +156,7 @@ public class Parasite : MonoBehaviour
     {
         canAttack = false;
         animator.SetBool("Attack", true);
+        GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(animator.runtimeAnimatorController.animationClips[0].length);
         if (playerInRange)
         {

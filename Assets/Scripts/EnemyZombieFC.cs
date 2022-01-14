@@ -167,6 +167,7 @@ public class EnemyZombieFC : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         canAttack = false;
+        GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(animator.runtimeAnimatorController.animationClips[2].length);
         if (playerInRange)
         {

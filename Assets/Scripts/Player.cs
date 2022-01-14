@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         isPowerUsed = false;
         myTransform = GetComponent<Transform>();
         myCameraTransform = myTransform.GetChild(0);
-        xRot = myCameraTransform.localRotation.eulerAngles.x; ;
+        xRot = myCameraTransform.localRotation.eulerAngles.x;
         yRot = myTransform.rotation.eulerAngles.y;
         myCharacterController = GetComponent<CharacterController>();
         currentEnergy = maxEnergy;
@@ -79,6 +79,21 @@ public class Player : MonoBehaviour
 
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
+
+            if (invertXAxis != SettingsManager.invertX)
+            {
+                invertXAxis = SettingsManager.invertX;
+            }
+
+            if (invertYAxis != SettingsManager.invertY)
+            {
+                invertYAxis = SettingsManager.invertY;
+            }
+
+            if (mouseSpeed != SettingsManager.sensibility)
+            {
+                mouseSpeed = SettingsManager.sensibility;
+            }
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
@@ -111,14 +126,15 @@ public class Player : MonoBehaviour
                     yDir = 1;
                 }
                 xRot = xRot + yDir * Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSpeed;
-                myCameraTransform.localRotation = Quaternion.Euler(xRot, 0, 0);
+                //myCameraTransform.localRotation = Quaternion.Euler(xRot, 0, 0);
+                myCameraTransform.localRotation = Quaternion.Euler(Mathf.Clamp(xRot, -90, 90),0,0);
             }
 
             UpdateEffect();
 
             if (!Input.GetKey(KeyCode.LeftShift))
             {
-                if (currentEnergy < 50)
+                if (currentEnergy < maxEnergy)
                     ReloadEnergy();
             }
 
@@ -129,7 +145,7 @@ public class Player : MonoBehaviour
                     !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.DownArrow) && !attackAnim)
             {
                 isMoving = false;
-                //transform.gameObject.GetComponent<Animator>().Play("idle1");
+                transform.gameObject.GetComponent<Animator>().Play("idle1");
             }
             else
             {
@@ -161,16 +177,16 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
                 {
-                    //if(isMoving && !attackAnim)
-                        //transform.gameObject.GetComponent<Animator>().Play("Run");
+                    if(isMoving && !attackAnim)
+                        transform.gameObject.GetComponent<Animator>().Play("Run");
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed*2, yMov, zMov * keyboardSpeed*2) * Time.fixedDeltaTime));
                     ConsumeEnergy(.2f);
                     noiseLevel = 2;
                 }
                 else
                 {
-                    //if(isMoving && !attackAnim)
-                      //  transform.gameObject.GetComponent<Animator>().Play("Walk");
+                    if(isMoving && !attackAnim)
+                        transform.gameObject.GetComponent<Animator>().Play("Walk");
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed, yMov, zMov * keyboardSpeed) * Time.fixedDeltaTime));
                     noiseLevel = 1;
                 }
@@ -189,18 +205,18 @@ public class Player : MonoBehaviour
                 if (currentPrefabIndex == 0)
                 {
                     attackAnim = true;
-                    //transform.gameObject.GetComponent<Animator>().Play("Attack1");
+                    transform.gameObject.GetComponent<Animator>().Play("Attack1");
                     energy = 15;
                 }else if (currentPrefabIndex == 1)
                 {
                     attackAnim = true;
-                    //transform.gameObject.GetComponent<Animator>().Play("Attack5");
+                    transform.gameObject.GetComponent<Animator>().Play("Attack5");
                     energy = 25;
                 }
                 else
                 {
                     attackAnim = true;
-                    //transform.gameObject.GetComponent<Animator>().Play("Attack2");
+                    transform.gameObject.GetComponent<Animator>().Play("Attack2");
                     energy = 45;
                 }
                 if (energyBar.GetEnergy() > energy) 
@@ -236,7 +252,7 @@ public class Player : MonoBehaviour
                 {
                     // set the start point near the player
                     rotation = transform.rotation;
-                pos = transform.position + forward;// + right + up;
+                pos = transform.position + forward +up;// + right + up;
                 }
                 else
                 {
@@ -341,7 +357,7 @@ public class Player : MonoBehaviour
 
     IEnumerator WaitForAnimation()
     {
-        //yield return new WaitForSeconds(transform.GetComponent<Animator>().runtimeAnimatorController.animationClips[5].length);
+        yield return new WaitForSeconds(transform.GetComponent<Animator>().runtimeAnimatorController.animationClips[5].length);
         attackAnim = false;
         yield return new WaitForSeconds(1);
     }

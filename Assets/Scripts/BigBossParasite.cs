@@ -20,6 +20,8 @@ public class BigBossParasite : MonoBehaviour
     public static BossStatus state;
     public GameObject gui;
     public GameObject portal;
+    public Shader dissolve;
+    public GameObject dissolveTarget;
 
     private NavMeshAgent agent;
     private HealthBar HealthBar;
@@ -83,11 +85,18 @@ public class BigBossParasite : MonoBehaviour
             if (bossBar.GetHealth() <= 0)
             {
                 state = BossStatus.death;
-                Destroy(gameObject);
-                gui.transform.GetChild(4).gameObject.SetActive(false);
-                portal.SetActive(true);
+                dissolveTarget.GetComponent<SkinnedMeshRenderer>().material.shader = dissolve;
+                StartCoroutine("waitDissolve");
             }
         }
+    }
+
+    IEnumerator waitDissolve()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+        gui.transform.GetChild(4).gameObject.SetActive(false);
+        portal.SetActive(true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -129,6 +138,7 @@ public class BigBossParasite : MonoBehaviour
     {
         canAttack = false;
         animator.SetBool("Attack",true);
+        GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(animator.runtimeAnimatorController.animationClips[2].length);
         if (playerInRange)
         {

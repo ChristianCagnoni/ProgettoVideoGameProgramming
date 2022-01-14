@@ -9,7 +9,7 @@ public class FinalBoss : MonoBehaviour
     public enum FinalBossStatus { start, half, dead };
     public enum FinalBossDamage {god,normal }
 
-    public GameObject target;
+    private GameObject target;
     public float cooldown;
     public float firstWait;
     public GameObject BallFire;
@@ -33,6 +33,7 @@ public class FinalBoss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.Find("Player");
         damage = FinalBossDamage.normal;
         bossBar.SetMaxHealth(maxH);
         status = FinalBossStatus.start;
@@ -47,7 +48,7 @@ public class FinalBoss : MonoBehaviour
     {
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
-            if (bossBar.GetHealth() <= maxH / 2)
+            if (bossBar.GetHealth() <= maxH / 2 && Vector3.Distance(transform.position, peak) <= 1)
             {
                 damage = FinalBossDamage.god;
                 status = FinalBossStatus.half;
@@ -76,7 +77,7 @@ public class FinalBoss : MonoBehaviour
             }
             if(Vector3.Distance(transform.position,peak)<=1 && damage == FinalBossDamage.god)
             {
-                poisonSphere.SetActive(false);
+                //poisonSphere.SetActive(false);
                 poisonSphere.transform.position = new Vector3(0, 580.1f, 0);
                 godAttack[0].SetActive(true);
                 godAttack[1].SetActive(true);
@@ -94,6 +95,7 @@ public class FinalBoss : MonoBehaviour
         godAttack[1].SetActive(false);
         godAttack[2].SetActive(false);
         godAttack[3].SetActive(false);
+        ready = false;
         damage = FinalBossDamage.normal;
     }
 
@@ -113,6 +115,7 @@ public class FinalBoss : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         BeginEffect();
+        GetComponent<AudioSource>().Play();
         canAttack = false;
         yield return new WaitForSeconds(cooldown);
         canAttack = true;

@@ -17,6 +17,8 @@ public class InGameMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         resume.onClick.AddListener(Resume);
         reload.onClick.AddListener(Reload);
         settings.onClick.AddListener(Settings);
@@ -30,6 +32,8 @@ public class InGameMenu : MonoBehaviour
 
     private void Resume()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         transform.gameObject.SetActive(false);
         Time.timeScale = 1f;
         GameManagerLogic.state = GameManagerLogic.State.game;
@@ -53,6 +57,8 @@ public class InGameMenu : MonoBehaviour
 
     private void Reload()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         isInMenu = false;
         Scene scene = SceneManager.GetActiveScene();
         GameManagerLogic.state = GameManagerLogic.State.start;

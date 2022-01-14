@@ -2,6 +2,7 @@ using DigitalRuby.PyroParticles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
@@ -162,15 +163,27 @@ public class TutorialManager : MonoBehaviour
         }
         else if (tutorialPhase == 11)
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
             Player.MouseLookToggle = false;
             gioca = child.transform.GetChild(1).gameObject.GetComponent<Button>();
             repeat = child.transform.GetChild(0).gameObject.GetComponent<Button>();
             repeat.onClick.AddListener(repeatTutorial);
+            gioca.onClick.AddListener(startGame);
         }
+    }
+
+    private void startGame()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        SceneManager.LoadScene("FirstChapter", LoadSceneMode.Single);
     }
 
     void repeatTutorial()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         tutorialPhase = 0;
         child.SetActive(false);
         child = panel.transform.GetChild(tutorialPhase).gameObject;

@@ -73,13 +73,15 @@ namespace DigitalRuby.PyroParticles
                 yield return new WaitForSeconds(delay);
             }
 
+            GameObject p = GameObject.Find("Player");
+
             // find a random source and destination point within the specified radius
-            Vector3 src = Source + (UnityEngine.Random.insideUnitSphere * SourceRadius);
+            Vector3 src = Source +new Vector3(0,p.transform.position.y,1) + (UnityEngine.Random.insideUnitSphere * SourceRadius);
             GameObject meteor = GameObject.Instantiate(MeteorPrefab);
             float scale = UnityEngine.Random.Range(ScaleRange.Minimum, ScaleRange.Maximum);
             meteor.transform.localScale = new Vector3(scale, scale, scale);
             meteor.transform.position = src;
-            Vector3 dest = gameObject.transform.position + (UnityEngine.Random.insideUnitSphere * DestinationRadius);
+            Vector3 dest = p.transform.position; //+ (UnityEngine.Random.insideUnitSphere * DestinationRadius);//gameObject.transform.position + (UnityEngine.Random.insideUnitSphere * DestinationRadius);
             dest.y = 0.0f;
 
             // get the direction and set speed based on how fast the meteor should arrive at the destination

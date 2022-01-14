@@ -6,6 +6,10 @@ public class BossSpawner : MonoBehaviour
 {
 
     public GameObject gui;
+    public GameObject oldS;
+    public GameObject newS;
+    public AudioSource oldSource;
+    public AudioSource newSource;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,10 @@ public class BossSpawner : MonoBehaviour
     {
         if (other.name == "Player")
         {
+            oldSource.Stop();
+            oldS.SetActive(false);
+            newS.SetActive(true);
+            newSource.Play();
             transform.GetChild(0).gameObject.SetActive(true);
             gui.transform.GetChild(4).gameObject.SetActive(true);
         }

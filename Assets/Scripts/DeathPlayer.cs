@@ -13,6 +13,8 @@ public class DeathPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         restart.onClick.AddListener(Reload);
         close.onClick.AddListener(Exit);
     }
@@ -25,6 +27,8 @@ public class DeathPlayer : MonoBehaviour
 
     private void Reload()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Scene scene = SceneManager.GetActiveScene();
         GameManagerLogic.state = GameManagerLogic.State.start;
         Time.timeScale = 1f;

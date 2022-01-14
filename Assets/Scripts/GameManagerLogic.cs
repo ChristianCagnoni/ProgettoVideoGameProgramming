@@ -39,9 +39,13 @@ public class GameManagerLogic : MonoBehaviour
                 Time.timeScale = 0f;
                 menu.SetActive(true);
                 InGameMenu.isInMenu = true;
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
             }
             else if(state==State.pause && InGameMenu.isInMenu)
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 state = State.game;
                 Time.timeScale = 1f;
                 menu.SetActive(false);

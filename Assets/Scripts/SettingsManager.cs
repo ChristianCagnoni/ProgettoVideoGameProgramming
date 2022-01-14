@@ -8,22 +8,23 @@ public class SettingsManager : MonoBehaviour
     public static float sensibility;
     public static bool invertX;
     public static bool invertY;
-    public static float resW;
-    public static float resH;
-    public static float antiA;
+    public static int resW;
+    public static int resH;
+    public static int antiA;
     public static bool full;
-    public static float resShadow;
+    public static int resShadow;
     public static float distanceShadow;
     public static bool shadowEnabled;
     public static float quality;
-    public static string difficult;
+    public static string difficulty;
     public static string characterName;
     public static int character;
+    public static bool vsync;
 
     // Start is called before the first frame update
     void Start()
     {
-        difficult = "easy";
+        difficulty = "easy";
         characterName = "";
         character = 0;
         sensibility = 10;
@@ -37,6 +38,7 @@ public class SettingsManager : MonoBehaviour
         distanceShadow = 10;
         shadowEnabled = true;
         quality = 100;
+        vsync = true;
     }
 
     // Update is called once per frame
