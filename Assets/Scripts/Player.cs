@@ -2,6 +2,7 @@ using DigitalRuby.PyroParticles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
     private float rotationX = 0F;
     private float rotationY = 0F;
     private Quaternion originalRotation;
-
+    private string sceneN;
     private bool isMoving;
     private bool attackAnim;
 
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sceneN=SceneManager.GetActiveScene().name;
         attackAnim=false;
         isMoving = false;
         secret = false;
@@ -145,7 +147,8 @@ public class Player : MonoBehaviour
                     !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.DownArrow) && !attackAnim)
             {
                 isMoving = false;
-                transform.gameObject.GetComponent<Animator>().Play("idle1");
+                if(sceneN!="Tutorial")
+                    transform.gameObject.GetComponent<Animator>().Play("idle1");
             }
             else
             {
@@ -177,7 +180,7 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
                 {
-                    if(isMoving && !attackAnim)
+                    if(isMoving && !attackAnim && sceneN!="Tutorial")
                         transform.gameObject.GetComponent<Animator>().Play("Run");
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed*2, yMov, zMov * keyboardSpeed*2) * Time.fixedDeltaTime));
                     ConsumeEnergy(.2f);
@@ -185,7 +188,7 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    if(isMoving && !attackAnim)
+                    if(isMoving && !attackAnim && sceneN != "Tutorial")
                         transform.gameObject.GetComponent<Animator>().Play("Walk");
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed, yMov, zMov * keyboardSpeed) * Time.fixedDeltaTime));
                     noiseLevel = 1;
@@ -205,18 +208,21 @@ public class Player : MonoBehaviour
                 if (currentPrefabIndex == 0)
                 {
                     attackAnim = true;
-                    transform.gameObject.GetComponent<Animator>().Play("Attack1");
+                    if(sceneN!="Tutorial")
+                        transform.gameObject.GetComponent<Animator>().Play("Attack1");
                     energy = 15;
                 }else if (currentPrefabIndex == 1)
                 {
                     attackAnim = true;
-                    transform.gameObject.GetComponent<Animator>().Play("Attack5");
+                    if (sceneN != "Tutorial")
+                        transform.gameObject.GetComponent<Animator>().Play("Attack5");
                     energy = 25;
                 }
                 else
                 {
                     attackAnim = true;
-                    transform.gameObject.GetComponent<Animator>().Play("Attack2");
+                    if (sceneN != "Tutorial")
+                        transform.gameObject.GetComponent<Animator>().Play("Attack2");
                     energy = 45;
                 }
                 if (energyBar.GetEnergy() > energy) 
@@ -357,7 +363,8 @@ public class Player : MonoBehaviour
 
     IEnumerator WaitForAnimation()
     {
-        yield return new WaitForSeconds(transform.GetComponent<Animator>().runtimeAnimatorController.animationClips[5].length);
+        if (sceneN != "Tutorial")
+            yield return new WaitForSeconds(transform.GetComponent<Animator>().runtimeAnimatorController.animationClips[5].length);
         attackAnim = false;
         yield return new WaitForSeconds(1);
     }

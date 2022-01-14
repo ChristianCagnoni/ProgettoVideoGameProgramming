@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuStartupManager : MonoBehaviour
@@ -29,14 +30,19 @@ public class MenuStartupManager : MonoBehaviour
         exitB.onClick.AddListener(CloseGame);
         settingsB.onClick.AddListener(startSetttings);
         newGameB.onClick.AddListener(newGameClick);
-        savesPath = Directory.GetCurrentDirectory() + "\\Saves";
-        if (!Directory.Exists(savesPath))
+        if (!Directory.Exists(SettingsManager.savesPath))
         {
-            continueB.interactable = false;
+            if(!File.Exists(SettingsManager.saveFile))
+                continueB.interactable = false;
         }
         else
         {
-            continueB.onClick.AddListener(continueGame);
+            if (!File.Exists(SettingsManager.saveFile))
+                continueB.interactable = false;
+            else
+            {
+                continueB.onClick.AddListener(continueGame);
+            }
         }
     }
 
@@ -48,7 +54,21 @@ public class MenuStartupManager : MonoBehaviour
 
     void continueGame()
     {
-
+        string scene;
+        int character;
+        string difficulty;
+        using (StreamReader sw = new StreamReader(File.Open(SettingsManager.saveFile, System.IO.FileMode.Open)))
+        {
+            string tmp = sw.ReadToEnd();
+            string[] sv = tmp.Split('\n');
+            scene = sv[0];
+            character = int.Parse(sv[1]);
+            difficulty = sv[2];
+            sw.Close();
+        }
+        SettingsManager.character = character;
+        SettingsManager.difficulty = difficulty;
+        SceneManager.LoadScene(scene.Substring(0,scene.Length-1),LoadSceneMode.Single);
     }
 
     void newGameClick()
@@ -67,6 +87,47 @@ public class MenuStartupManager : MonoBehaviour
 
     void CloseGame()
     {
+        if (!Directory.Exists(SettingsManager.configPath))
+        {
+            Directory.CreateDirectory(SettingsManager.configPath);
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Open)))
+            {
+                sw.WriteLine(SettingsManager.character.ToString());
+                sw.WriteLine(SettingsManager.sensibility.ToString());
+                sw.WriteLine(SettingsManager.invertX.ToString());
+                sw.WriteLine(SettingsManager.invertY.ToString());
+                sw.WriteLine(SettingsManager.resH.ToString());
+                sw.WriteLine(SettingsManager.resW.ToString());
+                sw.WriteLine(SettingsManager.antiA.ToString());
+                sw.WriteLine(SettingsManager.full.ToString());
+                sw.WriteLine(SettingsManager.resShadow.ToString());
+                sw.WriteLine(SettingsManager.distanceShadow.ToString());
+                sw.WriteLine(SettingsManager.shadowEnabled.ToString());
+                sw.WriteLine(SettingsManager.quality.ToString());
+                sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.Close();
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Open)))
+            {
+                sw.WriteLine(SettingsManager.character.ToString());
+                sw.WriteLine(SettingsManager.sensibility.ToString());
+                sw.WriteLine(SettingsManager.invertX.ToString());
+                sw.WriteLine(SettingsManager.invertY.ToString());
+                sw.WriteLine(SettingsManager.resH.ToString());
+                sw.WriteLine(SettingsManager.resW.ToString());
+                sw.WriteLine(SettingsManager.antiA.ToString());
+                sw.WriteLine(SettingsManager.full.ToString());
+                sw.WriteLine(SettingsManager.resShadow.ToString());
+                sw.WriteLine(SettingsManager.distanceShadow.ToString());
+                sw.WriteLine(SettingsManager.shadowEnabled.ToString());
+                sw.WriteLine(SettingsManager.quality.ToString());
+                sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.Close();
+            }
+        }
         Application.Quit();
     }
 }

@@ -105,7 +105,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (tutorialPhase == 5)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
             {
                 wheel = true;
             }
@@ -120,7 +120,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (tutorialPhase == 6)
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
             {
                 wheel = true;
             }
@@ -135,24 +135,6 @@ public class TutorialManager : MonoBehaviour
         }
         else if (tutorialPhase == 7)
         {
-            StartCoroutine("waitEnemy");
-        }
-        else if (tutorialPhase == 8)
-        {
-            StartCoroutine("waitEnemy");
-        }
-        else if (tutorialPhase == 9)
-        {
-            if (Input.GetKey(KeyCode.Tab))
-            {
-                tutorialPhase++;
-                child.SetActive(false);
-                child = panel.transform.GetChild(tutorialPhase).gameObject;
-                child.SetActive(true);
-            }
-        }
-        else if (tutorialPhase == 10)
-        {
             if (Input.GetKey(KeyCode.Escape))
             {
                 tutorialPhase++;
@@ -161,7 +143,7 @@ public class TutorialManager : MonoBehaviour
                 child.SetActive(true);
             }
         }
-        else if (tutorialPhase == 11)
+        else if (tutorialPhase == 8)
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;

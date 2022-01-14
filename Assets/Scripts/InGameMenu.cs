@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class InGameMenu : MonoBehaviour
 {
@@ -49,6 +50,40 @@ public class InGameMenu : MonoBehaviour
 
     private void Exit()
     {
+        if (!Directory.Exists(SettingsManager.savesPath))
+        {
+            Directory.CreateDirectory(SettingsManager.savesPath);
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.saveFile, System.IO.FileMode.Create)))
+            {
+                sw.WriteLine(SceneManager.GetActiveScene().name);
+                sw.WriteLine(SettingsManager.character);
+                sw.WriteLine(SettingsManager.difficulty);
+                sw.Close();
+            }
+        }
+        else
+        {
+            if (File.Exists(SettingsManager.saveFile))
+            {
+                using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.saveFile, System.IO.FileMode.Open)))
+                {
+                    sw.WriteLine(SceneManager.GetActiveScene().name);
+                    sw.WriteLine(SettingsManager.character);
+                    sw.WriteLine(SettingsManager.difficulty);
+                    sw.Close();
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.saveFile, System.IO.FileMode.Create)))
+                {
+                    sw.WriteLine(SceneManager.GetActiveScene().name);
+                    sw.WriteLine(SettingsManager.character);
+                    sw.WriteLine(SettingsManager.difficulty);
+                    sw.Close();
+                }
+            }
+        }
         isInMenu = false;
         GameManagerLogic.state = GameManagerLogic.State.start;
         Time.timeScale = 1f;
