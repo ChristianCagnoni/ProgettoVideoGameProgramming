@@ -21,6 +21,10 @@ public class FinalBoss : MonoBehaviour
     public GameObject[] godAttack;
     public float godDuration;
     public GameObject poisonSphere;
+    public Shader dissolve;
+    public GameObject dissolveTarget;
+    public GameObject gui;
+    public GameObject specialObject;
 
     private bool canAttack;
     private GameObject launcher;
@@ -56,6 +60,8 @@ public class FinalBoss : MonoBehaviour
             if (bossBar.GetHealth() <= 0)
             {
                 status=FinalBossStatus.dead;
+                dissolveTarget.GetComponent<SkinnedMeshRenderer>().material.shader = dissolve;
+                StartCoroutine("waitDissolve");
             }
             if (transform.position.y < target.transform.position.y + 32)
             {
@@ -86,6 +92,15 @@ public class FinalBoss : MonoBehaviour
                 StartCoroutine("waitAttackGod");
             }
         }
+    }
+
+    IEnumerator waitDissolve()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
+        gui.transform.GetChild(4).gameObject.SetActive(false);
+        Destroy(poisonSphere);
+        specialObject.SetActive(true);
     }
 
     IEnumerator waitAttackGod()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class NewGame : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class NewGame : MonoBehaviour
     public Dropdown character;
     public Dropdown difficulty;
     public Image characterI;
-    public Text characterText;
+    public TextMeshProUGUI characterText;
     public Sprite characterSprite1;
     public Sprite characterSprite2;
 

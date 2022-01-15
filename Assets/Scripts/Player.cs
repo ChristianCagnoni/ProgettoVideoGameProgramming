@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Player : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class Player : MonoBehaviour
     public static bool isPower;
     public static bool isPowerUsed;
     public static bool secret;
+    public AudioClip walk;
+    public AudioClip run;
+    public AudioMixerGroup walkM;
+    public AudioMixerGroup runM;
 
     private Transform myTransform;
     private Transform myCameraTransform;
@@ -50,11 +55,13 @@ public class Player : MonoBehaviour
     private string sceneN;
     private bool isMoving;
     private bool attackAnim;
+    private AudioSource source;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
         sceneN=SceneManager.GetActiveScene().name;
         attackAnim=false;
         isMoving = false;
@@ -74,6 +81,7 @@ public class Player : MonoBehaviour
         MouseLookToggle = true;
         noiseLevel = 0;
         StartCoroutine("noiseControl");
+        StartCoroutine("waitAudio");
     }
 
     void Update()
@@ -180,22 +188,43 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.LeftShift) && energyBar.GetEnergy() > 0)
                 {
-                    if(isMoving && !attackAnim && sceneN!="Tutorial")
+                    if (isMoving && !attackAnim && sceneN != "Tutorial")
+                    {
+                        source.clip = run;
+                        source.outputAudioMixerGroup = runM;
                         transform.gameObject.GetComponent<Animator>().Play("Run");
+                    }
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed*2, yMov, zMov * keyboardSpeed*2) * Time.fixedDeltaTime));
                     ConsumeEnergy(.2f);
                     noiseLevel = 2;
                 }
                 else
                 {
-                    if(isMoving && !attackAnim && sceneN != "Tutorial")
+                    if (isMoving && !attackAnim && sceneN != "Tutorial")
+                    {
+                        source.clip = walk;
+                        source.outputAudioMixerGroup = runM;
                         transform.gameObject.GetComponent<Animator>().Play("Walk");
+                    }
                     myCharacterController.Move(myTransform.TransformDirection(new Vector3(xMov * keyboardSpeed, yMov, zMov * keyboardSpeed) * Time.fixedDeltaTime));
                     noiseLevel = 1;
                 }
 
                 
             }
+        }
+    }
+
+    IEnumerator waitAudio()
+    {
+        while (true)
+        {
+            if (isMoving)
+            {
+                source.Play();
+                yield return new WaitWhile(() => source.isPlaying);
+            }
+            yield return new WaitForSeconds(1);
         }
     }
 

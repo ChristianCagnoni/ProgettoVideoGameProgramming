@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -18,13 +19,24 @@ public class SettingsMenu : MonoBehaviour
     public Slider quality;
     public InputField mouseSensibility;
     public Toggle vsync;
+    public TextMeshProUGUI qualityText;
+    public Toggle fps;
+    public Slider music;
+    public TextMeshProUGUI musicText;
+    public Slider playerS;
+    public TextMeshProUGUI playerSText;
+    public Slider enemyS;
+    public TextMeshProUGUI enemySText;
+
 
     private Button b;
     private Button b1;
+    private Button b2;
     private GameObject generalPanel;
     public GameObject parent;
     private GameObject gameB;
     private GameObject gameB1;
+    private GameObject gameB2;
     private GameObject actual;
     private GameObject scrollView;
     private ScrollRect rect;
@@ -40,24 +52,52 @@ public class SettingsMenu : MonoBehaviour
         generalPanel = transform.GetChild(0).gameObject;
         gameB = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         gameB1 = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
+        gameB2 = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject;
         b = gameB.GetComponent<Button>();
-        b1 = gameB1.GetComponent<Button>(); 
+        b1 = gameB1.GetComponent<Button>();
+        b2 = gameB2.GetComponent<Button>();
         actual = gameB;
         b.Select();
         b.onClick.AddListener(selectButton1);
         b1.onClick.AddListener(selectButton2);
+        b2.onClick.AddListener(selectButton3);
         scrollView= transform.GetChild(1).gameObject;
         rect = scrollView.GetComponent<ScrollRect>();
         index = 0;
         rect.content = contents[index].GetComponent<RectTransform>();
         mouseSens = GameObject.Find("MouseSensibility");
         sensibility = false;
+        qualityText.text = SettingsManager.quality.ToString() + "%";
         quality.onValueChanged.AddListener(delegate { changeQuality(); });
+        musicText.text = SettingsManager.music.ToString() + "%";
+        music.onValueChanged.AddListener(delegate { changeMusic(); });
+        playerSText.text = SettingsManager.playerSound.ToString() + "%";
+        playerS.onValueChanged.AddListener(delegate { changePlayerS(); });
+        enemySText.text = SettingsManager.enemySound.ToString() + "%";
+        enemyS.onValueChanged.AddListener(delegate { changeEnemyS(); });
         res.onValueChanged.AddListener(delegate { changeRes(); });
         AA.onValueChanged.AddListener(delegate { changeAA(); });
         screen.onValueChanged.AddListener(delegate { changeScreen(); });
         shadowRes.onValueChanged.AddListener(delegate { changeShadowRes(); });
         shadowDist.onValueChanged.AddListener(delegate { changeShadowDist(); });
+    }
+
+    private void changeMusic()
+    {
+        SettingsManager.music = music.value * 100;
+        musicText.text = SettingsManager.music.ToString() + "%";
+    }
+
+    private void changeEnemyS()
+    {
+        SettingsManager.enemySound = enemyS.value * 100;
+        enemySText.text = SettingsManager.enemySound.ToString() + "%";
+    }
+
+    private void changePlayerS()
+    {
+        SettingsManager.playerSound = playerS.value * 100;
+        playerSText.text = SettingsManager.playerSound.ToString() + "%";
     }
 
     private void loadSettings()
@@ -151,8 +191,18 @@ public class SettingsMenu : MonoBehaviour
             shadowDist.value = 4;
         }
         quality.value = SettingsManager.quality/100;
+        qualityText.text = SettingsManager.quality.ToString()+"%";
+
+        music.value = SettingsManager.music / 100;
+        musicText.text = SettingsManager.music.ToString() + "%";
+        playerS.value = SettingsManager.playerSound / 100;
+        playerSText.text = SettingsManager.playerSound.ToString() + "%";
+        enemyS.value = SettingsManager.enemySound / 100;
+        enemySText.text = SettingsManager.enemySound.ToString() + "%";
+
         mouseSensibility.text = SettingsManager.sensibility.ToString();
         vsync.isOn = SettingsManager.vsync;
+        fps.isOn = SettingsManager.fps;
         if (vsync.isOn)
         {
             QualitySettings.vSyncCount = 1;
@@ -294,6 +344,7 @@ public class SettingsMenu : MonoBehaviour
     private void changeQuality()
     {
         SettingsManager.quality = quality.value*100;
+        qualityText.text = SettingsManager.quality.ToString()+"%";
     }
 
     private void selectButton1()
@@ -316,11 +367,29 @@ public class SettingsMenu : MonoBehaviour
         b1.Select();
     }
 
+    private void selectButton3()
+    {
+        contents[index].SetActive(false);
+        index = 2;
+        rect.content = contents[index].GetComponent<RectTransform>();
+        contents[index].SetActive(true);
+        actual = gameB2;
+        b2.Select();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !sensibility)
         {
+            if (fps.isOn)
+            {
+                SettingsManager.fps = true;
+            }
+            else
+            {
+                SettingsManager.fps = false;
+            }
             if (vsync.isOn)
             {
                 SettingsManager.vsync = true;

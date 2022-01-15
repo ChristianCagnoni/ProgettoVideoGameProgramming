@@ -16,8 +16,6 @@ public class MenuStartupManager : MonoBehaviour
     public GameObject start;
     public GameObject newGame;
     public GameObject settings;
-    public GameObject bg;
-    private string savesPath;
 
     // Start is called before the first frame update
     void Start()
@@ -49,11 +47,12 @@ public class MenuStartupManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     void continueGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         string scene;
         int character;
         string difficulty;
@@ -105,6 +104,10 @@ public class MenuStartupManager : MonoBehaviour
                 sw.WriteLine(SettingsManager.shadowEnabled.ToString());
                 sw.WriteLine(SettingsManager.quality.ToString());
                 sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.WriteLine(SettingsManager.fps.ToString());
+                sw.WriteLine(SettingsManager.music.ToString());
+                sw.WriteLine(SettingsManager.playerSound.ToString());
+                sw.WriteLine(SettingsManager.enemySound.ToString());
                 sw.Close();
             }
         }
@@ -125,6 +128,10 @@ public class MenuStartupManager : MonoBehaviour
                 sw.WriteLine(SettingsManager.shadowEnabled.ToString());
                 sw.WriteLine(SettingsManager.quality.ToString());
                 sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.WriteLine(SettingsManager.fps.ToString());
+                sw.WriteLine(SettingsManager.music.ToString());
+                sw.WriteLine(SettingsManager.playerSound.ToString());
+                sw.WriteLine(SettingsManager.enemySound.ToString());
                 sw.Close();
             }
         }

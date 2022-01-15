@@ -21,6 +21,10 @@ public class SettingsManager : MonoBehaviour
     public static string characterName;
     public static int character;
     public static bool vsync;
+    public static bool fps;
+    public static float music;
+    public static float playerSound;
+    public static float enemySound;
 
     public static string configPath;
     public static string configFile;
@@ -32,11 +36,6 @@ public class SettingsManager : MonoBehaviour
         savesPath = Directory.GetCurrentDirectory() + "\\Saves";
         saveFile = savesPath + "\\save.sv";
         configPath = Directory.GetCurrentDirectory() + "\\Config";
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         if (!Directory.Exists(configPath))
         {
             Directory.CreateDirectory(configPath);
@@ -56,6 +55,11 @@ public class SettingsManager : MonoBehaviour
                 sw.WriteLine(true);
                 sw.WriteLine(100);
                 sw.WriteLine(true);
+                sw.WriteLine(true);
+                sw.WriteLine(false);
+                sw.WriteLine(100);
+                sw.WriteLine(100);
+                sw.WriteLine(100);
                 sw.Close();
             }
             using (StreamReader sw = new StreamReader(File.Open(configFile, System.IO.FileMode.Open)))
@@ -77,6 +81,10 @@ public class SettingsManager : MonoBehaviour
                 shadowEnabled = cfg[10][0] != 'F';
                 quality = float.Parse(cfg[11]);
                 vsync = cfg[12][0] != 'F';
+                fps= cfg[13][0] != 'F';
+                music = float.Parse(cfg[14]);
+                playerSound = float.Parse(cfg[15]);
+                enemySound = float.Parse(cfg[16]);
             }
         }
         else
@@ -103,6 +111,12 @@ public class SettingsManager : MonoBehaviour
                     shadowEnabled = cfg[10][0] != 'F';
                     quality = float.Parse(cfg[11]);
                     vsync = cfg[12][0] != 'F';
+                    fps = cfg[13][0] != 'F';
+                    fps = cfg[13][0] != 'F';
+                    music = float.Parse(cfg[14]);
+                    playerSound = float.Parse(cfg[15]);
+                    enemySound = float.Parse(cfg[16]);
+                    sw.Close();
                 }
             }
             else
@@ -122,6 +136,10 @@ public class SettingsManager : MonoBehaviour
                     sw.WriteLine(true);
                     sw.WriteLine(100);
                     sw.WriteLine(true);
+                    sw.WriteLine(false);
+                    sw.WriteLine(100);
+                    sw.WriteLine(100);
+                    sw.WriteLine(100);
                     sw.Close();
                 }
                 using (StreamReader sw = new StreamReader(File.Open(configFile, System.IO.FileMode.Open)))
@@ -143,9 +161,24 @@ public class SettingsManager : MonoBehaviour
                     shadowEnabled = cfg[10][0] != 'F';
                     quality = float.Parse(cfg[11]);
                     vsync = cfg[12][0] != 'F';
+                    fps = cfg[13][0] != 'F';
+                    music = float.Parse(cfg[14]);
+                    playerSound = float.Parse(cfg[15]);
+                    enemySound = float.Parse(cfg[16]);
+                    sw.Close();
                 }
             }
         }
+        if (Display.main.renderingWidth != resW)
+        {
+            resW = Display.main.renderingWidth;
+            resH = Display.main.renderingHeight;
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         /*difficulty = "easy";
         characterName = "";
         character = 0;

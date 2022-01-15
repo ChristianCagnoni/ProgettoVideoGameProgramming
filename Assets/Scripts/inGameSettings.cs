@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class inGameSettings : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class inGameSettings : MonoBehaviour
     public Slider quality;
     public InputField mouseSensibility;
     public Toggle vsync;
+    public TextMeshProUGUI qualityText;
+    public Toggle fps;
 
     private Button b;
     private Button b1;
@@ -52,6 +55,7 @@ public class inGameSettings : MonoBehaviour
         rect.content = contents[index].GetComponent<RectTransform>();
         mouseSens = GameObject.Find("MouseSensibility");
         sensibility = false;
+        qualityText.text = SettingsManager.quality.ToString()+"%";
         quality.onValueChanged.AddListener(delegate { changeQuality(); });
         res.onValueChanged.AddListener(delegate { changeRes(); });
         AA.onValueChanged.AddListener(delegate { changeAA(); });
@@ -151,8 +155,10 @@ public class inGameSettings : MonoBehaviour
             shadowDist.value = 4;
         }
         quality.value = SettingsManager.quality / 100;
+        qualityText.text = SettingsManager.quality.ToString()+"%";
         mouseSensibility.text = SettingsManager.sensibility.ToString();
         vsync.isOn = SettingsManager.vsync;
+        fps.isOn=SettingsManager.fps;
         if (vsync.isOn)
         {
             QualitySettings.vSyncCount = 1;
@@ -295,6 +301,7 @@ public class inGameSettings : MonoBehaviour
     private void changeQuality()
     {
         SettingsManager.quality = quality.value * 100;
+        qualityText.text = SettingsManager.quality.ToString()+"%";
     }
 
     private void selectButton1()
@@ -323,6 +330,14 @@ public class inGameSettings : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && !sensibility)
         {
+            if (fps.isOn)
+            {
+                SettingsManager.fps = true;
+            }
+            else
+            {
+                SettingsManager.fps = false;
+            }
             if (vsync.isOn)
             {
                 SettingsManager.vsync = true;
