@@ -506,6 +506,35 @@ public class SettingsMenu : MonoBehaviour
             MenuStartupManager.actualMenu.SetActive(false);
             MenuStartupManager.actualMenu = parent;
             MenuStartupManager.actualMenu.SetActive(true);
+
+            if (shoadowEnabled.isOn)
+            {
+                if (SettingsManager.resShadow == 256)
+                {
+                    SettingsManager.changeUrp(0);
+                }
+                else if (SettingsManager.resShadow == 512)
+                {
+                    SettingsManager.changeUrp(1);
+                }
+                else if (SettingsManager.resShadow == 1024)
+                {
+                    SettingsManager.changeUrp(2);
+                }
+                else if (SettingsManager.resShadow == 2048)
+                {
+                    SettingsManager.changeUrp(3);
+                }
+                else if (SettingsManager.resShadow == 4096)
+                {
+                    SettingsManager.changeUrp(4);
+                }
+            }
+            else
+            {
+                SettingsManager.changeUrp(5);
+            }
+
             SettingsManager.changeConfig(SettingsManager.antiA, SettingsManager.quality/100, (int)SettingsManager.distanceShadow);
             saveConfig();
         }else if(Input.GetKeyDown(KeyCode.Escape) && sensibility)

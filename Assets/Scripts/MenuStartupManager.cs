@@ -20,6 +20,8 @@ public class MenuStartupManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         actualMenu = start;
         continueB = actualMenu.transform.GetChild(0).gameObject.GetComponent<Button>();
         newGameB = actualMenu.transform.GetChild(1).gameObject.GetComponent<Button>();
