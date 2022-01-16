@@ -444,14 +444,13 @@ GameObject:
   - component: {fileID: 5017962058658783966}
   - component: {fileID: 6838894906794687282}
   - component: {fileID: 6470351583566933966}
-  - component: {fileID: 4753865451473986491}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5017962058658783966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -510,19 +509,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4753865451473986491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5430484367167900250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d58ff6e488d64334b8a4cc578916f45f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fpsCounter: {fileID: 8327611417345086953}
 --- !u!1 &6363931055596099730
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +938,7 @@ GameObject:
   - component: {fileID: 8995153125557710220}
   - component: {fileID: 8995153125557710223}
   - component: {fileID: 8995153125557710222}
+  - component: {fileID: 2193230322703349363}
   m_Layer: 5
   m_Name: GUI
   m_TagString: Untagged
@@ -1044,3 +1031,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2193230322703349363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995153125557710217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58ff6e488d64334b8a4cc578916f45f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpsCounter: {fileID: 8327611417345086953}
+  fpsPanal: {fileID: 5430484367167900250}

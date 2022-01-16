@@ -38,6 +38,7 @@ public class InGameMenu : MonoBehaviour
         transform.gameObject.SetActive(false);
         Time.timeScale = 1f;
         GameManagerLogic.state = GameManagerLogic.State.game;
+        TutorialManager.tut = TutorialManager.tutState.on;
         isInMenu = false;
     }
 
@@ -86,6 +87,7 @@ public class InGameMenu : MonoBehaviour
         }
         isInMenu = false;
         GameManagerLogic.state = GameManagerLogic.State.start;
+        TutorialManager.tut = TutorialManager.tutState.on;
         Time.timeScale = 1f;
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Single);
     }
@@ -97,6 +99,7 @@ public class InGameMenu : MonoBehaviour
         isInMenu = false;
         Scene scene = SceneManager.GetActiveScene();
         GameManagerLogic.state = GameManagerLogic.State.start;
+        TutorialManager.tut = TutorialManager.tutState.on;
         Time.timeScale = 1f;
         SceneManager.LoadScene(scene.name, LoadSceneMode.Single);
     }

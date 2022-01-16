@@ -8,8 +8,12 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour
 {
 
+    public enum tutState {pause,on};
+
     public static int tutorialPhase;
+    public GameObject portal;
     public GameObject tutorialCanvas;
+    public GameObject menu;
     private GameObject panel;
     private GameObject child;
     private bool[] pressed;
@@ -17,14 +21,16 @@ public class TutorialManager : MonoBehaviour
     private Button repeat;
     private Button gioca;
     private bool wheel;
+    public static tutState tut;
 
     // Start is called before the first frame update
     void Start()
     {
+        tut = tutState.on;
         pressed = new bool[] { false, false, false, false};
         falses = 4;
         wheel = false;
-        tutorialPhase = 0;
+        tutorialPhase = 8;
         tutorialCanvas.SetActive(true);
         panel= tutorialCanvas.transform.GetChild(0).gameObject;
         panel.SetActive(true);
@@ -35,6 +41,29 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (tut != tutState.pause)
+            {
+                GameManagerLogic.state = GameManagerLogic.State.pause;
+                tut = tutState.pause;
+                Time.timeScale = 0f;
+                menu.SetActive(true);
+                InGameMenu.isInMenu = true;
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+            }
+            else if (tut == tutState.pause && InGameMenu.isInMenu)
+            {
+                GameManagerLogic.state = GameManagerLogic.State.game;
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                tut = tutState.on;
+                Time.timeScale = 1f;
+                menu.SetActive(false);
+                InGameMenu.isInMenu = false;
+            }
+        }
         if (tutorialPhase == 0)
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
@@ -142,16 +171,25 @@ public class TutorialManager : MonoBehaviour
                 child = panel.transform.GetChild(tutorialPhase).gameObject;
                 child.SetActive(true);
             }
-        }
-        else if (tutorialPhase == 8)
+        }else if (tutorialPhase == 8)
         {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-            Player.MouseLookToggle = false;
-            gioca = child.transform.GetChild(1).gameObject.GetComponent<Button>();
-            repeat = child.transform.GetChild(0).gameObject.GetComponent<Button>();
-            repeat.onClick.AddListener(repeatTutorial);
-            gioca.onClick.AddListener(startGame);
+            StartCoroutine("waitTime");
+        }
+        else if (tutorialPhase == 9)
+        {
+            StartCoroutine("waitTime");
+        }
+        else if (tutorialPhase == 10)
+        {
+            StartCoroutine("waitTime");
+        }
+        else if (tutorialPhase == 11)
+        {
+            portal.SetActive(true);
+            if (Input.GetKey(KeyCode.Space))
+            {
+                SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
+            }
         }
     }
 
@@ -185,6 +223,17 @@ public class TutorialManager : MonoBehaviour
         child = panel.transform.GetChild(tutorialPhase).gameObject;
         child.SetActive(true);
         StopCoroutine("waitEnemy");
+    }
+
+    IEnumerator waitTime()
+    {
+        yield return new WaitForSeconds(3);
+        tutorialPhase++;
+        Debug.Log(tutorialPhase);
+        child.SetActive(false);
+        child = panel.transform.GetChild(tutorialPhase).gameObject;
+        child.SetActive(true);
+        StopCoroutine("waitTime");
     }
 
 }

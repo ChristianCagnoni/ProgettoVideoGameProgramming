@@ -36,6 +36,27 @@ public class Skeleton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SettingsManager.difficulty == "easy")
+        {
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            moveSpeed++;
+            maxDist += 5;
+            minDist -= 2;
+            enemyCooldown -= 0.25f;
+            damage += 1;
+            radius += 5;
+        }
+        else
+        {
+            moveSpeed += 2;
+            maxDist += 10;
+            minDist -= 4;
+            enemyCooldown -= 0.5f;
+            damage += 2;
+            radius += 10;
+        }
         old = 0;
         last = 0;
         numberT = transforms[0].childCount;

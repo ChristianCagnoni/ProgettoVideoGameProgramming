@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -25,6 +27,11 @@ public class SettingsManager : MonoBehaviour
     public static float music;
     public static float playerSound;
     public static float enemySound;
+    public static int defURP;
+    public static UniversalRenderPipelineAsset urp;
+    public UniversalRenderPipelineAsset[] urps;
+    public static UniversalRenderPipelineAsset[] bck;
+
 
     public static string configPath;
     public static string configFile;
@@ -33,6 +40,11 @@ public class SettingsManager : MonoBehaviour
 
     private void Awake()
     {
+        bck = new UniversalRenderPipelineAsset[urps.Length];
+        for(int i = 0; i < urps.Length; i++)
+        {
+            bck[i] = urps[i];
+        }
         savesPath = Directory.GetCurrentDirectory() + "\\Saves";
         saveFile = savesPath + "\\save.sv";
         configPath = Directory.GetCurrentDirectory() + "\\Config";
@@ -43,7 +55,7 @@ public class SettingsManager : MonoBehaviour
             using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Create)))
             {
                 sw.WriteLine(0);
-                sw.WriteLine(10);
+                sw.WriteLine(100);
                 sw.WriteLine(false);
                 sw.WriteLine(false);
                 sw.WriteLine(1080);
@@ -55,9 +67,8 @@ public class SettingsManager : MonoBehaviour
                 sw.WriteLine(true);
                 sw.WriteLine(100);
                 sw.WriteLine(true);
-                sw.WriteLine(true);
                 sw.WriteLine(false);
-                sw.WriteLine(100);
+                sw.WriteLine(35);
                 sw.WriteLine(100);
                 sw.WriteLine(100);
                 sw.Close();
@@ -124,7 +135,7 @@ public class SettingsManager : MonoBehaviour
                 using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Create)))
                 {
                     sw.WriteLine(0);
-                    sw.WriteLine(10);
+                    sw.WriteLine(100);
                     sw.WriteLine(false);
                     sw.WriteLine(false);
                     sw.WriteLine(1080);
@@ -137,7 +148,7 @@ public class SettingsManager : MonoBehaviour
                     sw.WriteLine(100);
                     sw.WriteLine(true);
                     sw.WriteLine(false);
-                    sw.WriteLine(100);
+                    sw.WriteLine(35);
                     sw.WriteLine(100);
                     sw.WriteLine(100);
                     sw.Close();
@@ -174,6 +185,14 @@ public class SettingsManager : MonoBehaviour
             resW = Display.main.renderingWidth;
             resH = Display.main.renderingHeight;
         }
+        urp = urps[0];
+    }
+
+    public static void changeUrp(int index)
+    {
+        QualitySettings.renderPipeline = null;
+        urp=bck[index];
+        QualitySettings.renderPipeline = urp;
     }
 
     // Start is called before the first frame update
@@ -199,6 +218,8 @@ public class SettingsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //urp.renderScale = quality;
+        //urp.shadowDistance = 50;
+        //urp.msaaSampleCount = 8;
     }
 }

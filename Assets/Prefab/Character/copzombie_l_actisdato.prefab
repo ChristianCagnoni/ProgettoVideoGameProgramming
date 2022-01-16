@@ -1127,6 +1127,7 @@ GameObject:
   - component: {fileID: 1466791037}
   - component: {fileID: 204093930035411437}
   - component: {fileID: -8019016476150042488}
+  - component: {fileID: 4533724894991769981}
   m_Layer: 6
   m_Name: copzombie_l_actisdato
   m_TagString: Enemy
@@ -1355,6 +1356,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4533724894991769981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3562789636993172089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265d21d938e6ed54093478f88fa9606e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3650218778369863306
 GameObject:
   m_ObjectHideFlags: 0

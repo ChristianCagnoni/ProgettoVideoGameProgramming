@@ -81,12 +81,12 @@ public class Player : MonoBehaviour
         MouseLookToggle = true;
         noiseLevel = 0;
         StartCoroutine("noiseControl");
-        StartCoroutine("waitAudio");
+        if(SceneManager.GetActiveScene().name!="Tutorial")
+            StartCoroutine("waitAudio");
     }
 
     void Update()
     {
-
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
 
@@ -118,8 +118,7 @@ public class Player : MonoBehaviour
                 MouseLookToggle = !MouseLookToggle;
             }
 
-            if (Input.GetMouseButton(1))
-            {
+            
                 //Character Y rotation
                 int xDir = 1;
                 if (invertXAxis)
@@ -138,7 +137,7 @@ public class Player : MonoBehaviour
                 xRot = xRot + yDir * Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSpeed;
                 //myCameraTransform.localRotation = Quaternion.Euler(xRot, 0, 0);
                 myCameraTransform.localRotation = Quaternion.Euler(Mathf.Clamp(xRot, -90, 90),0,0);
-            }
+            
 
             UpdateEffect();
 

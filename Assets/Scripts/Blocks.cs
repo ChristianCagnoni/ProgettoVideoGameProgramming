@@ -25,7 +25,18 @@ public class Blocks : MonoBehaviour
         if (other.name == "Player")
         {
             block.SetActive(true);
+            if(gameObject.name== "Block" || gameObject.name== "Block1")
+            {
+                StartCoroutine("dead");
+            }
         }
+    }
+
+    IEnumerator dead()
+    {
+        yield return new WaitForSeconds(2);
+        HealthBar healthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
+        healthBar.SetHealth(0);
     }
 
 }

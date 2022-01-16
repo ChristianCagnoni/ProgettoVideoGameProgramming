@@ -6,7 +6,7 @@ using DigitalRuby.PyroParticles;
 public class FinalBoss : MonoBehaviour
 {
 
-    public enum FinalBossStatus { start, half, dead };
+    public enum FinalBossStatus { start, half, dead,quarter };
     public enum FinalBossDamage {god,normal }
 
     private GameObject target;
@@ -37,6 +37,23 @@ public class FinalBoss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SettingsManager.difficulty == "easy")
+        {
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            maxH += 100;
+            speed += 50;
+            firstWait -= 3;
+            cooldown -= 2;
+        }
+        else
+        {
+            maxH += 200;
+            speed += 100;
+            firstWait -= 6;
+            cooldown -= 4;
+        }
         target = GameObject.Find("Player");
         damage = FinalBossDamage.normal;
         bossBar.SetMaxHealth(maxH);
@@ -57,6 +74,11 @@ public class FinalBoss : MonoBehaviour
                 damage = FinalBossDamage.god;
                 status = FinalBossStatus.half;
             }
+            if (bossBar.GetHealth() <= maxH / 4 && Vector3.Distance(transform.position, peak) <= 1 && SettingsManager.difficulty=="difficult")
+            {
+                damage = FinalBossDamage.god;
+                status = FinalBossStatus.half;
+            }
             if (bossBar.GetHealth() <= 0)
             {
                 status=FinalBossStatus.dead;
@@ -72,23 +94,34 @@ public class FinalBoss : MonoBehaviour
             if (canAttack && status==FinalBossStatus.start)
             {
                 StartCoroutine("AttackCooldown");
-            }else if(canAttack && status == FinalBossStatus.half)
-            {
-
             }
             if (ready)
             {
                 float step = speed * Time.deltaTime;
                 istance.transform.position += normalizeDirection * step;
+                Debug.Log(speed);
+                Debug.Log(step);
             }
             if(Vector3.Distance(transform.position,peak)<=1 && damage == FinalBossDamage.god)
             {
                 //poisonSphere.SetActive(false);
                 poisonSphere.transform.position = new Vector3(0, 580.1f, 0);
-                godAttack[0].SetActive(true);
-                godAttack[1].SetActive(true);
-                godAttack[2].SetActive(true);
-                godAttack[3].SetActive(true);
+                if (SettingsManager.difficulty == "easy")
+                {
+                    godAttack[0].SetActive(true);
+                }
+                else if (SettingsManager.difficulty == "medium")
+                {
+                    godAttack[0].SetActive(true);
+                    godAttack[1].SetActive(true);
+                }
+                else
+                {
+                    godAttack[0].SetActive(true);
+                    godAttack[1].SetActive(true);
+                    godAttack[2].SetActive(true);
+                    godAttack[3].SetActive(true);
+                }
                 StartCoroutine("waitAttackGod");
             }
         }
@@ -106,12 +139,25 @@ public class FinalBoss : MonoBehaviour
     IEnumerator waitAttackGod()
     {
         yield return new WaitForSeconds(godDuration);
-        godAttack[0].SetActive(false);
-        godAttack[1].SetActive(false);
-        godAttack[2].SetActive(false);
-        godAttack[3].SetActive(false);
+        if (SettingsManager.difficulty == "easy")
+        {
+            godAttack[0].SetActive(false);
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            godAttack[0].SetActive(false);
+            godAttack[1].SetActive(false);
+        }
+        else
+        {
+            godAttack[0].SetActive(false);
+            godAttack[1].SetActive(false);
+            godAttack[2].SetActive(false);
+            godAttack[3].SetActive(false);
+        }
         ready = false;
         damage = FinalBossDamage.normal;
+        status = FinalBossStatus.start;
     }
 
     IEnumerator waitForAttack()

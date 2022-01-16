@@ -16,7 +16,18 @@ public class BossManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gui= GameObject.Find("GUI");
+        if (SettingsManager.difficulty == "easy")
+        {
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            maxH += 50;
+        }
+        else
+        {
+            maxH += 100;
+        }
+        gui = GameObject.Find("GUI");
         bossBar = GameObject.Find("GUI").transform.GetChild(4).GetComponent<BossHealthBar>();
         state = BossZombieStatus.live;
         bossBar.SetMaxHealth(maxH);

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.IO;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class SettingsMenu : MonoBehaviour
     public TextMeshProUGUI playerSText;
     public Slider enemyS;
     public TextMeshProUGUI enemySText;
+    public Button esc;
 
 
     private Button b;
@@ -61,6 +63,7 @@ public class SettingsMenu : MonoBehaviour
         b.onClick.AddListener(selectButton1);
         b1.onClick.AddListener(selectButton2);
         b2.onClick.AddListener(selectButton3);
+        esc.onClick.AddListener(CloseSettings);
         scrollView= transform.GetChild(1).gameObject;
         rect = scrollView.GetComponent<ScrollRect>();
         index = 0;
@@ -80,6 +83,67 @@ public class SettingsMenu : MonoBehaviour
         screen.onValueChanged.AddListener(delegate { changeScreen(); });
         shadowRes.onValueChanged.AddListener(delegate { changeShadowRes(); });
         shadowDist.onValueChanged.AddListener(delegate { changeShadowDist(); });
+    }
+
+    private void CloseSettings()
+    {
+        if (fps.isOn)
+        {
+            SettingsManager.fps = true;
+        }
+        else
+        {
+            SettingsManager.fps = false;
+        }
+        if (vsync.isOn)
+        {
+            SettingsManager.vsync = true;
+            QualitySettings.vSyncCount = 1;
+        }
+        else
+        {
+            SettingsManager.vsync = false;
+            QualitySettings.vSyncCount = 0;
+        }
+        if (inverseX.isOn)
+        {
+            SettingsManager.invertX = true;
+        }
+        else
+        {
+            SettingsManager.invertX = false;
+        }
+        if (inverseY.isOn)
+        {
+            SettingsManager.invertY = true;
+        }
+        else
+        {
+            SettingsManager.invertY = false;
+        }
+        if (shoadowEnabled.isOn)
+        {
+            SettingsManager.shadowEnabled = true;
+            QualitySettings.shadows = ShadowQuality.All;
+        }
+        else
+        {
+            SettingsManager.shadowEnabled = false;
+            QualitySettings.shadows = ShadowQuality.Disable;
+            SettingsManager.changeUrp(5);
+        }
+        if (mouseSensibility.text != "")
+        {
+            SettingsManager.sensibility = float.Parse(mouseSensibility.text);
+        }
+        else
+        {
+            SettingsManager.sensibility = 10;
+        }
+        MenuStartupManager.actualMenu.SetActive(false);
+        MenuStartupManager.actualMenu = parent;
+        MenuStartupManager.actualMenu.SetActive(true);
+        saveConfig();
     }
 
     private void changeMusic()
@@ -437,6 +501,7 @@ public class SettingsMenu : MonoBehaviour
             MenuStartupManager.actualMenu.SetActive(false);
             MenuStartupManager.actualMenu = parent;
             MenuStartupManager.actualMenu.SetActive(true);
+            saveConfig();
         }else if(Input.GetKeyDown(KeyCode.Escape) && sensibility)
         {
             EventSystem.current.SetSelectedGameObject(actual);
@@ -458,6 +523,59 @@ public class SettingsMenu : MonoBehaviour
             sensibility = false;
         }
 
+    }
+
+    private void saveConfig()
+    {
+        if (!Directory.Exists(SettingsManager.configPath))
+        {
+            Directory.CreateDirectory(SettingsManager.configPath);
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Open)))
+            {
+                sw.WriteLine(SettingsManager.character.ToString());
+                sw.WriteLine(SettingsManager.sensibility.ToString());
+                sw.WriteLine(SettingsManager.invertX.ToString());
+                sw.WriteLine(SettingsManager.invertY.ToString());
+                sw.WriteLine(SettingsManager.resH.ToString());
+                sw.WriteLine(SettingsManager.resW.ToString());
+                sw.WriteLine(SettingsManager.antiA.ToString());
+                sw.WriteLine(SettingsManager.full.ToString());
+                sw.WriteLine(SettingsManager.resShadow.ToString());
+                sw.WriteLine(SettingsManager.distanceShadow.ToString());
+                sw.WriteLine(SettingsManager.shadowEnabled.ToString());
+                sw.WriteLine(SettingsManager.quality.ToString());
+                sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.WriteLine(SettingsManager.fps.ToString());
+                sw.WriteLine(SettingsManager.music.ToString());
+                sw.WriteLine(SettingsManager.playerSound.ToString());
+                sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.Close();
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Open)))
+            {
+                sw.WriteLine(SettingsManager.character.ToString());
+                sw.WriteLine(SettingsManager.sensibility.ToString());
+                sw.WriteLine(SettingsManager.invertX.ToString());
+                sw.WriteLine(SettingsManager.invertY.ToString());
+                sw.WriteLine(SettingsManager.resH.ToString());
+                sw.WriteLine(SettingsManager.resW.ToString());
+                sw.WriteLine(SettingsManager.antiA.ToString());
+                sw.WriteLine(SettingsManager.full.ToString());
+                sw.WriteLine(SettingsManager.resShadow.ToString());
+                sw.WriteLine(SettingsManager.distanceShadow.ToString());
+                sw.WriteLine(SettingsManager.shadowEnabled.ToString());
+                sw.WriteLine(SettingsManager.quality.ToString());
+                sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.WriteLine(SettingsManager.fps.ToString());
+                sw.WriteLine(SettingsManager.music.ToString());
+                sw.WriteLine(SettingsManager.playerSound.ToString());
+                sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.Close();
+            }
+        }
     }
 
 }

@@ -33,6 +33,7 @@ public class BossEnemyZombie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         isAttacking = false;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();

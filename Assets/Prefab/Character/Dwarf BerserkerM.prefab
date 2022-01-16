@@ -1806,6 +1806,7 @@ GameObject:
   - component: {fileID: -2289800260490599189}
   - component: {fileID: -7512495888966763066}
   - component: {fileID: -8062405830493639561}
+  - component: {fileID: -839936554862845326}
   m_Layer: 8
   m_Name: Dwarf BerserkerM
   m_TagString: Player
@@ -2016,6 +2017,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-839936554862845326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070759079770602316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265d21d938e6ed54093478f88fa9606e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2070769780474432538
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,30 @@ public class BigBossParasite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        state=BossStatus.live;
+        if (SettingsManager.difficulty == "easy")
+        {
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            moveSpeed+=2;
+            maxDist += 10;
+            minDist -= 2;
+            enemyCooldown -= 0.25f;
+            damage += 5;
+            radius += 10;
+            maxH += 50;
+        }
+        else
+        {
+            moveSpeed += 4;
+            maxDist += 20;
+            minDist -= 4;
+            enemyCooldown -= 0.5f;
+            damage += 10;
+            radius += 20;
+            maxH += 100;
+        }
+        state =BossStatus.live;
         bossBar.SetMaxHealth(maxH);
         old = 0;
         last = 0;

@@ -1823,7 +1823,7 @@ GameObject:
   - component: {fileID: 654076266}
   m_Layer: 0
   m_Name: Music
-  m_TagString: Untagged
+  m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4746,6 +4746,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc099369ec11e9d409c524e27816375a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  urps:
+  - {fileID: 11400000, guid: 19ba41d7c0026c3459d37c2fe90c55a0, type: 2}
+  - {fileID: 11400000, guid: 27d1219383f0f004b92d035cca30d121, type: 2}
+  - {fileID: 11400000, guid: 91f87a6c395c71b43a44bc35856fd8d1, type: 2}
+  - {fileID: 11400000, guid: c74af5c7a2ac43146b240bb5c9df94d7, type: 2}
+  - {fileID: 11400000, guid: b5e1e237aabaed34489b8f3bc2fe9bc3, type: 2}
+  - {fileID: 11400000, guid: 09114d76eec29e944b76b4de80a52ef9, type: 2}
 --- !u!4 &1557835592
 Transform:
   m_ObjectHideFlags: 0

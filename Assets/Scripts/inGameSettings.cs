@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 public class inGameSettings : MonoBehaviour
 {
@@ -21,13 +22,22 @@ public class inGameSettings : MonoBehaviour
     public Toggle vsync;
     public TextMeshProUGUI qualityText;
     public Toggle fps;
+    public Slider music;
+    public TextMeshProUGUI musicText;
+    public Slider playerS;
+    public TextMeshProUGUI playerSText;
+    public Slider enemyS;
+    public TextMeshProUGUI enemySText;
+    public Button esc;
 
     private Button b;
     private Button b1;
+    private Button b2;
     private GameObject generalPanel;
     public GameObject parent;
     private GameObject gameB;
     private GameObject gameB1;
+    private GameObject gameB2;
     private GameObject actual;
     private GameObject scrollView;
     private ScrollRect rect;
@@ -43,12 +53,16 @@ public class inGameSettings : MonoBehaviour
         generalPanel = transform.GetChild(0).gameObject;
         gameB = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
         gameB1 = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(1).gameObject;
+        gameB2 = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(2).gameObject;
         b = gameB.GetComponent<Button>();
         b1 = gameB1.GetComponent<Button>();
+        b2 = gameB2.GetComponent<Button>();
         actual = gameB;
         b.Select();
         b.onClick.AddListener(selectButton1);
         b1.onClick.AddListener(selectButton2);
+        b2.onClick.AddListener(selectButton3);
+        esc.onClick.AddListener(CloseSettings);
         scrollView = transform.GetChild(1).gameObject;
         rect = scrollView.GetComponent<ScrollRect>();
         index = 0;
@@ -57,11 +71,95 @@ public class inGameSettings : MonoBehaviour
         sensibility = false;
         qualityText.text = SettingsManager.quality.ToString()+"%";
         quality.onValueChanged.AddListener(delegate { changeQuality(); });
+        musicText.text = SettingsManager.music.ToString() + "%";
+        music.onValueChanged.AddListener(delegate { changeMusic(); });
+        playerSText.text = SettingsManager.playerSound.ToString() + "%";
+        playerS.onValueChanged.AddListener(delegate { changePlayerS(); });
+        enemySText.text = SettingsManager.enemySound.ToString() + "%";
+        enemyS.onValueChanged.AddListener(delegate { changeEnemyS(); });
         res.onValueChanged.AddListener(delegate { changeRes(); });
         AA.onValueChanged.AddListener(delegate { changeAA(); });
         screen.onValueChanged.AddListener(delegate { changeScreen(); });
         shadowRes.onValueChanged.AddListener(delegate { changeShadowRes(); });
         shadowDist.onValueChanged.AddListener(delegate { changeShadowDist(); });
+    }
+
+    private void CloseSettings()
+    {
+        if (fps.isOn)
+        {
+            SettingsManager.fps = true;
+        }
+        else
+        {
+            SettingsManager.fps = false;
+        }
+        if (vsync.isOn)
+        {
+            SettingsManager.vsync = true;
+            QualitySettings.vSyncCount = 1;
+        }
+        else
+        {
+            SettingsManager.vsync = false;
+            QualitySettings.vSyncCount = 0;
+        }
+        if (inverseX.isOn)
+        {
+            SettingsManager.invertX = true;
+        }
+        else
+        {
+            SettingsManager.invertX = false;
+        }
+        if (inverseY.isOn)
+        {
+            SettingsManager.invertY = true;
+        }
+        else
+        {
+            SettingsManager.invertY = false;
+        }
+        if (shoadowEnabled.isOn)
+        {
+            SettingsManager.shadowEnabled = true;
+            QualitySettings.shadows = ShadowQuality.All;
+        }
+        else
+        {
+            SettingsManager.shadowEnabled = false;
+            QualitySettings.shadows = ShadowQuality.Disable;
+        }
+        if (mouseSensibility.text != "")
+        {
+            SettingsManager.sensibility = float.Parse(mouseSensibility.text);
+        }
+        else
+        {
+            SettingsManager.sensibility = 10;
+        }
+        transform.gameObject.SetActive(false);
+        parent.SetActive(true);
+        InGameMenu.isInMenu = true;
+        saveConfig();
+    }
+
+    private void changeMusic()
+    {
+        SettingsManager.music = music.value * 100;
+        musicText.text = SettingsManager.music.ToString() + "%";
+    }
+
+    private void changeEnemyS()
+    {
+        SettingsManager.enemySound = enemyS.value * 100;
+        enemySText.text = SettingsManager.enemySound.ToString() + "%";
+    }
+
+    private void changePlayerS()
+    {
+        SettingsManager.playerSound = playerS.value * 100;
+        playerSText.text = SettingsManager.playerSound.ToString() + "%";
     }
 
     private void loadSettings()
@@ -156,6 +254,14 @@ public class inGameSettings : MonoBehaviour
         }
         quality.value = SettingsManager.quality / 100;
         qualityText.text = SettingsManager.quality.ToString()+"%";
+
+        music.value = SettingsManager.music / 100;
+        musicText.text = SettingsManager.music.ToString() + "%";
+        playerS.value = SettingsManager.playerSound / 100;
+        playerSText.text = SettingsManager.playerSound.ToString() + "%";
+        enemyS.value = SettingsManager.enemySound / 100;
+        enemySText.text = SettingsManager.enemySound.ToString() + "%";
+
         mouseSensibility.text = SettingsManager.sensibility.ToString();
         vsync.isOn = SettingsManager.vsync;
         fps.isOn=SettingsManager.fps;
@@ -324,6 +430,16 @@ public class inGameSettings : MonoBehaviour
         b1.Select();
     }
 
+    private void selectButton3()
+    {
+        contents[index].SetActive(false);
+        index = 2;
+        rect.content = contents[index].GetComponent<RectTransform>();
+        contents[index].SetActive(true);
+        actual = gameB2;
+        b2.Select();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -385,6 +501,7 @@ public class inGameSettings : MonoBehaviour
             transform.gameObject.SetActive(false);
             parent.SetActive(true);
             InGameMenu.isInMenu = true;
+            saveConfig();
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && sensibility)
         {
@@ -405,6 +522,59 @@ public class inGameSettings : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(actual);
             sensibility = false;
+        }
+    }
+
+    private void saveConfig()
+    {
+        if (!Directory.Exists(SettingsManager.configPath))
+        {
+            Directory.CreateDirectory(SettingsManager.configPath);
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Open)))
+            {
+                sw.WriteLine(SettingsManager.character.ToString());
+                sw.WriteLine(SettingsManager.sensibility.ToString());
+                sw.WriteLine(SettingsManager.invertX.ToString());
+                sw.WriteLine(SettingsManager.invertY.ToString());
+                sw.WriteLine(SettingsManager.resH.ToString());
+                sw.WriteLine(SettingsManager.resW.ToString());
+                sw.WriteLine(SettingsManager.antiA.ToString());
+                sw.WriteLine(SettingsManager.full.ToString());
+                sw.WriteLine(SettingsManager.resShadow.ToString());
+                sw.WriteLine(SettingsManager.distanceShadow.ToString());
+                sw.WriteLine(SettingsManager.shadowEnabled.ToString());
+                sw.WriteLine(SettingsManager.quality.ToString());
+                sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.WriteLine(SettingsManager.fps.ToString());
+                sw.WriteLine(SettingsManager.music.ToString());
+                sw.WriteLine(SettingsManager.playerSound.ToString());
+                sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.Close();
+            }
+        }
+        else
+        {
+            using (StreamWriter sw = new StreamWriter(File.Open(SettingsManager.configFile, System.IO.FileMode.Open)))
+            {
+                sw.WriteLine(SettingsManager.character.ToString());
+                sw.WriteLine(SettingsManager.sensibility.ToString());
+                sw.WriteLine(SettingsManager.invertX.ToString());
+                sw.WriteLine(SettingsManager.invertY.ToString());
+                sw.WriteLine(SettingsManager.resH.ToString());
+                sw.WriteLine(SettingsManager.resW.ToString());
+                sw.WriteLine(SettingsManager.antiA.ToString());
+                sw.WriteLine(SettingsManager.full.ToString());
+                sw.WriteLine(SettingsManager.resShadow.ToString());
+                sw.WriteLine(SettingsManager.distanceShadow.ToString());
+                sw.WriteLine(SettingsManager.shadowEnabled.ToString());
+                sw.WriteLine(SettingsManager.quality.ToString());
+                sw.WriteLine(SettingsManager.vsync.ToString());
+                sw.WriteLine(SettingsManager.fps.ToString());
+                sw.WriteLine(SettingsManager.music.ToString());
+                sw.WriteLine(SettingsManager.playerSound.ToString());
+                sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.Close();
+            }
         }
     }
 

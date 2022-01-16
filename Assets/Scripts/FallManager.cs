@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FallManager : MonoBehaviour
 {
@@ -20,8 +21,15 @@ public class FallManager : MonoBehaviour
     {
         if (other.name == "Player")
         {
-            HealthBar healthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
-            healthBar.SetHealth(0);
+            if (SceneManager.GetActiveScene().name == "Tutorial")
+            {
+                SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
+            }
+            else
+            {
+                HealthBar healthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
+                healthBar.SetHealth(0);
+            }
         }
     }
 }

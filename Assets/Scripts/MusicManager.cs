@@ -18,7 +18,18 @@ public class MusicManager : MonoBehaviour
     {
         if (SettingsManager.music != musicSource.volume)
         {
-            musicSource.volume=SettingsManager.music/100;
+            if (gameObject.CompareTag("Music"))
+            {
+                musicSource.volume = SettingsManager.music / 100;
+            }
+            else if (gameObject.CompareTag("Player"))
+            {
+                musicSource.volume = SettingsManager.playerSound / 100;
+            }
+            else if (gameObject.CompareTag("Enemy"))
+            {
+                musicSource.volume = SettingsManager.enemySound / 100;
+            }
         }
     }
 }
