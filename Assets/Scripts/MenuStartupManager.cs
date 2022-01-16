@@ -108,6 +108,7 @@ public class MenuStartupManager : MonoBehaviour
                 sw.WriteLine(SettingsManager.music.ToString());
                 sw.WriteLine(SettingsManager.playerSound.ToString());
                 sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.WriteLine(SettingsManager.defURP.ToString());
                 sw.Close();
             }
         }
@@ -132,6 +133,7 @@ public class MenuStartupManager : MonoBehaviour
                 sw.WriteLine(SettingsManager.music.ToString());
                 sw.WriteLine(SettingsManager.playerSound.ToString());
                 sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.WriteLine(SettingsManager.defURP.ToString());
                 sw.Close();
             }
         }

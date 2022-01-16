@@ -124,13 +124,10 @@ public class SettingsMenu : MonoBehaviour
         if (shoadowEnabled.isOn)
         {
             SettingsManager.shadowEnabled = true;
-            QualitySettings.shadows = ShadowQuality.All;
         }
         else
         {
             SettingsManager.shadowEnabled = false;
-            QualitySettings.shadows = ShadowQuality.Disable;
-            SettingsManager.changeUrp(5);
         }
         if (mouseSensibility.text != "")
         {
@@ -143,6 +140,36 @@ public class SettingsMenu : MonoBehaviour
         MenuStartupManager.actualMenu.SetActive(false);
         MenuStartupManager.actualMenu = parent;
         MenuStartupManager.actualMenu.SetActive(true);
+        if (shoadowEnabled.isOn)
+        {
+            if (SettingsManager.resShadow == 256)
+            {
+                SettingsManager.changeUrp(0);
+            }
+            else if (SettingsManager.resShadow == 512)
+            {
+                SettingsManager.changeUrp(1);
+            }
+            else if (SettingsManager.resShadow == 1024)
+            {
+                SettingsManager.changeUrp(2);
+            }
+            else if (SettingsManager.resShadow == 2048)
+            {
+                SettingsManager.changeUrp(3);
+            }
+            else if (SettingsManager.resShadow == 4096)
+            {
+                SettingsManager.changeUrp(4);
+            }
+        }
+        else
+        {
+            SettingsManager.changeUrp(5);
+        }
+
+        SettingsManager.changeConfig(SettingsManager.antiA, SettingsManager.quality/100, (int)SettingsManager.distanceShadow);
+
         saveConfig();
     }
 
@@ -212,27 +239,22 @@ public class SettingsMenu : MonoBehaviour
         if (SettingsManager.resShadow == 256)
         {
             shadowRes.value = 0;
-            QualitySettings.shadowResolution = ShadowResolution.Low;
         }
         else if (SettingsManager.resShadow == 512)
         {
             shadowRes.value = 1;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (SettingsManager.resShadow == 1024)
         {
             shadowRes.value = 2;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (SettingsManager.resShadow == 2048)
         {
             shadowRes.value = 3;
-            QualitySettings.shadowResolution = ShadowResolution.High;
         }
         else
         {
             shadowRes.value = 4;
-            QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
         }
         if (SettingsManager.distanceShadow == 10)
         {
@@ -276,16 +298,6 @@ public class SettingsMenu : MonoBehaviour
             QualitySettings.vSyncCount = 0;
         }
         Screen.SetResolution(SettingsManager.resW, SettingsManager.resH, SettingsManager.full);
-        QualitySettings.shadowDistance = SettingsManager.distanceShadow;
-        QualitySettings.antiAliasing = SettingsManager.antiA;
-        if (shoadowEnabled.isOn)
-        {
-            QualitySettings.shadows = ShadowQuality.All;
-        }
-        else
-        {
-            QualitySettings.shadows = ShadowQuality.Disable;
-        }
     }
 
     private void changeShadowDist()
@@ -311,7 +323,6 @@ public class SettingsMenu : MonoBehaviour
         {
             SettingsManager.distanceShadow = 100;
         }
-        QualitySettings.shadowDistance = SettingsManager.distanceShadow;
     }
 
     private void changeShadowRes()
@@ -320,27 +331,22 @@ public class SettingsMenu : MonoBehaviour
         if (value == 0)
         {
             SettingsManager.resShadow = 256;
-            QualitySettings.shadowResolution = ShadowResolution.Low;
         }
         else if (value == 1)
         {
             SettingsManager.resShadow = 512;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (value == 2)
         {
             SettingsManager.resShadow = 1024;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (value == 3)
         {
             SettingsManager.resShadow = 2048;
-            QualitySettings.shadowResolution = ShadowResolution.High;
         }
         else
         {
             SettingsManager.resShadow = 4096;
-            QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
         }
     }
 
@@ -377,7 +383,6 @@ public class SettingsMenu : MonoBehaviour
         {
             SettingsManager.antiA = 8;
         }
-        QualitySettings.antiAliasing=SettingsManager.antiA;
     }
 
     private void changeRes()
@@ -501,6 +506,7 @@ public class SettingsMenu : MonoBehaviour
             MenuStartupManager.actualMenu.SetActive(false);
             MenuStartupManager.actualMenu = parent;
             MenuStartupManager.actualMenu.SetActive(true);
+            SettingsManager.changeConfig(SettingsManager.antiA, SettingsManager.quality/100, (int)SettingsManager.distanceShadow);
             saveConfig();
         }else if(Input.GetKeyDown(KeyCode.Escape) && sensibility)
         {
@@ -549,6 +555,7 @@ public class SettingsMenu : MonoBehaviour
                 sw.WriteLine(SettingsManager.music.ToString());
                 sw.WriteLine(SettingsManager.playerSound.ToString());
                 sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.WriteLine(SettingsManager.defURP.ToString());
                 sw.Close();
             }
         }
@@ -573,6 +580,7 @@ public class SettingsMenu : MonoBehaviour
                 sw.WriteLine(SettingsManager.music.ToString());
                 sw.WriteLine(SettingsManager.playerSound.ToString());
                 sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.WriteLine(SettingsManager.defURP.ToString());
                 sw.Close();
             }
         }

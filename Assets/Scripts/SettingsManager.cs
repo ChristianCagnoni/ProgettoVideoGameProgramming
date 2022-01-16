@@ -71,6 +71,7 @@ public class SettingsManager : MonoBehaviour
                 sw.WriteLine(35);
                 sw.WriteLine(100);
                 sw.WriteLine(100);
+                sw.WriteLine(0);
                 sw.Close();
             }
             using (StreamReader sw = new StreamReader(File.Open(configFile, System.IO.FileMode.Open)))
@@ -96,6 +97,7 @@ public class SettingsManager : MonoBehaviour
                 music = float.Parse(cfg[14]);
                 playerSound = float.Parse(cfg[15]);
                 enemySound = float.Parse(cfg[16]);
+                defURP=int.Parse(cfg[17]);
             }
         }
         else
@@ -127,6 +129,7 @@ public class SettingsManager : MonoBehaviour
                     music = float.Parse(cfg[14]);
                     playerSound = float.Parse(cfg[15]);
                     enemySound = float.Parse(cfg[16]);
+                    defURP = int.Parse(cfg[17]);
                     sw.Close();
                 }
             }
@@ -151,6 +154,7 @@ public class SettingsManager : MonoBehaviour
                     sw.WriteLine(35);
                     sw.WriteLine(100);
                     sw.WriteLine(100);
+                    sw.WriteLine(0);
                     sw.Close();
                 }
                 using (StreamReader sw = new StreamReader(File.Open(configFile, System.IO.FileMode.Open)))
@@ -176,6 +180,7 @@ public class SettingsManager : MonoBehaviour
                     music = float.Parse(cfg[14]);
                     playerSound = float.Parse(cfg[15]);
                     enemySound = float.Parse(cfg[16]);
+                    defURP = int.Parse(cfg[17]);
                     sw.Close();
                 }
             }
@@ -185,7 +190,16 @@ public class SettingsManager : MonoBehaviour
             resW = Display.main.renderingWidth;
             resH = Display.main.renderingHeight;
         }
-        urp = urps[0];
+        urp = urps[defURP];
+    }
+
+    public static void changeConfig(int aliasing,float scale,int distance)
+    {
+        urp.renderScale = scale;
+        urp.msaaSampleCount = aliasing;
+        urp.shadowDistance = distance;
+        Debug.Log(scale);
+        Debug.Log(urp.renderScale);
     }
 
     public static void changeUrp(int index)
@@ -218,8 +232,5 @@ public class SettingsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //urp.renderScale = quality;
-        //urp.shadowDistance = 50;
-        //urp.msaaSampleCount = 8;
     }
 }

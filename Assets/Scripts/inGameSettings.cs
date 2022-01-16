@@ -123,12 +123,10 @@ public class inGameSettings : MonoBehaviour
         if (shoadowEnabled.isOn)
         {
             SettingsManager.shadowEnabled = true;
-            QualitySettings.shadows = ShadowQuality.All;
         }
         else
         {
             SettingsManager.shadowEnabled = false;
-            QualitySettings.shadows = ShadowQuality.Disable;
         }
         if (mouseSensibility.text != "")
         {
@@ -141,6 +139,7 @@ public class inGameSettings : MonoBehaviour
         transform.gameObject.SetActive(false);
         parent.SetActive(true);
         InGameMenu.isInMenu = true;
+        SettingsManager.changeConfig(SettingsManager.antiA, SettingsManager.quality / 100, (int)SettingsManager.distanceShadow);
         saveConfig();
     }
 
@@ -210,27 +209,22 @@ public class inGameSettings : MonoBehaviour
         if (SettingsManager.resShadow == 256)
         {
             shadowRes.value = 0;
-            QualitySettings.shadowResolution = ShadowResolution.Low;
         }
         else if (SettingsManager.resShadow == 512)
         {
             shadowRes.value = 1;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (SettingsManager.resShadow == 1024)
         {
             shadowRes.value = 2;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (SettingsManager.resShadow == 2048)
         {
             shadowRes.value = 3;
-            QualitySettings.shadowResolution = ShadowResolution.High;
         }
         else
         {
             shadowRes.value = 4;
-            QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
         }
         if (SettingsManager.distanceShadow == 10)
         {
@@ -274,16 +268,6 @@ public class inGameSettings : MonoBehaviour
             QualitySettings.vSyncCount = 0;
         }
         Screen.SetResolution(SettingsManager.resW, SettingsManager.resH, SettingsManager.full);
-        QualitySettings.shadowDistance = SettingsManager.distanceShadow;
-        QualitySettings.antiAliasing = SettingsManager.antiA;
-        if (shoadowEnabled.isOn)
-        {
-            QualitySettings.shadows = ShadowQuality.All;
-        }
-        else
-        {
-            QualitySettings.shadows = ShadowQuality.Disable;
-        }
     }
 
     private void changeShadowDist()
@@ -309,7 +293,6 @@ public class inGameSettings : MonoBehaviour
         {
             SettingsManager.distanceShadow = 100;
         }
-        QualitySettings.shadowDistance = SettingsManager.distanceShadow;
     }
 
     private void changeShadowRes()
@@ -318,27 +301,22 @@ public class inGameSettings : MonoBehaviour
         if (value == 0)
         {
             SettingsManager.resShadow = 256;
-            QualitySettings.shadowResolution = ShadowResolution.Low;
         }
         else if (value == 1)
         {
             SettingsManager.resShadow = 512;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (value == 2)
         {
             SettingsManager.resShadow = 1024;
-            QualitySettings.shadowResolution = ShadowResolution.Medium;
         }
         else if (value == 3)
         {
             SettingsManager.resShadow = 2048;
-            QualitySettings.shadowResolution = ShadowResolution.High;
         }
         else
         {
             SettingsManager.resShadow = 4096;
-            QualitySettings.shadowResolution = ShadowResolution.VeryHigh;
         }
     }
 
@@ -375,7 +353,6 @@ public class inGameSettings : MonoBehaviour
         {
             SettingsManager.antiA = 8;
         }
-        QualitySettings.antiAliasing = SettingsManager.antiA;
     }
 
     private void changeRes()
@@ -483,12 +460,10 @@ public class inGameSettings : MonoBehaviour
             if (shoadowEnabled.isOn)
             {
                 SettingsManager.shadowEnabled = true;
-                QualitySettings.shadows = ShadowQuality.All;
             }
             else
             {
                 SettingsManager.shadowEnabled = false;
-                QualitySettings.shadows = ShadowQuality.Disable;
             }
             if (mouseSensibility.text != "")
             {
@@ -501,6 +476,7 @@ public class inGameSettings : MonoBehaviour
             transform.gameObject.SetActive(false);
             parent.SetActive(true);
             InGameMenu.isInMenu = true;
+            SettingsManager.changeConfig(SettingsManager.antiA, SettingsManager.quality / 100, (int)SettingsManager.distanceShadow);
             saveConfig();
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && sensibility)
@@ -549,6 +525,7 @@ public class inGameSettings : MonoBehaviour
                 sw.WriteLine(SettingsManager.music.ToString());
                 sw.WriteLine(SettingsManager.playerSound.ToString());
                 sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.WriteLine(SettingsManager.defURP.ToString());
                 sw.Close();
             }
         }
@@ -573,6 +550,7 @@ public class inGameSettings : MonoBehaviour
                 sw.WriteLine(SettingsManager.music.ToString());
                 sw.WriteLine(SettingsManager.playerSound.ToString());
                 sw.WriteLine(SettingsManager.enemySound.ToString());
+                sw.WriteLine(SettingsManager.defURP.ToString());
                 sw.Close();
             }
         }
