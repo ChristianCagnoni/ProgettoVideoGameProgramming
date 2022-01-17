@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//script per la gestione del tutorial
 public class TutorialManager : MonoBehaviour
 {
 
-    public enum tutState {pause,on};
+    public enum tutState {pause,on};//stato del tutorial
 
     public static int tutorialPhase;
     public GameObject portal;
@@ -41,6 +42,7 @@ public class TutorialManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //se premi esc metti in pausa
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (tut != tutState.pause)
@@ -64,6 +66,7 @@ public class TutorialManager : MonoBehaviour
                 InGameMenu.isInMenu = false;
             }
         }
+        //in base alla fase del tutorial fai cose diverse
         if (tutorialPhase == 0)
         {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
@@ -193,6 +196,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    //passa al primo livello
     private void startGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -200,6 +204,7 @@ public class TutorialManager : MonoBehaviour
         SceneManager.LoadScene("FirstChapter", LoadSceneMode.Single);
     }
 
+    //ricomincia il tutorial
     void repeatTutorial()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -215,6 +220,7 @@ public class TutorialManager : MonoBehaviour
         repeat.onClick.RemoveListener(repeatTutorial);
     }
 
+    //attendi 20 secondi per l'azione del nemico
     IEnumerator waitEnemy()
     {
         yield return new WaitForSeconds(20);
@@ -225,6 +231,7 @@ public class TutorialManager : MonoBehaviour
         StopCoroutine("waitEnemy");
     }
 
+    //attendi 3 secondi per leggere il testo
     IEnumerator waitTime()
     {
         yield return new WaitForSeconds(3);

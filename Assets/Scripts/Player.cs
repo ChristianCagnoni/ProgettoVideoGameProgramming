@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 
+//script per la gestione del player
 public class Player : MonoBehaviour
 {
+    //parametri del player
     public float keyboardSpeed;
     public float mouseSpeed;
     public bool invertXAxis, invertYAxis;
@@ -87,9 +89,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //esegui blocco se gioco non è in pausa
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
-
+            //gestione rotazione e poteri del player
             if (invertXAxis != SettingsManager.invertX)
             {
                 invertXAxis = SettingsManager.invertX;
@@ -166,8 +169,10 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //esegui blocco se gioco non è in pausa
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
+            //gestione del movimento e della corsa
             if (!myCharacterController.isGrounded)
             {
                 yMov += Physics.gravity.y * Time.fixedDeltaTime ;
@@ -214,6 +219,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //metodo per riprodurre passi
     IEnumerator waitAudio()
     {
         while (true)
@@ -228,6 +234,7 @@ public class Player : MonoBehaviour
     }
 
     
+    //metodo che gestisce i poteri del player
         private void UpdateEffect()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -266,6 +273,7 @@ public class Player : MonoBehaviour
             }
         }
 
+    //metodo che attiva l'effetto del potere
         private void BeginEffect()
         {
             Vector3 pos;
@@ -319,12 +327,14 @@ public class Player : MonoBehaviour
             }
         }
 
+    //metodo che interrompe effetto precedente e avvia il nuovo
         public void StartCurrent()
         {
             StopCurrent();
             BeginEffect();
         }
 
+    //metodo che interrompe l'effetto
         private void StopCurrent()
         {
             // if we are running a constant effect like wall of fire, stop it now
@@ -336,6 +346,7 @@ public class Player : MonoBehaviour
             currentPrefabScript = null;
         }
 
+    //passa al prossimo effetto
     public void NextPrefab()
     {
         currentPrefabIndex++;
@@ -352,6 +363,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //passa all'effetto precedente
     public void PreviousPrefab()
     {
         currentPrefabIndex--;
@@ -368,18 +380,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    //ricarica stamina
         void ReloadEnergy()
     {
         currentEnergy += 0.2f;
         energyBar.SetEnergy(currentEnergy);
     }
 
+    //consuma stamina
     void ConsumeEnergy(float energy)
     {
         currentEnergy -= energy;
         energyBar.SetEnergy(currentEnergy);    
     }
 
+    //gestore del rumore
     IEnumerator noiseControl()
     {
         while(true){
@@ -389,6 +404,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //attendi conclusione animazione attacco
     IEnumerator WaitForAnimation()
     {
         if (sceneN != "Tutorial")

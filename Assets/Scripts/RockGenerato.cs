@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script che spawna le rocce nel primo livello
 public class RockGenerato : MonoBehaviour
 {
 
@@ -31,6 +32,7 @@ public class RockGenerato : MonoBehaviour
         
     }
 
+    //metodo che spawna number rocce entro le cordiante specificate
     IEnumerator spawner()
     {
         Random.seed = 30000;

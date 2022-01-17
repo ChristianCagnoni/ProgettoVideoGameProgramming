@@ -987,9 +987,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Attraversa i portali per trovare il
+  m_Text: 'Cerca e ttraversa i portali per trovare il
 
-    boss finale e prendere il tesoro'
+    boss finale e prendere
+    il tesoro'
 --- !u!222 &350377993
 CanvasRenderer:
   m_ObjectHideFlags: 0

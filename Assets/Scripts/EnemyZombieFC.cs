@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//script per la gestione del nemico generico
 public class EnemyZombieFC : MonoBehaviour
 {
 
-    
+    //parametri che ne gestiscono il comportamento
     static bool enemyShooting;
     public bool playerSighted;
     public float moveSpeed = 4;
@@ -34,6 +35,7 @@ public class EnemyZombieFC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //in base alla difficoltà influenza i parametri
         if (SettingsManager.difficulty == "easy")
         {
         }else if (SettingsManager.difficulty == "medium")
@@ -66,10 +68,11 @@ public class EnemyZombieFC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //esgui il seguente blocco se il gioco non è in pausa
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
 
-            if (Vector3.Distance(target.position, transform.position) < viewArea)
+            if (Vector3.Distance(target.position, transform.position) < viewArea)//visione del target
             {
                 playerSighted = true;
             }
@@ -79,7 +82,7 @@ public class EnemyZombieFC : MonoBehaviour
             }
 
             //playerFound();
-            if (!playerSighted)
+            if (!playerSighted)//se target non trovato movimento casuale
             {
                 animator.SetBool("Attack", false);
                 if (!agent.hasPath)
@@ -87,7 +90,7 @@ public class EnemyZombieFC : MonoBehaviour
                     agent.SetDestination(GetPoint.Instance.GetRandomPoint(transform, radius));
                     animator.SetBool("Walk", true);
                 }
-
+                //raycasting per evitare le montagne
                 RaycastHit hit;
                 Vector3 raycastDir = agent.destination - transform.position;
                 Ray landingRay = new Ray(transform.position, raycastDir);
@@ -105,9 +108,9 @@ public class EnemyZombieFC : MonoBehaviour
                     }
                 }
             }
-            else
+            else//se target trovato
             {
-                if (playerSighted && !isAttacking)
+                if (playerSighted && !isAttacking)//movimento
                 {
                     if (target)
                     {
@@ -116,7 +119,7 @@ public class EnemyZombieFC : MonoBehaviour
                     }
                 }
 
-                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4 && !isAttacking)
+                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4 && !isAttacking)//ascolto
                 {
                     if (target)
                     {
@@ -126,7 +129,7 @@ public class EnemyZombieFC : MonoBehaviour
                     }
                 }
 
-                if (playerInRange && canAttack)
+                if (playerInRange && canAttack)//attacco
                 {
                     isAttacking = true;
                     animator.SetBool("Walk", false);
@@ -137,6 +140,7 @@ public class EnemyZombieFC : MonoBehaviour
         }
     }
 
+    //influenza i parametri se player entra nel trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == target)
@@ -156,6 +160,7 @@ public class EnemyZombieFC : MonoBehaviour
     {
     }
 
+    //influenza i parametri se player esce dal trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.transform == target)
@@ -168,7 +173,7 @@ public class EnemyZombieFC : MonoBehaviour
         }
     }
 
-    void playerFound()
+    /*void playerFound()
     {
         Vector3 lookAt = target.position;
 
@@ -184,8 +189,9 @@ public class EnemyZombieFC : MonoBehaviour
                 HealthBar.SetHealth((int)(HealthBar.GetHealth() - 1));
             }
         }
-    }
+    }*/
 
+    //metodo per la gestione del cooldown dell'attacco
     IEnumerator AttackCooldown()
     {
         canAttack = false;
@@ -206,14 +212,16 @@ public class EnemyZombieFC : MonoBehaviour
         animator.SetBool("Attack", false);
     }
 
-    private IEnumerator WaitForAnimation(Animation animation)
+
+    /*private IEnumerator WaitForAnimation(Animation animation)
     {
         do
         {
             yield return null;
         } while (animation.isPlaying);
-    }
+    }*/
 
+    //mostra in editor l'area di visione e di ricerca
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()

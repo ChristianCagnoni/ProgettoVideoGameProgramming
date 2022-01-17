@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script che gestisce il danno da lanciafiamme
 public class FlameThrowner : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -16,19 +17,20 @@ public class FlameThrowner : MonoBehaviour
         
     }
 
+    //in base al tag del personaggio che entra nel trigger fai cose diverse
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy")//nemico normale
         {
             Destroy(other.gameObject);
             EnemyGenerator.enemyCounter--;
         }
-        else if (other.tag == "Boss")
+        else if (other.tag == "Boss")//boss
         {
             BossHealthBar bossBar = GameObject.Find("GUI").transform.GetChild(4).GetComponent<BossHealthBar>();
             bossBar.SetHealth((int)(bossBar.GetHealth() - 15));
         }
-        else if (other.tag == "Player")
+        else if (other.tag == "Player")//player
         {
             HealthBar healthBar = GameObject.Find("GUI").transform.GetChild(1).GetComponent<HealthBar>();
             healthBar.SetHealth((int)(healthBar.GetHealth() - 15));

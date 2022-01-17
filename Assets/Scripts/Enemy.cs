@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Script per la gestione del nemico nel tutorial
 public class Enemy : MonoBehaviour
 {
-
+    //parametri per la gestione del nemico
     public Transform target;
     public NavMeshAgent agent;
     static bool enemyShooting;
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //in base alla fase del tutorial fai cose diverse
         if (TutorialManager.tutorialPhase ==2)
         {
             if (playerSighted)
@@ -58,7 +60,7 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        if (TutorialManager.tutorialPhase == 8)
+        /*if (TutorialManager.tutorialPhase == 8)
         {
             if (target)
             {
@@ -72,9 +74,10 @@ public class Enemy : MonoBehaviour
                 target.position = target.position + new Vector3(1.0f, 0, 0);
                 StartCoroutine(AttackCooldown());
             }
-        }
+        }*/
     }
 
+    //cambia parametri quando player entra nel trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == target)
@@ -88,7 +91,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-
+    //cambia parametri quando player sta nel trigger
     private void OnTriggerStay(Collider other)
     {
         if (other.transform == target)
@@ -97,6 +100,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //cambia parametri quando player esce dal trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.transform == target)
@@ -110,6 +114,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //metodo per quando il player viene trovato
     void playerFound()
     {
         Vector3 lookAt = target.position;
@@ -127,6 +132,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //metodo per la gestione del cooldown dell'attacco
     IEnumerator AttackCooldown()
     {
         canAttack = false;

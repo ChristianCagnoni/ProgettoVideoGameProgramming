@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+//script per la gestione della schermata princiaple
 public class MenuStartupManager : MonoBehaviour
 {
 
@@ -51,6 +53,7 @@ public class MenuStartupManager : MonoBehaviour
     {
     }
 
+    //metodo per continuare la partita salvata
     void continueGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -72,6 +75,7 @@ public class MenuStartupManager : MonoBehaviour
         SceneManager.LoadScene(scene.Substring(0,scene.Length-1),LoadSceneMode.Single);
     }
 
+    //metodo per iniziare una nuova partita
     void newGameClick()
     {
         actualMenu.SetActive(false);
@@ -79,6 +83,7 @@ public class MenuStartupManager : MonoBehaviour
         actualMenu.SetActive(true);
     }
 
+    //metodo per passare alle impostazioni
     void startSetttings()
     {
         actualMenu.SetActive(false);
@@ -86,6 +91,7 @@ public class MenuStartupManager : MonoBehaviour
         actualMenu.SetActive(true);
     }
 
+    //metodo per uscire dal gioco
     void CloseGame()
     {
         if (!Directory.Exists(SettingsManager.configPath))

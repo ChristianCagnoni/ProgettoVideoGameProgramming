@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script per la gestione della fase del boss nel primo livello
 public class PortalBarrier : MonoBehaviour
 {
 
@@ -30,6 +31,7 @@ public class PortalBarrier : MonoBehaviour
         
     }
 
+    //se player entra nel trigger cambia musica e blocca il passaggio
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")

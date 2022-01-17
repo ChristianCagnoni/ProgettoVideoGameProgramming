@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script per la gestione della visibilità dell boss finale
 public class FinalBossSpawner : MonoBehaviour
 {
     public GameObject boss;
@@ -25,7 +26,7 @@ public class FinalBossSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (start)
+        if (start)//scalatura poison sphere
         {
             float step = speed * Time.deltaTime;
             if(poisonSphere.transform.localScale.x< 64.2166748)
@@ -38,13 +39,14 @@ public class FinalBossSpawner : MonoBehaviour
                 start = false;
             }
         }
-        if (scaled && poisonSphere.transform.position.y< 580.1)
+        if (scaled && poisonSphere.transform.position.y< 580.1)//movimento poison sphere
         {
             float step = speed * Time.deltaTime;
             poisonSphere.transform.position += new Vector3(0, 2, 0) * step;
         }
     }
 
+    //quando player entra nel trigger rendi visibile child
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")
@@ -53,6 +55,7 @@ public class FinalBossSpawner : MonoBehaviour
         }
     }
 
+    //quando player esce dal trigger rendi visibile boss
     private void OnTriggerExit(Collider other)
     {
         if (other.name == "Player")

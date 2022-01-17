@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script per la gestione della musica
 public class MusicManager : MonoBehaviour
 {
 
@@ -16,6 +17,7 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //in base al tag cambia parametri diversi
         if (SettingsManager.music != musicSource.volume)
         {
             if (gameObject.CompareTag("Music"))

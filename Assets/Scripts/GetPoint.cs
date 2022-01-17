@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//script che gestice la generazione di punti casuali in una certa area
 public class GetPoint : MonoBehaviour
 {
-    public static GetPoint Instance;
+    public static GetPoint Instance;//istanza della classe
 
-    public float Range;
+    public float Range;//range massimo considerato
 
     private void Awake()
     {
         Instance = this;
     }
 
+    //metodo che stabilisce se il vettore dato è causale o no
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
 
@@ -33,6 +35,7 @@ public class GetPoint : MonoBehaviour
         return false;
     }
 
+    //metodo che genera un vettore casuale
     public Vector3 GetRandomPoint(Transform point = null, float radius = 0)
     {
         Vector3 _point;
@@ -47,6 +50,7 @@ public class GetPoint : MonoBehaviour
         return point == null ? Vector3.zero : point.position;
     }
 
+    //attiva la visualizzazione in editor dell'area
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

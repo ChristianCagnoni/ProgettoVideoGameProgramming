@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Script che gestisce l'arma di supporto nel secondo livello
 public class CheckArrowAttack : MonoBehaviour
 {
 
@@ -19,13 +20,12 @@ public class CheckArrowAttack : MonoBehaviour
         
     }
 
+    //se il boss entra nel trigger subisce un danno
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ffwfwfwe");
         Debug.Log(other.name);
         if (other.tag == "Boss")
         {
-            Debug.Log("colpèito");
             bossBar.SetHealth((int)(bossBar.GetHealth() - 35));
         }
     }

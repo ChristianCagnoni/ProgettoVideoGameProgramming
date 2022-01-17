@@ -6,9 +6,10 @@ using UnityEngine.UI;
 using TMPro;
 using System.IO;
 
+//script per la gestione delle impostazioni in game
 public class inGameSettings : MonoBehaviour
 {
-
+    //parametri editabili
     public Toggle inverseX;
     public Toggle inverseY;
     public Toggle shoadowEnabled;
@@ -49,6 +50,7 @@ public class inGameSettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //settaggio iniziale
         loadSettings();
         generalPanel = transform.GetChild(0).gameObject;
         gameB = generalPanel.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
@@ -84,6 +86,7 @@ public class inGameSettings : MonoBehaviour
         shadowDist.onValueChanged.AddListener(delegate { changeShadowDist(); });
     }
 
+    //metodo per la chiusaura delle impostazioni da pulsante
     private void CloseSettings()
     {
         if (fps.isOn)
@@ -172,24 +175,28 @@ public class inGameSettings : MonoBehaviour
         saveConfig();
     }
 
+    //metodo per la gestione del volume della musica
     private void changeMusic()
     {
         SettingsManager.music = music.value * 100;
         musicText.text = SettingsManager.music.ToString() + "%";
     }
 
+    //metodo per la gestione del volume dei nemici
     private void changeEnemyS()
     {
         SettingsManager.enemySound = enemyS.value * 100;
         enemySText.text = SettingsManager.enemySound.ToString() + "%";
     }
 
+    //metodo per la gestione del volume del player
     private void changePlayerS()
     {
         SettingsManager.playerSound = playerS.value * 100;
         playerSText.text = SettingsManager.playerSound.ToString() + "%";
     }
 
+    //metodo che carica le impostazioni
     private void loadSettings()
     {
         inverseX.isOn = SettingsManager.invertX;
@@ -299,6 +306,7 @@ public class inGameSettings : MonoBehaviour
         Screen.SetResolution(SettingsManager.resW, SettingsManager.resH, SettingsManager.full);
     }
 
+    //metodo che gestisce il cambio della distanza ombre
     private void changeShadowDist()
     {
         int value = shadowDist.value;
@@ -324,6 +332,7 @@ public class inGameSettings : MonoBehaviour
         }
     }
 
+    //metodo che gestisce il cambio della risoluzione delle ombre
     private void changeShadowRes()
     {
         int value = shadowRes.value;
@@ -349,6 +358,7 @@ public class inGameSettings : MonoBehaviour
         }
     }
 
+    //metodo che gestisce il cambio formato schermo
     private void changeScreen()
     {
         int value = screen.value;
@@ -363,6 +373,7 @@ public class inGameSettings : MonoBehaviour
         Screen.SetResolution(SettingsManager.resW, SettingsManager.resH, SettingsManager.full);
     }
 
+    //metodo che gestisce il cambio dell'antialiasing
     private void changeAA()
     {
         int value = AA.value;
@@ -384,6 +395,7 @@ public class inGameSettings : MonoBehaviour
         }
     }
 
+    //metodo che gestisce il cambio della risoluzione
     private void changeRes()
     {
         int value = res.value;
@@ -410,12 +422,14 @@ public class inGameSettings : MonoBehaviour
         Screen.SetResolution(SettingsManager.resW, SettingsManager.resH, SettingsManager.full);
     }
 
+    //metodo che gestisce il cambio della qualità di rendering
     private void changeQuality()
     {
         SettingsManager.quality = quality.value * 100;
         qualityText.text = SettingsManager.quality.ToString()+"%";
     }
 
+    //metodo per il passaggio alla prima schermata di opzioni
     private void selectButton1()
     {
         contents[index].SetActive(false);
@@ -426,6 +440,7 @@ public class inGameSettings : MonoBehaviour
         b.Select();
     }
 
+    //metodo per il passaggio alla seconda schermata di opzioni
     private void selectButton2()
     {
         contents[index].SetActive(false);
@@ -436,6 +451,7 @@ public class inGameSettings : MonoBehaviour
         b1.Select();
     }
 
+    //metodo per il passaggio alla terza schermata di opzioni
     private void selectButton3()
     {
         contents[index].SetActive(false);
@@ -449,7 +465,7 @@ public class inGameSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //gestione del pulsante esc per l'uscita o l'annullamento del testo inserito
         if (Input.GetKeyDown(KeyCode.Escape) && !sensibility)
         {
             if (fps.isOn)
@@ -559,6 +575,7 @@ public class inGameSettings : MonoBehaviour
         }
     }
 
+    //metodo per il salvataggio delle impostazioni
     private void saveConfig()
     {
         if (!Directory.Exists(SettingsManager.configPath))

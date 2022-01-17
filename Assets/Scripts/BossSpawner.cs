@@ -23,6 +23,7 @@ public class BossSpawner : MonoBehaviour
         
     }
 
+    //se il player esce dal trigger cambia la musica e rende visibile il boss
     private void OnTriggerExit(Collider other)
     {
         if (other.name == "Player")

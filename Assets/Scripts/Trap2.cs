@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//script per la gestione della trappola 2
 public class Trap2 : MonoBehaviour
 {
 
@@ -21,6 +23,7 @@ public class Trap2 : MonoBehaviour
         
     }
 
+    //se player entra nel trigger lancia la corutine
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")
@@ -30,6 +33,7 @@ public class Trap2 : MonoBehaviour
         }
     }
 
+    //metodo che attiva la trappola
     IEnumerator spawnEnemy()
     {
         yield return new WaitForSeconds(1);

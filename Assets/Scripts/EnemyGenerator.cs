@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Script per lo spawn dei nemici nel primo livello
 public class EnemyGenerator : MonoBehaviour
 {
 
@@ -30,6 +31,7 @@ public class EnemyGenerator : MonoBehaviour
         
     }
 
+    //corutine che spawna un nemico ogni 5 secondi
     IEnumerator enemySpawner()
     {
         yield return new WaitForSeconds(5);

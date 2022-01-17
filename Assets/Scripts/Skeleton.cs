@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DigitalRuby.PyroParticles;
 
+//script per la gestione del nemico skeleton
 public class Skeleton : MonoBehaviour
 {
+    //parametri per la gestione del personaggio
     public bool playerSighted;
     public float moveSpeed = 4;
     public float maxDist = 10;
@@ -36,6 +38,7 @@ public class Skeleton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //influenza parametri in base alla difficoltà
         if (SettingsManager.difficulty == "easy")
         {
         }
@@ -70,7 +73,7 @@ public class Skeleton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //gestione del target
         if (target == null)
         {
             if (GameObject.Find("Player") != null)
@@ -79,10 +82,11 @@ public class Skeleton : MonoBehaviour
             }
         }
 
+        //esegui il seguente blocco se gioco non è in pausa e il target esiste
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death && target!=null)
         {
 
-            if (Vector3.Distance(target.position, transform.position) < radius)
+            if (Vector3.Distance(target.position, transform.position) < radius)//target visto
             {
                 playerSighted = true;
             }
@@ -91,7 +95,7 @@ public class Skeleton : MonoBehaviour
                 playerSighted = false;
             }
 
-            if (!playerSighted)
+            if (!playerSighted)//se target non visto movimento verso un punto casuale
             {
                 if (!agent.hasPath)
                 {
@@ -100,7 +104,7 @@ public class Skeleton : MonoBehaviour
                     animator.SetBool("Walk", true);
                 }
             }
-            else if (canAttack && playerInRange)
+            else if (canAttack && playerInRange)//attacco
             {
                 Debug.Log("1");
                 isAttacking = true;
@@ -108,7 +112,7 @@ public class Skeleton : MonoBehaviour
                 animator.SetBool("Walk", false);
                 StartCoroutine(AttackCooldown());
             }
-            else if (!isAttacking)
+            else if (!isAttacking)//movimento
             {
                 if (target)
                 {
@@ -119,6 +123,7 @@ public class Skeleton : MonoBehaviour
         }
     }
 
+    //cambia parametri se player entra nel trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == target)
@@ -138,6 +143,7 @@ public class Skeleton : MonoBehaviour
     {
     }
 
+    //cambia parametri se player esce dal trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -152,6 +158,7 @@ public class Skeleton : MonoBehaviour
         }
     }
 
+    //metodo per la gestione del lanciafiamme
     private void BeginEffect()
     {
         Vector3 pos;
@@ -200,6 +207,7 @@ public class Skeleton : MonoBehaviour
         currentPrefabObject.transform.rotation = rotation;
     }
 
+    //metodo per la gestione del cooldown
     IEnumerator AttackCooldown()
     {
         BeginEffect();
@@ -213,6 +221,7 @@ public class Skeleton : MonoBehaviour
         Debug.Log("2");
     }
 
+    //metodo per la visione in editor dell'area visible
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()

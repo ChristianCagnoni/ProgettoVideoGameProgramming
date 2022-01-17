@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//script che gestisce il god attack del boss finale
 public class godAttack : MonoBehaviour
 {
 
@@ -19,6 +21,7 @@ public class godAttack : MonoBehaviour
         
     }
 
+    //se player entra subisce danno di 5
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -27,6 +30,7 @@ public class godAttack : MonoBehaviour
         }
     }
 
+    //finchè player rimane subisce danno di 1
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))

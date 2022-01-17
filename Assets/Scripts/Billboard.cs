@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Script non utilizzato(prova per fare corrispondere lo sguardo)
 public class Billboard : MonoBehaviour
 {
 

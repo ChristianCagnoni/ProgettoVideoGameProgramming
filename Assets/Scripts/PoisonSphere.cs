@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//script che gestisce la poison sphere
 public class PoisonSphere : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -16,6 +18,7 @@ public class PoisonSphere : MonoBehaviour
         
     }
 
+    //se player entra nel trigger azzera la vita
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")

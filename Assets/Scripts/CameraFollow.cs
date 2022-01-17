@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+//Script per la gestione della camera terza persona(non più usato)
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;

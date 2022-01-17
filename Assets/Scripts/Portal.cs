@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+//script che gestisce i portali
 public class Portal : MonoBehaviour
 {
 
@@ -20,6 +22,7 @@ public class Portal : MonoBehaviour
         
     }
 
+    //se player entra nel trigger passa alla prossima scena
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")

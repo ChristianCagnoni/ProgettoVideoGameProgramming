@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//script che gestisce il cambio di risoluzione cambiando la risoluzione di riferimento dei canvas
 public class ResolutionManager : MonoBehaviour
 {
 

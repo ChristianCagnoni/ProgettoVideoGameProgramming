@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+//Script per il calcolo degli fps
 public class FPSCounter : MonoBehaviour
 {
 
@@ -18,13 +19,13 @@ public class FPSCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SettingsManager.fps)
+        if (SettingsManager.fps)//se opzione fps attiva calcola gli fps e rendi visibile il pannello
         {
             fpsPanal.SetActive(true);
             int frame = (int)(1.0f / Time.deltaTime);
             fpsCounter.text = frame.ToString();
         }
-        else
+        else//altrimenti nascondi il pannello
         {
             fpsPanal.SetActive(false);
         }

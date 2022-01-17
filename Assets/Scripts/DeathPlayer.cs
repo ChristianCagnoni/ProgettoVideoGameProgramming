@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//Script per la gestione della schermata quando il player muore
 public class DeathPlayer : MonoBehaviour
 {
 
@@ -25,6 +26,7 @@ public class DeathPlayer : MonoBehaviour
         
     }
 
+    //metodo attaccato al listener di un pulsante per ricaricare il livello
     private void Reload()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -35,6 +37,7 @@ public class DeathPlayer : MonoBehaviour
         SceneManager.LoadScene(scene.name,LoadSceneMode.Single);
     }
 
+    //metodo attaccato al listener di un pulsante per tornare alla schermata iniziale
     private void Exit()
     {
         GameManagerLogic.state = GameManagerLogic.State.start;

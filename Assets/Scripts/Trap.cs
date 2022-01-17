@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script per la gestione della trappola 2
 public class Trap : MonoBehaviour
 {
 
@@ -22,6 +23,7 @@ public class Trap : MonoBehaviour
         
     }
 
+    //se player entra nel trigger lancia la trappola
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player")

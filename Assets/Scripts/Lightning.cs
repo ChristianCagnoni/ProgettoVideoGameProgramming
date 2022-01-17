@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
+//script che si occupa della gestione dell'effetto fulmine
 public class Lightning : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class Lightning : MonoBehaviour
         
     }
 
+    //metodo che attiva l'animazione ogni 10 secondi
     IEnumerator player()
     {
         while (true)

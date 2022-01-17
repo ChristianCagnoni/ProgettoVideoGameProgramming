@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//script per la gestione del nemico parasite
 public class Parasite : MonoBehaviour
 {
-
+    //parametri per la gestione del personaggio
     public bool playerSighted;
     public float moveSpeed = 4;
     public float maxDist = 10;
@@ -34,6 +35,7 @@ public class Parasite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //influenza parametri in base alla difficoltà
         if (SettingsManager.difficulty == "easy")
         {
         }
@@ -68,6 +70,7 @@ public class Parasite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //gestione del target
         if (target == null)
         {
             if (GameObject.Find("Player") != null)
@@ -75,10 +78,11 @@ public class Parasite : MonoBehaviour
                 target= GameObject.Find("Player").transform; ;
             }
         }
+        //esegui il seguente blocco se gioco non è in pausa o se target esiste
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death && target!=null)
         {
 
-            if (Vector3.Distance(target.position, transform.position) < radius)
+            if (Vector3.Distance(target.position, transform.position) < radius)//visione target
             {
                 playerSighted = true;
             }
@@ -87,8 +91,9 @@ public class Parasite : MonoBehaviour
                 playerSighted = false;
             }
 
-            if (!playerSighted)
+            if (!playerSighted)//se target non visto
             {
+                //movimento casuale
                 if (!agent.hasPath)
                 {
                     int dec = Random.Range(0, numberT);
@@ -106,7 +111,7 @@ public class Parasite : MonoBehaviour
                     }
                     
                 }
-
+                //raycast per evitare collisioni
                 RaycastHit hit;
                 Vector3 raycastDir = agent.destination - transform.position;
                 Ray landingRay = new Ray(transform.position, raycastDir);
@@ -124,7 +129,7 @@ public class Parasite : MonoBehaviour
                     }
                 }
             }
-            else if (canAttack && playerInRange)
+            else if (canAttack && playerInRange)//attacco
             {
                 Debug.Log("1");
                 isAttacking = true;
@@ -132,7 +137,7 @@ public class Parasite : MonoBehaviour
                 animator.SetBool("Walk", false);
                 StartCoroutine(AttackCooldown());
             }
-            else if(!isAttacking)
+            else if(!isAttacking)//movimento
             {
                 if (target)
                 {
@@ -143,6 +148,7 @@ public class Parasite : MonoBehaviour
         }
     }
 
+    //cambia parametri se player entra nel trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == target)
@@ -162,6 +168,7 @@ public class Parasite : MonoBehaviour
     {
     }
 
+    //cambia parametri se player esce dal trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -173,6 +180,7 @@ public class Parasite : MonoBehaviour
         }
     }
 
+    //metodo per l agestione del cooldown
     IEnumerator AttackCooldown()
     {
         canAttack = false;
@@ -192,6 +200,7 @@ public class Parasite : MonoBehaviour
         Debug.Log("2");
     }
 
+    //visione in editor del range
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()

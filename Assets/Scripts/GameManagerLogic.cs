@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+//script che gestisce le diverse fasi del gioco
 public class GameManagerLogic : MonoBehaviour
 {
 
@@ -31,9 +33,9 @@ public class GameManagerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))//se premuto esc
         {
-            if (state != State.pause)
+            if (state != State.pause)//e non in pausa vai in pausa
             {
                 state = State.pause;
                 Time.timeScale = 0f;
@@ -42,7 +44,7 @@ public class GameManagerLogic : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
             }
-            else if(state==State.pause && InGameMenu.isInMenu)
+            else if(state==State.pause && InGameMenu.isInMenu)//altrimenti riprendi il gioco
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -52,13 +54,13 @@ public class GameManagerLogic : MonoBehaviour
                 InGameMenu.isInMenu = false;
             }
         }
-        if (healthBar.GetHealth() <= 0)
+        if (healthBar.GetHealth() <= 0)//se vita personaggio minore o uguale a 0 attiva la schermata di sconfitta
         {
             state = State.death;
             Time.timeScale = 0f;
             deathCanvas.SetActive(true);
         }
-        if (scene.name == "FirstChapter")
+        if (scene.name == "FirstChapter")//se la scena è la prima gestisci anche lo spawn del boss
         {
             if (PortalBarrier.inPortalZone && !spawn)
             {
@@ -68,12 +70,14 @@ public class GameManagerLogic : MonoBehaviour
         }
     }
 
+    //metodo per lo spawn del boss
     IEnumerator PortalZone()
     {
         Instantiate(zombiePrefab, new Vector3(258, 3.25f, 55), Quaternion.identity);
         yield return null;
     }
 
+    //metodo chiamato al lancio
     IEnumerator startGame()
     {
         state = State.game;

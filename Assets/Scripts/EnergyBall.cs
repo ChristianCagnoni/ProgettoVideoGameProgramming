@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script che gestisce le sfere di energia del boss finale
 public class EnergyBall : MonoBehaviour
 {
 
-    public enum Barrier{total,partial,none};
+    public enum Barrier{total,partial,none};//tipologia di barriera incontrata
 
-    public float duration;
+    public float duration;//massima distanza entro la quale la sfera viaggia
 
     private HealthBar HealthBar;
     private Barrier barrier;
@@ -26,6 +27,7 @@ public class EnergyBall : MonoBehaviour
         
     }
 
+    //crea danno al personaggio in base alla barriera trovata se il player entra nel trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 8)
@@ -52,6 +54,7 @@ public class EnergyBall : MonoBehaviour
         }
     }
 
+    //distruggi la sfera dopo tot secondi
     IEnumerator life()
     {
         yield return new WaitForSeconds(duration);

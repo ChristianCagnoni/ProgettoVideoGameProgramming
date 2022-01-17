@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+//sciprt che gestisce il lancio di una nuova partita
 public class NewGame : MonoBehaviour
 {
 
@@ -35,6 +36,7 @@ public class NewGame : MonoBehaviour
         nameC = characterText.text;
     }
 
+    //metodo che setta la difficoltà selezionata
     private void changeDifficulty()
     {
         int value=difficulty.value;
@@ -52,6 +54,7 @@ public class NewGame : MonoBehaviour
         }
     }
 
+    //metodo che setta il tipo di personaggio
     private void changeCharacter()
     {
         int value=character.value;
@@ -69,6 +72,7 @@ public class NewGame : MonoBehaviour
         }
     }
 
+    //metodo che gestisce il pulsante back
     private void backButton()
     {
         MenuStartupManager.actualMenu.SetActive(false);
@@ -76,6 +80,7 @@ public class NewGame : MonoBehaviour
         MenuStartupManager.actualMenu.SetActive(true);
     }
 
+    //metodo che lancia il tutorial o il primo livello
     private void confirmButton()
     {
         Cursor.lockState = CursorLockMode.Locked;

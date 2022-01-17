@@ -2,6 +2,7 @@
 
 namespace UnityTemplateProjects
 {
+    //script per la gestione della camera(non usato)
     public class SimpleCameraController : MonoBehaviour
     {
         class CameraState

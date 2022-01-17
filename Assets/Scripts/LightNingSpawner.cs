@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
+
+//script per lo spawn di nemici di fulmini(non usato)
 public class LightNingSpawner : MonoBehaviour
 {
 

@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
+//script per la gestione delle impostazioni
 public class SettingsManager : MonoBehaviour
 {
-
+    //valori editabili
     public static float sensibility;
     public static bool invertX;
     public static bool invertY;
@@ -38,6 +39,7 @@ public class SettingsManager : MonoBehaviour
     public static string savesPath;
     public static string saveFile;
 
+    //caricamento delle impostazioni
     private void Awake()
     {
         bck = new UniversalRenderPipelineAsset[urps.Length];
@@ -191,8 +193,11 @@ public class SettingsManager : MonoBehaviour
             resH = Display.main.renderingHeight;
         }
         urp = urps[defURP];
+        changeUrp(defURP);
+        changeConfig(antiA,quality/100,(int)distanceShadow);
     }
 
+    //modifica parametri
     public static void changeConfig(int aliasing,float scale,int distance)
     {
         urp.renderScale = scale;
@@ -202,10 +207,12 @@ public class SettingsManager : MonoBehaviour
         Debug.Log(urp.renderScale);
     }
 
+    //cambio urp
     public static void changeUrp(int index)
     {
         QualitySettings.renderPipeline = null;
         urp=bck[index];
+        defURP=index;
         QualitySettings.renderPipeline = urp;
     }
 

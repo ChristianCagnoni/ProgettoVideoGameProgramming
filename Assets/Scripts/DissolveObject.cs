@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//script per la gestione della dissolvenza
 [RequireComponent(typeof(Renderer))]
 public class DissolveObject : MonoBehaviour
 {
@@ -17,14 +18,12 @@ public class DissolveObject : MonoBehaviour
 
     private void Update()
     {
-        if (BigBossParasite.state == BigBossParasite.BossStatus.death)
-        {
-            var time = Time.time * Mathf.PI * 0.25f;
+        //modifica dei parametri del materiale per dare l'effetto di dissolvenza
+        var time = Time.time * Mathf.PI * 0.25f;
 
-            float height = transform.position.y;
-            height += Mathf.Sin(time) * (objectHeight / 2.0f);
-            SetHeight(height);
-        }
+        float height = transform.position.y;
+        height += Mathf.Sin(time) * (objectHeight / 2.0f);
+        SetHeight(height);
     }
 
     private void SetHeight(float height)

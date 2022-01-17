@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class BossEnemyZombie : MonoBehaviour
 {
-
+    //parametri per la gestione del personaggio
     static bool enemyShooting;
     public bool playerSighted;
     public float moveSpeed = 4;
@@ -44,10 +44,11 @@ public class BossEnemyZombie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //esegui il seguente blocco se il gioco non è in pausa
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
 
-            if (Vector3.Distance(target.position, transform.position) < viewArea)
+            if (Vector3.Distance(target.position, transform.position) < viewArea)//visione del target
             {
                 playerSighted = true;
             }
@@ -57,7 +58,7 @@ public class BossEnemyZombie : MonoBehaviour
             }
 
             //playerFound();
-            if (!playerSighted)
+            if (!playerSighted)//se il target non viene visto muoviti casualmente
             {
                 animator.SetBool("Attack", false);
                 if (!agent.hasPath)
@@ -66,6 +67,7 @@ public class BossEnemyZombie : MonoBehaviour
                     animator.SetBool("Walk", true);
                 }
 
+                //raycasting per evitare collisione con le montagne
                 RaycastHit hit;
                 Vector3 raycastDir = agent.destination - transform.position;
                 Ray landingRay = new Ray(transform.position, raycastDir);
@@ -85,7 +87,7 @@ public class BossEnemyZombie : MonoBehaviour
             }
             else
             {
-                if (playerSighted && !isAttacking)
+                if (playerSighted && !isAttacking)//movimento
                 {
                     if (target)
                     {
@@ -94,7 +96,7 @@ public class BossEnemyZombie : MonoBehaviour
                     }
                 }
 
-                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4 && !isAttacking)
+                if (Vector3.Distance(target.position, transform.position) < Player.noiseLevel * 4 && !isAttacking)//ascolto
                 {
                     if (target)
                     {
@@ -104,7 +106,7 @@ public class BossEnemyZombie : MonoBehaviour
                     }
                 }
 
-                if (playerInRange && canAttack)
+                if (playerInRange && canAttack)//attacco
                 {
                     isAttacking = true;
                     animator.SetBool("Walk", false);
@@ -115,6 +117,7 @@ public class BossEnemyZombie : MonoBehaviour
         }
     }
 
+    //cambia parametri di gestione se il player entra nel trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform == target)
@@ -134,6 +137,7 @@ public class BossEnemyZombie : MonoBehaviour
     {
     }
 
+    //cambia parametri di gestione se il player esce dal trigger
     private void OnTriggerExit(Collider other)
     {
         if (other.transform == target)
@@ -146,7 +150,7 @@ public class BossEnemyZombie : MonoBehaviour
         }
     }
 
-    void playerFound()
+    /*void playerFound()
     {
         Vector3 lookAt = target.position;
 
@@ -162,8 +166,9 @@ public class BossEnemyZombie : MonoBehaviour
                 HealthBar.SetHealth((int)(HealthBar.GetHealth() - 1));
             }
         }
-    }
+    }*/
 
+    //metodo per la gestione del cooldown dell'attacco
     IEnumerator AttackCooldown()
     {
         canAttack = false;
@@ -183,6 +188,7 @@ public class BossEnemyZombie : MonoBehaviour
         animator.SetBool("Attack", false);
     }
 
+    //visualizza in editor l'area d'interesse
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()

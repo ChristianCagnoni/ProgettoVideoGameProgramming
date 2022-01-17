@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DigitalRuby.PyroParticles;
 
+//script per la gestione del boss finale
 public class FinalBoss : MonoBehaviour
 {
 
-    public enum FinalBossStatus { start, half, dead,quarter };
-    public enum FinalBossDamage {god,normal }
+    public enum FinalBossStatus { start, half, dead,quarter };//stati del boss
+    public enum FinalBossDamage {god,normal };//danno del boss
 
+    //parametri di gestione
     private GameObject target;
     public float cooldown;
     public float firstWait;
@@ -37,6 +39,7 @@ public class FinalBoss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //influenza i parametri in base alla difficoltà
         if (SettingsManager.difficulty == "easy")
         {
         }
@@ -67,42 +70,42 @@ public class FinalBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //esegui il seguente blocco se il gioco non è in pausa
         if (GameManagerLogic.state != GameManagerLogic.State.pause && GameManagerLogic.state != GameManagerLogic.State.death)
         {
-            if (bossBar.GetHealth() <= maxH / 2 && Vector3.Distance(transform.position, peak) <= 1)
+            if (bossBar.GetHealth() <= maxH / 2 && Vector3.Distance(transform.position, peak) <= 1)//primo step per il god attack
             {
                 damage = FinalBossDamage.god;
                 status = FinalBossStatus.half;
             }
-            if (bossBar.GetHealth() <= maxH / 4 && Vector3.Distance(transform.position, peak) <= 1 && SettingsManager.difficulty=="difficult")
+            if (bossBar.GetHealth() <= maxH / 4 && Vector3.Distance(transform.position, peak) <= 1 && SettingsManager.difficulty=="difficult")//secondo step per il god attack
             {
                 damage = FinalBossDamage.god;
                 status = FinalBossStatus.half;
             }
-            if (bossBar.GetHealth() <= 0)
+            if (bossBar.GetHealth() <= 0)//se salute minore o uguale a 0 dissolvi il boss
             {
                 status=FinalBossStatus.dead;
                 dissolveTarget.GetComponent<SkinnedMeshRenderer>().material.shader = dissolve;
+                dissolveTarget.AddComponent<DissolveObject>();
                 StartCoroutine("waitDissolve");
             }
-            if (transform.position.y < target.transform.position.y + 32)
+            if (transform.position.y < target.transform.position.y + 32)//muovi boss insieme al player
             {
                 transform.position = transform.position + new Vector3(0, 16f, 0) * Time.deltaTime;
             }
             transform.LookAt(new Vector3(target.transform.position.x, 0, target.transform.position.z));
             transform.rotation = new Quaternion(0, transform.rotation.y, 0,transform.rotation.w);
-            if (canAttack && status==FinalBossStatus.start)
+            if (canAttack && status==FinalBossStatus.start)//attacco
             {
                 StartCoroutine("AttackCooldown");
             }
-            if (ready)
+            if (ready)//muovi la sfera d'energia
             {
                 float step = speed * Time.deltaTime;
                 istance.transform.position += normalizeDirection * step;
-                Debug.Log(speed);
-                Debug.Log(step);
             }
-            if(Vector3.Distance(transform.position,peak)<=1 && damage == FinalBossDamage.god)
+            if(Vector3.Distance(transform.position,peak)<=1 && damage == FinalBossDamage.god)//god attack
             {
                 //poisonSphere.SetActive(false);
                 poisonSphere.transform.position = new Vector3(0, 580.1f, 0);
@@ -127,6 +130,7 @@ public class FinalBoss : MonoBehaviour
         }
     }
 
+    //metodo per attendere la dissolvenza
     IEnumerator waitDissolve()
     {
         yield return new WaitForSeconds(3);
@@ -136,6 +140,7 @@ public class FinalBoss : MonoBehaviour
         specialObject.SetActive(true);
     }
 
+    //metodo per il god attack
     IEnumerator waitAttackGod()
     {
         yield return new WaitForSeconds(godDuration);
@@ -160,12 +165,14 @@ public class FinalBoss : MonoBehaviour
         status = FinalBossStatus.start;
     }
 
+    //metodo per l'attacco normale
     IEnumerator waitForAttack()
     {
         yield return new WaitForSeconds(firstWait);
         canAttack = true;
     }
 
+    //creazione della sfera d'energia
     private void BeginEffect()
     {
         istance = Instantiate(BallFire,launcher.transform.position,Quaternion.identity);
@@ -173,6 +180,7 @@ public class FinalBoss : MonoBehaviour
         ready = true;
     }
 
+    //metodo per la gestione del cooldown
     IEnumerator AttackCooldown()
     {
         BeginEffect();

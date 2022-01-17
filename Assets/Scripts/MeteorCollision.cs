@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//script che gestisce la collisione delle meteore
 public class MeteorCollision : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -16,11 +18,11 @@ public class MeteorCollision : MonoBehaviour
         
     }
 
+    //in base al personaggio quando entra nel trigger fai cose diverse
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            Debug.Log("fatto");
             Destroy(other.gameObject);
         }else if (other.tag == "Boss")
         {

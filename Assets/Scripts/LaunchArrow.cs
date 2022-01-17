@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//script che gestisce il movimento delle frecce nel secondo livello
 public class LaunchArrow : MonoBehaviour
 {
 
@@ -22,12 +23,13 @@ public class LaunchArrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!ready)
+        if (!ready)//finchè la condizione è soddisfatta muovi le frecce
         {
             arrow.transform.position = arrow.transform.position + new Vector3(-8f, 0,0)*Time.deltaTime;
         }
     }
 
+    //se player entra nel trigger attiva il lancio
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Player" && ready)
@@ -36,6 +38,7 @@ public class LaunchArrow : MonoBehaviour
         }   
     }
 
+    //metodo che gestisce la logica di lancio e movimento
     IEnumerator launch()
     {
         ready = false;

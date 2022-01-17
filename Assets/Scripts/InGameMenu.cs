@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
 
+//script per la gestione del menu in game
 public class InGameMenu : MonoBehaviour
 {
 
@@ -31,6 +32,7 @@ public class InGameMenu : MonoBehaviour
     {
     }
 
+    //metodo per riprendere la partita ed suscire dal menu
     private void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -42,6 +44,7 @@ public class InGameMenu : MonoBehaviour
         isInMenu = false;
     }
 
+    //metodo per passare alle impostazioni
     private void Settings()
     {
         transform.gameObject.SetActive(false);
@@ -49,6 +52,7 @@ public class InGameMenu : MonoBehaviour
         isInMenu = false;
     }
 
+    //metodo per il ritorno alla schermata principale
     private void Exit()
     {
         if (!Directory.Exists(SettingsManager.savesPath))
@@ -92,6 +96,7 @@ public class InGameMenu : MonoBehaviour
         SceneManager.LoadScene("StartMenu", LoadSceneMode.Single);
     }
 
+    //metodo per ricominciare il livello
     private void Reload()
     {
         Cursor.lockState = CursorLockMode.Locked;
