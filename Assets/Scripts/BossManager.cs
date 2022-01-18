@@ -27,9 +27,13 @@ public class BossManager : MonoBehaviour
         {
             maxH += 50;
         }
-        else
+        else if (SettingsManager.difficulty == "difficult")
         {
             maxH += 100;
+        }
+        else
+        {
+            maxH += 200;
         }
         gui = GameObject.Find("GUI");
         bossBar = GameObject.Find("GUI").transform.GetChild(4).GetComponent<BossHealthBar>();

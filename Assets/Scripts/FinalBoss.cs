@@ -48,14 +48,21 @@ public class FinalBoss : MonoBehaviour
             maxH += 100;
             speed += 50;
             firstWait -= 3;
-            cooldown -= 2;
+            cooldown -= 1;
+        }
+        else if (SettingsManager.difficulty == "difficult")
+        {
+            maxH += 200;
+            speed += 75;
+            firstWait -= 6;
+            cooldown -= 1.5f;
         }
         else
         {
-            maxH += 200;
+            maxH += 400;
             speed += 100;
-            firstWait -= 6;
-            cooldown -= 4;
+            firstWait -= 9;
+            cooldown -= 2;
         }
         target = GameObject.Find("Player");
         damage = FinalBossDamage.normal;
@@ -109,22 +116,6 @@ public class FinalBoss : MonoBehaviour
             {
                 //poisonSphere.SetActive(false);
                 poisonSphere.transform.position = new Vector3(0, 580.1f, 0);
-                if (SettingsManager.difficulty == "easy")
-                {
-                    godAttack[0].SetActive(true);
-                }
-                else if (SettingsManager.difficulty == "medium")
-                {
-                    godAttack[0].SetActive(true);
-                    godAttack[1].SetActive(true);
-                }
-                else
-                {
-                    godAttack[0].SetActive(true);
-                    godAttack[1].SetActive(true);
-                    godAttack[2].SetActive(true);
-                    godAttack[3].SetActive(true);
-                }
                 StartCoroutine("waitAttackGod");
             }
         }
@@ -143,6 +134,23 @@ public class FinalBoss : MonoBehaviour
     //metodo per il god attack
     IEnumerator waitAttackGod()
     {
+        yield return new WaitForSeconds(5);
+        if (SettingsManager.difficulty == "easy")
+        {
+            godAttack[0].SetActive(true);
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            godAttack[0].SetActive(true);
+            godAttack[1].SetActive(true);
+        }
+        else
+        {
+            godAttack[0].SetActive(true);
+            godAttack[1].SetActive(true);
+            godAttack[2].SetActive(true);
+            godAttack[3].SetActive(true);
+        }
         yield return new WaitForSeconds(godDuration);
         if (SettingsManager.difficulty == "easy")
         {

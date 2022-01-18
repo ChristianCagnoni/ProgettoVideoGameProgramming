@@ -51,7 +51,7 @@ public class Skeleton : MonoBehaviour
             damage += 1;
             radius += 5;
         }
-        else
+        else if (SettingsManager.difficulty == "difficult")
         {
             moveSpeed += 2;
             maxDist += 10;
@@ -59,6 +59,15 @@ public class Skeleton : MonoBehaviour
             enemyCooldown -= 0.5f;
             damage += 2;
             radius += 10;
+        }
+        else
+        {
+            moveSpeed += 4;
+            maxDist += 20;
+            minDist -= 5;
+            enemyCooldown -= 0.75f;
+            damage += 4;
+            radius += float.PositiveInfinity;
         }
         old = 0;
         last = 0;

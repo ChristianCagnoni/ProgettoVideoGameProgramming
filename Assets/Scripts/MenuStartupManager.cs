@@ -68,6 +68,7 @@ public class MenuStartupManager : MonoBehaviour
             scene = sv[0];
             character = int.Parse(sv[1]);
             difficulty = sv[2];
+            difficulty = difficulty.Substring(0, difficulty.Length - 1);
             sw.Close();
         }
         SettingsManager.character = character;

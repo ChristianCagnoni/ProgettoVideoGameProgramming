@@ -63,6 +63,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "FinalChapter")
+        {
+            keyboardSpeed = 10;
+        }
         source = GetComponent<AudioSource>();
         sceneN=SceneManager.GetActiveScene().name;
         attackAnim=false;

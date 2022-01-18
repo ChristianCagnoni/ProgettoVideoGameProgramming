@@ -33,7 +33,40 @@ public class BossEnemyZombie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //in base alla difficoltà influenza i parametri
+        if (SettingsManager.difficulty == "easy")
+        {
+        }
+        else if (SettingsManager.difficulty == "medium")
+        {
+            moveSpeed++;
+            maxDist += 5;
+            minDist -= 2;
+            enemyCooldown -= 0.25f;
+            damage += 1;
+            radius += 5;
+            viewArea += 5;
+        }
+        else if (SettingsManager.difficulty == "difficult")
+        {
+            moveSpeed += 2;
+            maxDist += 10;
+            minDist -= 4;
+            enemyCooldown -= 0.5f;
+            damage += 2;
+            radius += 10;
+            viewArea += 10;
+        }
+        else
+        {
+            moveSpeed += 4;
+            maxDist += 20;
+            minDist -= 5;
+            enemyCooldown -= 0.75f;
+            damage += 4;
+            radius += 100;
+            viewArea += float.PositiveInfinity;
+        }
         isAttacking = false;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();

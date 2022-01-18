@@ -48,9 +48,13 @@ public class NewGame : MonoBehaviour
         {
             SettingsManager.difficulty = "medium";
         }
-        else
+        else if (value == 2)
         {
             SettingsManager.difficulty = "difficult";
+        }
+        else
+        {
+            SettingsManager.difficulty = "extreme";
         }
     }
 

@@ -2161,7 +2161,7 @@ MonoBehaviour:
   contents:
   - {fileID: 171136550}
   - {fileID: 171136548}
-  - {fileID: 0}
+  - {fileID: 171136572}
 --- !u!114 &171136562 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4339053799499291057, guid: a91f9c2ede3e78c4aae38b4be50253bb,
@@ -2282,6 +2282,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &171136572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3414783547910191667, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 171136546}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &175412872
 PrefabInstance:
   m_ObjectHideFlags: 0

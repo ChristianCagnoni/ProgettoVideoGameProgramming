@@ -9577,7 +9577,7 @@ MonoBehaviour:
   contents:
   - {fileID: 993534117}
   - {fileID: 993534115}
-  - {fileID: 0}
+  - {fileID: 993534139}
 --- !u!114 &993534129 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4339053799499291057, guid: a91f9c2ede3e78c4aae38b4be50253bb,
@@ -9698,6 +9698,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &993534139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3414783547910191667, guid: a91f9c2ede3e78c4aae38b4be50253bb,
+    type: 3}
+  m_PrefabInstance: {fileID: 993534113}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &997763674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5118460033899367882, guid: 06fa46bc580986446920431d7984ab93,

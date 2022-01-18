@@ -48,15 +48,25 @@ public class EnemyZombieFC : MonoBehaviour
             radius+=5;
             viewArea+=5;
         }
-        else
+        else if (SettingsManager.difficulty == "difficult")
         {
-            moveSpeed+=2;
+            moveSpeed += 2;
             maxDist += 10;
             minDist -= 4;
             enemyCooldown -= 0.5f;
             damage += 2;
             radius += 10;
             viewArea += 10;
+        }
+        else
+        {
+            moveSpeed+=4;
+            maxDist += 20;
+            minDist -= 5;
+            enemyCooldown -= 0.75f;
+            damage += 4;
+            radius += 100;
+            viewArea += float.PositiveInfinity;
         }
         isAttacking = false;
         animator = GetComponent<Animator>();

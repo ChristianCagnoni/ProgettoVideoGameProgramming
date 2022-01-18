@@ -3337,7 +3337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4f45d6e8a47994bab18ea6630d0d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboardSpeed: 10
+  keyboardSpeed: 7
   mouseSpeed: 100
   invertXAxis: 0
   invertYAxis: 0

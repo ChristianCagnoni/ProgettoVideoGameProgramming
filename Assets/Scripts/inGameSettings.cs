@@ -465,6 +465,18 @@ public class inGameSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            Scrollbar vBar = transform.GetChild(1).GetChild(1).GetComponent<Scrollbar>();
+            if (vBar.value < 1)
+                vBar.value += 0.25f;
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            Scrollbar vBar = transform.GetChild(1).GetChild(1).GetComponent<Scrollbar>();
+            if (vBar.value > 0)
+                vBar.value -= 0.25f;
+        }
         //gestione del pulsante esc per l'uscita o l'annullamento del testo inserito
         if (Input.GetKeyDown(KeyCode.Escape) && !sensibility)
         {
