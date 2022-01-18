@@ -31,3 +31,4 @@ Nel progetto condiviso non è presente il supporto al formato 21:9 che è stato 
 Ma il supporto è presente nella build.
 
 Se nell'editor si prova a eseguire il gioco in scene diverse da quella princiaple il gioco funzionerà ma non in modo ottimale per mancanza di inizializzazione di parametri fondamentali.
+(nel progetto nel tutorial (in editor) si partirà con l'ottava fase, per correggere l'esecuzione cambiare il valore del parametro in riga 34 dello script TutorialManager.cs da 8 a 0)
