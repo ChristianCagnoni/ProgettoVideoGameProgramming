@@ -31,7 +31,7 @@ public class TutorialManager : MonoBehaviour
         pressed = new bool[] { false, false, false, false};
         falses = 4;
         wheel = false;
-        tutorialPhase = 8;
+        tutorialPhase = 0;
         tutorialCanvas.SetActive(true);
         panel= tutorialCanvas.transform.GetChild(0).gameObject;
         panel.SetActive(true);
